@@ -1,0 +1,312 @@
+<div class="flex flex-col flex-auto form-Out">
+    <div class="flex-auto">
+        <div
+            class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+        >
+            <div class="text-xl font-semibold text-white">Add Fee</div>
+            <button
+                (click)="close()"
+                type="button"
+                mat-icon-button
+                matDialogClose
+            >
+                <mat-icon
+                    [svgIcon]="'heroicons_outline:x'"
+                    class="text-white"
+                ></mat-icon>
+            </button>
+        </div>
+
+        <form
+            [formGroup]="createForm"
+            class="flex flex-col create-form px-5 py-5"
+        >
+            <ng-container>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 mb-2"
+                >
+                    <div class="col mb-3 flex items-center">
+                        <div class="flex items-center justify-center">
+                            <img
+                                class="rounded-full w-img border-2"
+                                src="{{ baseUrl + details.Data.image }}"
+                                alt="User avatar"
+                            />
+                        </div>
+                        <div class="pl-4">
+                            <div class="font-semibold">
+                                {{ details.Data.name }}
+                                {{ details.Data.surname }}
+                            </div>
+                            <!-- <div>laxmi@gmial.com</div>
+                            <div>9988775565</div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 mb-3"
+                >
+                    <div class="col mb-3">
+                        <div class="text-md font-medium mb-2">Course Fee :</div>
+                        <div
+                            class="inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-primary/10 text-primary"
+                        >
+                            {{ details.Data.courseFee }}
+                        </div>
+                    </div>
+                    <div
+                        class="col mb-3"
+                        *ngIf="details.Data.discountNumber != 0"
+                    >
+                        <div class="text-md font-semibold mb-2">Discount :</div>
+                        <div
+                            class="inline-flex items-center h-6 px-3 rounded-full text-sm font-semibold leading-6 tracking-wide bg-accent-200 text-accent-600"
+                        >
+                            {{ details.Data.discountNumber }}
+                        </div>
+                    </div>
+
+                    <div
+                        class="col mb-3"
+                        *ngIf="details.Data.discountNumber != 0"
+                    >
+                        <div class="text-md font-medium mb-2">
+                            After Discount :
+                        </div>
+                        <div
+                            class="inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-warning/10 text-warning dark:bg-warning/15"
+                        >
+                            {{ details.Data.amountAfterDiscount }}
+                        </div>
+                    </div>
+                    <div class="col mb-3 pl-4">
+                        <div class="text-md font-medium mb-2">Total Paid :</div>
+                        <div
+                            class="inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                        >
+                            {{ details.Data.paidAmt }}
+                        </div>
+                    </div>
+                    <div class="col pl-4 mb-3">
+                        <div class="text-md font-medium mb-2">Due :</div>
+                        <div
+                            class="inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                        >
+                            {{ details.Data.due }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto w-full add_payment_table">
+                    <table
+                        class="mat-elevation-z8 w-full border"
+                        mat-table
+                        [dataSource]="dataSource"
+                        #paymentTable
+                    >
+                        <!-- terms -->
+                        <ng-container matColumnDef="terms">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-2 bg-light-primary text-primary_l capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Terms
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{ i + 1 }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- paid -->
+                        <ng-container matColumnDef="paid">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-2 bg-light-primary text-primary_l capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Paid Amount
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{ transaction.amountPaid }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- paidThrough -->
+                        <ng-container matColumnDef="paidThrough">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-2 bg-light-primary text-primary_l capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Paid Through
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="flex capitalize text-xs+">
+                                    {{ transaction.paidThrough }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- date -->
+                        <ng-container matColumnDef="date">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-2 bg-light-primary text-primary_l capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Paid date
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="flex capitalize text-xs+">
+                                    {{
+                                        transaction.paidDate
+                                            | date : "dd MMM, yyyy"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                                align="center"
+                                [attr.colspan]="displayedColumns.length"
+                            >
+                                No Payments.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div
+                    class="mt-3 text-sm font-semibold tracking-tight leading-6 truncate"
+                >
+                    Add Fee
+                </div>
+                <div class="flex flex-row gt-md:flex-row mt-1">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <input
+                            id="amount"
+                            matInput
+                            [formControlName]="'amountPaid'"
+                            placeholder="Enter Amount"
+                            (keypress)="numberOnly($event)"
+                            min="0"
+                            max="90000"
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('amountPaid')
+                                    .hasError('required')
+                            "
+                        >
+                            Amount is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-4"
+                    >
+                        <mat-select
+                            [formControlName]="'paidThrough'"
+                            placeholder="Paid Through"
+                        >
+                            <mat-option value="bank-transfer">
+                                Bank Transfer
+                            </mat-option>
+                            <mat-option value="phonePay-RK">
+                                Phone Pay - RK
+                            </mat-option>
+                            <mat-option value="phonePay-Lakshmi">
+                                Phone Pay - Lakshmi
+                            </mat-option>
+                            <mat-option value="googlePay-RK">
+                                Google Pay - RK
+                            </mat-option>
+                            <mat-option value="googlePay-Lakshmi">
+                                Google Pay - Lakshmi
+                            </mat-option>
+                            <mat-option value="cash"> Cash </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('paidThrough')
+                                    .hasError('required')
+                            "
+                        >
+                            PaidThrough is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-4"
+                    >
+                        <input
+                            matInput
+                            [matDatepicker]="picker"
+                            [formControlName]="'paidDate'"
+                            placeholder="Date"
+                            (click)="picker.open()"
+                        />
+
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('paidDate').hasError('required')
+                            "
+                        >
+                            Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mt-2 mb-2">
+                    <button
+                        type="submit"
+                        class="w-20 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Pay
+                    </button>
+                </div>
+            </ng-container>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+.tabs-setting ::ng-deep {
+    .mat-tab-labels {
+        border-bottom: 1px solid #e2e8f0 !important;
+        padding-left: 20px;
+        .count-label {
+            background: rgba(
+                var(--fuse-text-secondary-rgb),
+                var(--tw-text-opacity)
+            );
+            display: flex;
+            border-radius: 100%;
+            color: #fff;
+            font-size: 11px;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+        }
+    }
+}
+::ng-deep .tab-group.mat-tab-group .mat-tab-body-content {
+    padding: 0px !important;
+}
+
+::ng-deep .tab-group.mat-tab-group .mat-tab-header .mat-tab-label-container {
+    padding: 0 0px;
+}
+.employee-image {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 5px 0px;
+    border: 3px solid rgb(241, 241, 241);
+    overflow: hidden;
+    img {
+        border-radius: 100%;
+    }
+}
+
+.letter-actions {
+    ::ng-deep mat-select {
+        mat-option {
+            color: #06b2ff !important;
+        }
+    }
+}
+
+.bg-light {
+    background-color: #ddd !important;
+}
+::ng-deep body.light .mat-snack-bar-container,
+body .light .mat-snack-bar-container {
+    background: rgb(34 197 94);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container .mat-button {
+    color: #fff;
+}
+
+::ng-deep body.light .mat-snack-bar-container.alert-red {
+    background: rgb(239 68 68);
+    color: #fff !important;
+}
+.all_btn {
+    height: 40px;
+    color: rgba(100, 116, 139, 0.7);
+}
+.common_filters {
+    position: absolute;
+    right: 0px;
+    top: 13px;
+    z-index: 9;
+}

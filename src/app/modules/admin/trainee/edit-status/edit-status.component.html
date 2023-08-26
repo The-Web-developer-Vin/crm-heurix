@@ -1,0 +1,117 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-2xl font-semibold text-white truncate">
+                    Update Status
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-6"
+            >
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense add-width w-full"
+                    >
+                        <mat-label>Status</mat-label>
+                        <mat-select
+                            [formControlName]="'status'"
+                            (selectionChange)="selectedTimeline($event.value)"
+                        >
+                            <mat-option value="onGoing"> on-Going </mat-option>
+                            <mat-option value="completed">
+                                Completed
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('status').hasError('required')
+                            "
+                        >
+                            Status is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                        *ngIf="dates"
+                    >
+                        <mat-label>Completed on</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker2"
+                            [formControlName]="'completedDate'"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker2"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('completedDate')
+                                    .hasError('required')
+                            "
+                        >
+                            Completed Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- company, package-->
+                <div class="flex flex-row gt-md:flex-row" *ngIf="dates">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Company Name</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'company'"
+                            appAlphabetOnly
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Package</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'package'"
+                            (keypress)="numberOnly($event)"
+                        />
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-md:flex-row">
+                    <button
+                        type="submit"
+                        class="max-w-50 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Update Status
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

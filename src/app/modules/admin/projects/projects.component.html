@@ -1,0 +1,746 @@
+<div class="flex flex-col flex-auto min-w-0 bg-white">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                        >
+                            Projects
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <div class="flex items-center mt-6 sm:mt-0 sm:ml-2">
+                                <div
+                                    class="flex items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                                    >
+                                        Total Projects :
+                                    </div>
+                                    <div
+                                        class="ml-3 lg:flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-primary/10 text-primary"
+                                    >
+                                        {{
+                                            counts?.projectDetails?.length
+                                                ? counts.projectDetails?.length
+                                                : 0
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                                    >
+                                        Total Budget:
+                                    </div>
+                                    <div
+                                        class="ml-3 lg:flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-warning/10 text-warning dark:bg-warning/15"
+                                    >
+                                        {{
+                                            counts?.total_budget
+                                                | currency
+                                                    : counts?.currency
+                                                    : "symbol"
+                                                    : "1.0"
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                                    >
+                                        Total Paid :
+                                    </div>
+                                    <div
+                                        class="ml-3 lg:flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                                    >
+                                        {{
+                                            counts?.total_paid
+                                                | currency
+                                                    : counts?.currency
+                                                    : "symbol"
+                                                    : "1.0"
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center justify-center mr-3"
+                                >
+                                    <div
+                                        class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                                    >
+                                        Total Due :
+                                    </div>
+                                    <div
+                                        class="ml-3 lg:flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                                    >
+                                        {{
+                                            counts?.total_due
+                                                | currency
+                                                    : counts?.currency
+                                                    : "symbol"
+                                                    : "1.0"
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                                *ngIf="role != 'Admin'"
+                            >
+                                <button
+                                    class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                    mat-flat-button
+                                    (click)="add()"
+                                >
+                                    <mat-icon
+                                        svgIcon="add"
+                                        class="icon-size-5 text-white"
+                                    ></mat-icon>
+                                    <span class="ml-1">Add Project</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-card mb-5 shadow rounded-lg py-1">
+                <div class="search p-4 flex items-center justify-between">
+                    <div class="flex items-center relative">
+                        <mat-form-field
+                            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                            [floatLabel]="'always'"
+                        >
+                            <input
+                                class="border border-slate-300 bg-transparent px-2 py-2 pr-9 text-xs+ placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                matInput
+                                #search
+                                placeholder="Search"
+                                [(ngModel)]="searchValue"
+                                (keyup.enter)="doFilter(searchValue)"
+                            />
+                        </mat-form-field>
+                        <mat-icon
+                            matPrefix
+                            class="icon-size-5 absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent right-5"
+                            [svgIcon]="'heroicons_solid:search'"
+                            (click)="doFilter(searchValue)"
+                        ></mat-icon>
+                    </div>
+
+                    <div class="flex">
+                        <!-- <button
+                            *ngIf="role != 'Admin'"
+                            class="all_btn rounded-full border w-30"
+                            [ngClass]="
+                                defaultAll ? 'mat-button-toggle-checked' : ''
+                            "
+                            (click)="getAllProjects()"
+                        >
+                            <span class="">All</span>
+                        </button> -->
+                        <mat-form-field
+                            *ngIf="role == 'Admin'"
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded"
+                        >
+                            <mat-select
+                                [(ngModel)]="categoryName"
+                                (selectionChange)="getCategory($event.value)"
+                            >
+                                <mat-option
+                                    value="dev"
+                                    (click)="getDevProjects()"
+                                >
+                                    Dev
+                                </mat-option>
+                                <mat-option value="digital">
+                                    Digital
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <mat-form-field
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                [(ngModel)]="currencyName"
+                                (selectionChange)="
+                                    selectedCurrency($event.value)
+                                "
+                            >
+                                <mat-option
+                                    *ngFor="let data of getallcoutries"
+                                    value="{{ data._id._id }}"
+                                    >{{ data._id.name }} -
+                                    {{ data._id.currency }}</mat-option
+                                >
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                placeholder="Month"
+                                [(ngModel)]="monthnumber"
+                                (selectionChange)="getMonthValue($event.value)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of months"
+                                    [value]="option.val"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense ml-3 fuse-mat-rounded"
+                        >
+                            <mat-select
+                                placeholder="Year"
+                                [(ngModel)]="yearNumber"
+                                (selectionChange)="getYearValue($event.value)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of years"
+                                    [value]="option"
+                                >
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button
+                            *ngIf="backShow"
+                            class="px-3 ml-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                            mat-flat-button
+                            (click)="back()"
+                        >
+                            <mat-icon svgIcon="keyboard_backspace"></mat-icon>
+                            <span class="ml-1">Back</span>
+                        </button>
+                        <button
+                            *ngIf="clearShow"
+                            class="mt-1 flex flex-0 items-center justify-center w-8 h-8 ml-3 rounded-full text-warn-600 bg-warn-100 dark:text-warn-50 dark:bg-warn-600 ng-star-inserted"
+                            (click)="clear()"
+                            matTooltip="Clear"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                        >
+                            <mat-icon
+                                svgIcon="mat_outline:clear"
+                                class="text-red icon-size-2"
+                            ></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto w-full">
+                    <table
+                        class="w-full bg-transparent is-hoverable"
+                        multiTemplateDataRows
+                        mat-table
+                        [dataSource]="dataSource"
+                        [trackBy]="trackByFn"
+                        #projectsTable
+                        matSort
+                    >
+                        <!-- name -->
+                        <ng-container matColumnDef="name">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'name')"
+                            >
+                                Project Name
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5 prj_tp"
+                            >
+                                <span
+                                    class="text-xs+ flex capitalize cursor-pointer"
+                                    (click)="openSingleProject(transaction)"
+                                    matTooltip="{{ transaction.name }}"
+                                    aria-label="Button that displays a tooltip when focused or hovered over"
+                                >
+                                    {{ transaction.name | slice : 0 : 15 }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- client name -->
+                        <ng-container matColumnDef="client">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'client')"
+                            >
+                                Client Name
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5 cli_tp"
+                            >
+                                <span
+                                    (click)="
+                                        openSingleClient(
+                                            transaction.client?._id
+                                        )
+                                    "
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                    matTooltip="{{ transaction.client?.name }}"
+                                    aria-label="Button that displays a tooltip when focused or hovered over"
+                                    >{{
+                                        transaction.client?.name
+                                            | slice : 0 : 15
+                                    }}
+                                    <span
+                                        *ngIf="transaction.count >= 2"
+                                        class="ml-2 bg-primary_l text-white inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                        >{{ transaction.count }}</span
+                                    >
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- stream -->
+                        <ng-container matColumnDef="stream">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'technology')"
+                            >
+                                Tech
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5 tech_tp"
+                            >
+                                <span
+                                    class="cursor-pointer whitespace-nowrap capitalize text-xs+"
+                                    *ngIf="!transaction.total"
+                                    matTooltip="{{
+                                        transaction.technology?.name
+                                    }}"
+                                    aria-label="Button that displays a tooltip when focused or hovered over"
+                                >
+                                    {{
+                                        transaction.technology?.name
+                                            | slice : 0 : 15
+                                    }}
+                                </span>
+                                <span
+                                    class="text-md font-medium tracking-tight"
+                                    *ngIf="transaction.total"
+                                >
+                                    Total
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- budget -->
+                        <ng-container matColumnDef="budget">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'project_budget')"
+                            >
+                                Total Budget
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5 budget_tp"
+                            >
+                                <!-- (click)="viewBudget(transaction)" -->
+                                <span
+                                    class="badge bg-primary/10 text-primary_l amounts"
+                                >
+                                    {{
+                                        transaction.project_budget
+                                            | currency
+                                                : amount?.currency
+                                                : "symbol"
+                                                : "1.0"
+                                    }}
+                                    <!-- | currency : "USD" -->
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- paid -->
+                        <ng-container matColumnDef="paid">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                *matHeaderCellDef
+                                (click)="sorting($event, 'totalPaid')"
+                            >
+                                Total Paid
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap total-paid px-4 py-3 sm:px-5 paid_tp"
+                                (click)="view(transaction)"
+                            >
+                                <span
+                                    class="cursor-pointer amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                                >
+                                    {{
+                                        transaction.totalPaid
+                                            | currency
+                                                : amount?.currency
+                                                : "symbol"
+                                                : "1.0"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- due -->
+                        <ng-container matColumnDef="due">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                *matHeaderCellDef
+                                (click)="sorting($event, 'due')"
+                            >
+                                Total Due
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5 due_tp"
+                            >
+                                <span
+                                    class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                                >
+                                    {{
+                                        transaction.due
+                                            | currency
+                                                : amount?.currency
+                                                : "symbol"
+                                                : "1.0"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- status -->
+                        <ng-container matColumnDef="status">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'status')"
+                            >
+                                Status
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <ng-container *ngIf="!transaction.total">
+                                    <div
+                                        class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-warning"
+                                        *ngIf="
+                                            transaction.status !=
+                                                'Inprogress' &&
+                                            transaction?.status != 'Stopped'
+                                        "
+                                    >
+                                        <div
+                                            class="h-2 w-2 rounded-full bg-current"
+                                        ></div>
+                                        <span>
+                                            {{ transaction.status | titlecase }}
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="cursor-pointer whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-error"
+                                        *ngIf="transaction?.status == 'Stopped'"
+                                        matTooltip="{{
+                                            transaction?.stoppedReason?.name
+                                        }}"
+                                        aria-label="Button that displays a tooltip when focused or hovered over"
+                                    >
+                                        <div
+                                            class="h-2 w-2 rounded-full bg-current"
+                                        ></div>
+                                        <span>
+                                            {{ transaction.status | titlecase }}
+                                        </span>
+                                    </div>
+
+                                    <div
+                                        class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-success-l"
+                                        *ngIf="
+                                            transaction.status == 'Inprogress'
+                                        "
+                                    >
+                                        <div
+                                            class="h-2 w-2 rounded-full bg-current"
+                                        ></div>
+                                        <span> Working </span>
+                                    </div></ng-container
+                                >
+                                <div *ngIf="transaction.total">&nbsp;</div>
+                            </td>
+                        </ng-container>
+
+                        <!-- start date -->
+                        <ng-container matColumnDef="startDate">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                *matHeaderCellDef
+                                (click)="sorting($event, 'start_date')"
+                            >
+                                Start Date
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5 start_tp"
+                            >
+                                <span class="whitespace-nowrap text-xs+">
+                                    {{
+                                        transaction.start_date
+                                            | date : "dd MMM, y"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- actions -->
+                        <ng-container matColumnDef="actions">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Actions
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="
+                                    let transaction;
+                                    let i = renderIndex
+                                "
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <div class="flex">
+                                    <div
+                                        class="flex"
+                                        *ngIf="
+                                            !transaction.total &&
+                                            role != 'Admin'
+                                        "
+                                    >
+                                        <span
+                                            (click)="addBudget(transaction)"
+                                            class="flex items-center cursor-pointer"
+                                        >
+                                            <mat-icon
+                                                svgIcon="payments"
+                                                class="icon-size-5 mr-3 text-primary_l"
+                                            ></mat-icon>
+                                        </span>
+                                        <span
+                                            (click)="edit(transaction)"
+                                            class="flex items-center cursor-pointer"
+                                        >
+                                            <mat-icon
+                                                svgIcon="edit"
+                                                class="icon-size-5 mr-3 text-green-600"
+                                            ></mat-icon>
+                                        </span>
+                                        <span
+                                            class="flex items-center cursor-pointer"
+                                            (click)="delete(transaction)"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5 text-red mr-3"
+                                                [svgIcon]="'delete'"
+                                            ></mat-icon>
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="flex projects"
+                                        *ngIf="
+                                            !transaction.total &&
+                                            transaction.count >= 2
+                                        "
+                                    >
+                                        <button
+                                            class="min-w-10 min-h-7 h-7 px-2 leading-6 flex items-center justify-center"
+                                            mat-stroked-button
+                                            (click)="
+                                                toggleDetails(
+                                                    transaction.client._id,
+                                                    transaction,
+                                                    i
+                                                )
+                                            "
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    rowId === i
+                                                        ? 'heroicons_solid:chevron-up'
+                                                        : 'heroicons_solid:chevron-down'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="
+                                let row;
+                                columns: displayedColumns;
+                                let i = renderIndex
+                            "
+                            class="relative"
+                        ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                                align="center"
+                                [attr.colspan]="displayedColumns.length"
+                            >
+                                No data Found.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="flex items-center">
+                    <mat-paginator
+                        [length]="pageLength"
+                        [pageSize]="pageSize"
+                        [pageIndex]="pageNumber - 1"
+                        class="w-50"
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        (page)="getProjects()"
+                    >
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- add budget -->
+
+<ng-template #addbudget>
+    <div
+        class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+    >
+        <div class="text-xl font-semibold text-white">Add Budget</div>
+        <button
+            (click)="matClose()"
+            type="button"
+            mat-icon-button
+            matDialogClose
+        >
+            <mat-icon
+                [svgIcon]="'heroicons_outline:x'"
+                class="text-white"
+            ></mat-icon>
+        </button>
+    </div>
+
+    <form [formGroup]="budgetForm" class="flex flex-col create-form px-5 py-5">
+        <div class="flex flex-row gt-md:flex-row">
+            <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                <mat-label class="text-dark">Amount</mat-label>
+                <input
+                    id="project_name"
+                    matInput
+                    [formControlName]="'amount'"
+                    (keypress)="numberOnly($event)"
+                    maxlength="9"
+                />
+                <mat-error
+                    *ngIf="budgetForm.get('amount').hasError('required')"
+                >
+                    Amount is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field
+                appearance="fill"
+                class="flex-auto fuse-mat-dense w-full ml-4"
+            >
+                <mat-label class="text-dark">Budget Date</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [formControlName]="'paymentDate'"
+                    placeholder="Date"
+                    [value]="getTomorrow()"
+                    (click)="picker.open()"
+                    (dateInput)="addDate($event)"
+                    (dateChange)="addDate($event)"
+                />
+
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error
+                    *ngIf="budgetForm.get('paymentDate').hasError('required')"
+                >
+                    Date is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col gt-md:flex-row">
+            <button
+                type="submit"
+                class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                mat-flat-button
+                (click)="addbudgetToProject()"
+            >
+                Add Budget
+            </button>
+        </div>
+    </form>
+</ng-template>

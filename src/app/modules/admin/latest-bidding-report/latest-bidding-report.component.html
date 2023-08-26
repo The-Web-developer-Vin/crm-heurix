@@ -1,0 +1,328 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                        >
+                            Bidding Report
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <div class="flex items-center mt-6 sm:mt-0 sm:ml-2">
+                                <div
+                                    class="items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="mb-1 text-xs+ font-medium tracking-tight leading-7 md:leading-snug truncate"
+                                    >
+                                        Total Bids :
+                                    </div>
+                                    <div
+                                        class="h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-primary/10 text-primary"
+                                    >
+                                        {{ counts?.bids ? counts?.bids : 0 }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="mb-1 text-xs+ font-medium tracking-tight leading-7 md:leading-snug truncate"
+                                    >
+                                        Response :
+                                    </div>
+                                    <div
+                                        class="h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                                    >
+                                        {{
+                                            counts?.response
+                                                ? counts?.response
+                                                : 0
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="items-center justify-center border-r pr-3 mr-3"
+                                >
+                                    <div
+                                        class="mb-1 text-xs+ font-medium tracking-tight leading-7 md:leading-snug truncate"
+                                    >
+                                        Converted :
+                                    </div>
+                                    <div
+                                        class="h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-warning/10 text-warning dark:bg-warning/15"
+                                    >
+                                        {{
+                                            counts?.converted
+                                                ? counts?.converted
+                                                : 0
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="mb-1 text-xs+ font-medium tracking-tight leading-7 md:leading-snug truncate"
+                                    >
+                                        <ng-container *ngIf="biddingDate">{{
+                                            biddingDate | date : "MMMM"
+                                        }}</ng-container>
+                                        <ng-container *ngIf="!biddingDate"
+                                            >Total</ng-container
+                                        >
+                                        Bids :
+                                    </div>
+                                    <div
+                                        class="h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-primary/10 text-primary"
+                                    >
+                                        {{
+                                            counts?.totalBids
+                                                ? counts?.totalBids
+                                                : 0
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="items-center justify-center mr-3 border-r pr-3"
+                                >
+                                    <div
+                                        class="mb-1 text-xs+ font-medium tracking-tight leading-7 md:leading-snug truncate"
+                                    >
+                                        Response :
+                                    </div>
+                                    <div
+                                        class="h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/150"
+                                    >
+                                        {{
+                                            counts?.totalResponse
+                                                ? counts?.totalResponse
+                                                : 0
+                                        }}
+                                    </div>
+                                </div>
+                                <div class="items-center justify-center">
+                                    <div
+                                        class="mb-1 text-xs+ font-medium tracking-tight leading-7 md:leading-snug truncate"
+                                    >
+                                        Converted :
+                                    </div>
+                                    <div
+                                        class="h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-warning/10 text-warning dark:bg-warning/15"
+                                    >
+                                        {{
+                                            counts?.totalConverted
+                                                ? counts?.totalConverted
+                                                : 0
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                                *ngIf="role != 'Admin'"
+                            >
+                                <button
+                                    class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                    mat-flat-button
+                                    (click)="addBidding()"
+                                >
+                                    <mat-icon
+                                        svgIcon="add"
+                                        class="icon-size-5 text-white"
+                                    ></mat-icon>
+                                    <span class="ml-1">Add Bidding</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-card mb-5 shadow rounded py-2 pt-6 tabs-setting relative"
+            >
+                <div class="search p-4 flex items-center justify-between">
+                    <div class="flex">
+                        <ng-container *ngIf="role != 'Admin'">
+                            <button
+                                *ngIf="role != 'Admin'"
+                                class="all_btn rounded-full border w-30"
+                                [ngClass]="
+                                    defaultAll
+                                        ? 'mat-button-toggle-checked'
+                                        : ''
+                                "
+                                (click)="getAll()"
+                            >
+                                <span class="">All</span>
+                            </button></ng-container
+                        >
+                        <mat-form-field
+                            *ngIf="role == 'Admin'"
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded"
+                        >
+                            <mat-select
+                                [(ngModel)]="categoryName"
+                                placeholder="Category"
+                                (selectionChange)="getCategory($event.value)"
+                            >
+                                <mat-option value="dev" (click)="getDev()">
+                                    Dev
+                                </mat-option>
+                                <mat-option value="digital">
+                                    Digital
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+
+                        <mat-form-field
+                            *ngIf="role == 'Admin'"
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                [(ngModel)]="person"
+                                placeholder="Select"
+                                (selectionChange)="selectManager($event.value)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of employee"
+                                    [value]="option._id"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <mat-form-field
+                            appearance="fill"
+                            class="ml-3 fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                        >
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                (click)="picker.open()"
+                                [(ngModel)]="biddingDate"
+                                (dateChange)="selectedDate($event)"
+                                placeholder="dd-mm-yyyy"
+                            />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <!-- <ng-container *ngIf="role != 'Admin'">
+                            <button
+                                *ngIf="clearShow"
+                                class="mt-1 flex flex-0 items-center justify-center w-8 h-8 ml-3 rounded-full text-warn-600 bg-warn-100 dark:text-warn-50 dark:bg-warn-600 ng-star-inserted"
+                                (click)="clear()"
+                                matTooltip="Clear"
+                                aria-label="Button that displays a tooltip when focused or hovered over"
+                            >
+                                <mat-icon
+                                    svgIcon="mat_outline:clear"
+                                    class="text-red icon-size-2"
+                                ></mat-icon></button
+                        ></ng-container> -->
+                    </div>
+                </div>
+                <mat-tab-group
+                    class="tab-group"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="tabClick($event)"
+                >
+                    <!-- all biddings -->
+                    <mat-tab label="all">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                All
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{ counts?.bids ? counts?.bids : 0 }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'all'">
+                            <app-all-bidding-report
+                                [filterData]="filterData"
+                                [tabName]="tabName"
+                                [biddingDate]="biddingDate"
+                                [categoryName]="categoryName"
+                                (_searchValue)="searchEvent($event)"
+                                (_editBidding)="editBidding($event)"
+                                [allList]="allList"
+                            ></app-all-bidding-report
+                        ></ng-container>
+                    </mat-tab>
+                    <!-- Response -->
+                    <mat-tab label="response">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Response<span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        counts?.totalResponse
+                                            ? counts?.totalResponse
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'response'">
+                            <app-response-list
+                                [filterDataResponse]="filterDataResponse"
+                                [tabName]="tabName"
+                                [biddingDate]="biddingDate"
+                                [categoryName]="categoryName"
+                                (_editBidding)="editBidding($event)"
+                            ></app-response-list
+                        ></ng-container>
+                    </mat-tab>
+                    <!-- Converted -->
+                    <mat-tab label="converted">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Converted<span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        counts?.totalConverted
+                                            ? counts?.totalConverted
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'converted'">
+                            <app-converted-list
+                                [filterDataConverted]="filterDataConverted"
+                                [tabName]="tabName"
+                                [biddingDate]="biddingDate"
+                                [categoryName]="categoryName"
+                                (_editBidding)="editBidding($event)"
+                            ></app-converted-list
+                        ></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,274 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">Edit Payment</div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-5"
+            >
+                <ng-container>
+                    <div
+                        class="top_fields grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 mb-3"
+                    >
+                        <div class="col mb-3">
+                            <div class="text-md">
+                                <span class="font-semibold">
+                                    Client Name :</span
+                                >
+                                {{ checkedList.projectData?.client.name }}
+                            </div>
+                        </div>
+                        <div class="col mb-3">
+                            <div class="text-md">
+                                <span class="font-semibold">
+                                    Project Name :</span
+                                >
+                                {{ checkedList.projectData?.name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gt-md:flex-row">
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full"
+                        >
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                [formControlName]="'paidDate'"
+                                (click)="picker.open()"
+                                (dateInput)="addDate('payment', $event)"
+                                (dateChange)="addDate('payment', $event)"
+                            />
+
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full ml-3"
+                        >
+                            <input
+                                matInput
+                                [matDatepicker]="picker2"
+                                [formControlName]="'receivedDate'"
+                                (click)="picker2.open()"
+                                (dateInput)="addDate('receive', $event)"
+                                (dateChange)="addDate('receive', $event)"
+                            />
+
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker2"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense ml-3 w-full"
+                        >
+                            <mat-select
+                                [formControlName]="'paidThrough'"
+                                placeholder="Paid Through"
+                                (selectionChange)="getPaymentMethod($event)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of getallpaids"
+                                    [value]="option._id"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="overflow-x-auto w-full add_payment_table">
+                        <table
+                            class="mat-elevation-z8 w-full border"
+                            mat-table
+                            [dataSource]="dataSourceAddPayment"
+                            #clientsTable
+                        >
+                            <ng-container matColumnDef="budget">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="whitespace-nowrap bg-light-primary px-4 py-2 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                >
+                                    Budget
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element"
+                                    class="whitespace-nowrap px-4 py-1 sm:px-5"
+                                >
+                                    <span class="">{{
+                                        checkedList.projectData?.project_budget
+                                    }}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="hourlyRate">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="whitespace-nowrap bg-light-primary px-4 py-2 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                >
+                                    Hourly Rate
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element"
+                                    class="whitespace-nowrap px-4 py-1 sm:px-5"
+                                >
+                                    <span class="">{{
+                                        checkedList.projectData?.project_budget
+                                    }}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="hrsTracked">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="whitespace-nowrap bg-light-primary px-4 py-2 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                >
+                                    Hours Tracked
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element; let i = index"
+                                    class="whitespace-nowrap px-4 py-2 sm:px-5"
+                                >
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense amonut-field"
+                                    >
+                                        <input
+                                            id="amount"
+                                            matInput
+                                            oninput="this.value = this.value.replace(/[^0-9-.]/g, '');"
+                                            [formControlName]="'hoursTrack'"
+                                            placeholder="Enter Hours"
+                                            (keyup)="hoursTracked($event, i)"
+                                            maxlength="3"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="due">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="whitespace-nowrap bg-light-primary px-4 py-2 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                >
+                                    Due
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element"
+                                    class="whitespace-nowrap px-4 py-1 sm:px-5"
+                                >
+                                    <span class=""> {{ element?.due }}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="amount">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="whitespace-nowrap bg-light-primary px-4 py-2 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                >
+                                    Amount
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element; let i = index"
+                                    class="whitespace-nowrap px-4 py-1 sm:px-5"
+                                >
+                                    <mat-form-field
+                                        class="flex-auto w-full fuse-mat-dense amonut-field"
+                                    >
+                                        <input
+                                            id="amount"
+                                            matInput
+                                            [formControlName]="'amountPaid'"
+                                            placeholder="Enter Amount"
+                                            (keypress)="numberOnly($event)"
+                                            (keyup)="amountPaid($event, i)"
+                                            maxlength="9"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="inr">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="whitespace-nowrap bg-light-primary px-4 py-2 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                >
+                                    INR
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element; let i = index"
+                                    class="whitespace-nowrap px-4 py-1 sm:px-5"
+                                >
+                                    <mat-form-field
+                                        class="flex-auto w-full fuse-mat-dense amonut-field"
+                                    >
+                                        <input
+                                            id="amount"
+                                            matInput
+                                            [formControlName]="'inrAmount'"
+                                            placeholder="Enter INR Amount"
+                                            (keypress)="numberOnly($event)"
+                                            (keyup)="amountINR($event, i)"
+                                            maxlength="9"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <tr
+                                mat-header-row
+                                *matHeaderRowDef="displayedColumnsPayment"
+                            ></tr>
+                            <tr
+                                mat-row
+                                *matRowDef="
+                                    let row;
+                                    columns: displayedColumnsPayment
+                                "
+                            ></tr>
+                        </table>
+                        <div class="flex justify-end mt-5">
+                            <button
+                                type="submit"
+                                class="mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                mat-flat-button
+                                (click)="save()"
+                            >
+                                Pay
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </form>
+        </div>
+    </div>
+</div>

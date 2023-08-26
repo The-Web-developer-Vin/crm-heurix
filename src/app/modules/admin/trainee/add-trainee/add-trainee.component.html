@@ -1,0 +1,443 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-2xl font-semibold text-white truncate">
+                    {{ modify ? "Modify" : "Add" }} Trainee
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-6"
+            >
+                <div class="mb-3 text-md font-semibold details">
+                    Personal Details :
+                </div>
+                <!-- Name , email -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <div class="flex items-end w-full status_field">
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense w-20 select_field"
+                        >
+                            <mat-label>Name</mat-label>
+                            <mat-select
+                                placeholder="Mr"
+                                [formControlName]="'nameTitle'"
+                                [(ngModel)]="selectGender"
+                                (selectionChange)="getGender($event.value)"
+                            >
+                                <mat-option value="Mr"> Mr </mat-option>
+                                <mat-option value="Mrs"> Mrs </mat-option>
+                                <mat-option value="Miss"> Miss </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="w-full fuse-mat-dense input_field ml-3"
+                        >
+                            <input
+                                id="name"
+                                matInput
+                                [formControlName]="'name'"
+                                appAlphabetOnly
+                            />
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field
+                        appearance="fill"
+                        class="ml-5 w-full fuse-mat-dense"
+                    >
+                        <mat-label>Surname</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'surname'"
+                            appAlphabetOnly
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm.get('surname').hasError('required')
+                            "
+                        >
+                            Surname is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="ml-5 w-full fuse-mat-dense"
+                    >
+                        <mat-label>Father Name</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'fatherName'"
+                            appAlphabetOnly
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('fatherName')
+                                    .hasError('required')
+                            "
+                        >
+                            Father Name is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-full fuse-mat-dense ml-5">
+                        <mat-label>Email address</mat-label>
+                        <input
+                            id="email"
+                            matInput
+                            [formControlName]="'email'"
+                        />
+                        <mat-error
+                            *ngIf="createForm.get('email').hasError('required')"
+                        >
+                            Email address is required
+                        </mat-error>
+                        <mat-error
+                            *ngIf="createForm.get('email').hasError('email')"
+                        >
+                            Please enter a valid email address
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- date of joining , id, image -->
+
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                    >
+                        <mat-label>Date of Joining</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker"
+                            [formControlName]="'joiningDate'"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('joiningDate')
+                                    .hasError('required')
+                            "
+                        >
+                            Joining Date is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Trainee Id</mat-label>
+                        <input
+                            id="email"
+                            matInput
+                            [formControlName]="'traineeId'"
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm.get('traineeId').hasError('required')
+                            "
+                        >
+                            Trainee Id is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="fuse-mat-dense w-full ml-5">
+                        <mat-label class="">Profile Picture</mat-label>
+                        <input
+                            class="truncate"
+                            matInput
+                            readonly
+                            name="image"
+                            [(ngModel)]="imageAttr"
+                            [formControlName]="'image'"
+                        />
+
+                        <button
+                            class="browse_btn bg-accent-700 mat-accent text-white px-3 py-1 rounded"
+                            mat-flat-button
+                            color="primary"
+                        >
+                            Browse
+                        </button>
+
+                        <input
+                            type="file"
+                            #fileInput
+                            id="uploadImage"
+                            name="uploadImage"
+                            accept="image/*"
+                            (change)="fileSelectedImage($event)"
+                            class="browse-input"
+                        />
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Gender</mat-label>
+                        <mat-select [formControlName]="'gender'" #time>
+                            <mat-option value="male"> Male </mat-option>
+                            <mat-option value="female"> Female </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('technology')
+                                    .hasError('required')
+                            "
+                        >
+                            Select Any of stream
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- mobile number. alternative, city -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Mobile Number</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'mobileNumber'"
+                            (keypress)="numberOnly($event)"
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('mobileNumber')
+                                    .hasError('required')
+                            "
+                        >
+                            Mobile Number is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Alternative Mobile Number</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'alternativeNumber'"
+                            (keypress)="numberOnly($event)"
+                        />
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense add-width w-full ml-5"
+                    >
+                        <mat-label>City</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'city'"
+                            appAlphabetOnly
+                        />
+                        <mat-error
+                            *ngIf="createForm.get('city').hasError('required')"
+                        >
+                            City is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense add-width w-full ml-5"
+                    >
+                        <mat-label>Address</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'address'"
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm.get('address').hasError('required')
+                            "
+                        >
+                            Address is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mb-3 mt-3 text-md font-semibold details">
+                    Educational Details :
+                </div>
+
+                <!-- clg, refernce, phone number -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>College Name</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'collegeName'"
+                            appAlphabetOnly
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('collegeName')
+                                    .hasError('required')
+                            "
+                        >
+                            College Name is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Reference Name</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'referenceName'"
+                            appAlphabetOnly
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Reference Number</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'referenceNumber'"
+                            (keypress)="numberOnly($event)"
+                        />
+                    </mat-form-field>
+                </div>
+                <div class="mb-3 mt-3 text-md font-semibold details">
+                    Course Details :
+                </div>
+                <!-- course, technology,  -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                    >
+                        <mat-label>Course</mat-label>
+                        <mat-select
+                            [formControlName]="'course'"
+                            (selectionChange)="selectedCourse($event.value)"
+                        >
+                            <mat-optgroup
+                                *ngFor="let course of courses"
+                                [label]="course.duration"
+                            >
+                                <mat-option
+                                    *ngFor="let data of course.day"
+                                    [value]="data._id"
+                                >
+                                    {{ data.name }}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('course').hasError('required')
+                            "
+                        >
+                            Course is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Technology</mat-label>
+                        <mat-select
+                            [formControlName]="'technology'"
+                            #time
+                            multiple
+                            (selectionChange)="selectTechnology($event)"
+                        >
+                            <mat-option
+                                *ngFor="let data of getTechnologylist"
+                                [value]="data._id"
+                            >
+                                {{ data.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('technology')
+                                    .hasError('required')
+                            "
+                        >
+                            Select Any of stream
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Course Fee</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'courseFee'"
+                            readonly
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Discount Amount</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'discountNumber'"
+                            maxlength="5"
+                        />
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-md:flex-row">
+                    <button
+                        type="submit"
+                        class="max-w-50 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        {{ modify ? "Update" : "Add" }} Trainee
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

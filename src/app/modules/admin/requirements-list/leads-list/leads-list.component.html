@@ -1,0 +1,184 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="img_tp_sec mr-4">
+                                <img
+                                    src="../../../../../assets/images/employees/leads.png"
+                                    alt=""
+                                />
+                            </span>
+                            <div
+                                class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                            >
+                                Lead Requirements
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <!-- *ngIf="role=='Manager'" -->
+                            <button
+                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                mat-flat-button
+                            >
+                                <a
+                                    target="_blank"
+                                    routerLink="/leads/create"
+                                    class="flex items-center"
+                                >
+                                    <mat-icon
+                                        svgIcon="add"
+                                        class="icon-size-5 text-white"
+                                    ></mat-icon>
+                                    <span class="ml-1">Add Requirement</span></a
+                                >
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-card py-2 pt-6 shadow rounded-lg bg_block tabs-setting relative"
+            >
+                <mat-tab-group
+                    class="tab-group"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="tabClick($event)"
+                >
+                    <mat-tab label="prospect">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Prospect
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.prospect ? count?.prospect : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'prospect'">
+                            <app-prospect-list
+                                [filterData]="filterData"
+                                [tabName]="tabName"
+                                (_searchValue)="searchEvent($event)"
+                                [allList]="allList"
+                                (_deleteLead)="deleteLead($event)"
+                            ></app-prospect-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="lead">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Lead
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{ count?.lead ? count?.lead : 0 }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'lead'">
+                            <app-lead-tab-list
+                                [filterDataLead]="filterDataLead"
+                                [tabName]="tabName"
+                                (_searchValue)="searchEvent($event)"
+                                [allList]="allList"
+                                (_deleteLead)="deleteLead($event)"
+                            ></app-lead-tab-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="opportunity">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Opportunity
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.opportunity
+                                            ? count?.opportunity
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'opportunity'">
+                            <app-opportunity-list
+                                [filterDataOppr]="filterDataOppr"
+                                [tabName]="tabName"
+                                (_searchValue)="searchEvent($event)"
+                                [allList]="allList"
+                                (_deleteLead)="deleteLead($event)"
+                            ></app-opportunity-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="close">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Close
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{ count?.close ? count?.close : 0 }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'close'">
+                            <app-close-list
+                                [filterDataClose]="filterDataClose"
+                                [tabName]="tabName"
+                                (_searchValue)="searchEvent($event)"
+                                [allList]="allList"
+                                (_deleteLead)="deleteLead($event)"
+                            ></app-close-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="deleted">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Deleted
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.deleted ? count?.deleted : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'deleted'">
+                            <app-deleted-list
+                                [filterDataDelete]="filterDataDelete"
+                                [tabName]="tabName"
+                                (_searchValue)="searchEvent($event)"
+                                [allList]="allList"
+                                (_deleteLead)="deleteLead($event)"
+                            ></app-deleted-list
+                        ></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,254 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="img_tp_sec mr-2">
+                                <img
+                                    src="../../../../../assets/images/employees/g-ads.png"
+                                    alt=""
+                                />
+                            </span>
+                            <div
+                                class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                            >
+                                Google Ad Requirements
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <!-- *ngIf="role=='Manager'" -->
+                            <button
+                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                mat-flat-button
+                            >
+                                <a
+                                    target="_blank"
+                                    routerLink="/google-ads/create"
+                                    class="flex items-center"
+                                >
+                                    <mat-icon
+                                        svgIcon="add"
+                                        class="icon-size-5 text-white"
+                                    ></mat-icon>
+                                    <span class="ml-1">Add Requirement</span></a
+                                >
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-card mb-5 shadow rounded-lg bg_block">
+                <div class="search p-4 flex items-center justify-between">
+                    <div class="flex items-center relative">
+                        <mat-form-field
+                            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                            [floatLabel]="'always'"
+                        >
+                            <input
+                                matInput
+                                #search
+                                placeholder="Search"
+                                [(ngModel)]="searchName"
+                                (keyup.enter)="doFilter(searchName)"
+                            />
+                        </mat-form-field>
+                        <mat-icon
+                            matPrefix
+                            class="icon-size-5 cursor-pointer absolute right-4"
+                            [svgIcon]="'heroicons_solid:search'"
+                            (click)="doFilter(searchName)"
+                        ></mat-icon>
+                    </div>
+                </div>
+                <div class="overflow-x-auto w-full">
+                    <table
+                        class="w-full bg-transparent is-hoverable"
+                        mat-table
+                        matSort
+                        [dataSource]="dataSource"
+                        [trackBy]="trackByFn"
+                        #clientsTable
+                    >
+                        <ng-container matColumnDef="position">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                S.No
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{ i + 1 }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="client">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Client
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    class="flex cursor-pointer text-xs+ capitalize"
+                                    (click)="viewSingleAd(element)"
+                                >
+                                    {{ element.clientName }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="phone">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Phone Number
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="flex cursor-pointer text-xs+">
+                                    {{
+                                        element.phoneNumber
+                                            ? element.phoneNumber
+                                            : "--"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="email">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Email
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="flex cursor-pointer text-xs+">
+                                    {{ element?.mail ? element?.mail : "--" }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="created">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Created By
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{
+                                        element?.createdBy
+                                            ? element?.createdBy
+                                            : "--"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <!-- <div *ngIf="role=='Manager'">  -->
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Actions
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <div class="flex">
+                                    <span
+                                        class="flex items-center"
+                                        (click)="edit(element)"
+                                    >
+                                        <mat-icon
+                                            svgIcon="edit"
+                                            class="icon-size-5 mr-3 text-green-600 cursor-pointer"
+                                        ></mat-icon>
+                                    </span>
+                                    <span
+                                        class="flex items-center"
+                                        (click)="delete(element._id)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5 text-red cursor-pointer"
+                                            [svgIcon]="'delete'"
+                                        ></mat-icon>
+                                    </span>
+                                </div>
+                            </td>
+                            <!-- </div> -->
+                        </ng-container>
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                                align="center"
+                                [attr.colspan]="displayedColumns.length"
+                            >
+                                No data Found.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <mat-paginator
+                    [length]="pageLength"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageNumber - 1"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    (page)="getData()"
+                >
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

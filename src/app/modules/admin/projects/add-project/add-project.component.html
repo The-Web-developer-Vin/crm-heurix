@@ -1,0 +1,909 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">
+                    {{ modify ? "Modify" : "Create" }} Project
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <!-- manager create project -->
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-5"
+                *ngIf="
+                    role == 'Manager' ||
+                    (role == 'Digital marketing Manager' && modifyData != null)
+                "
+            >
+                <!-- Name , pname -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Client Name</mat-label>
+                        <mat-select
+                            [formControlName]="'client'"
+                            placeholder="Name"
+                        >
+                            <mat-option
+                                *ngFor="let option of clientslist"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('client').hasError('required')
+                            "
+                        >
+                            Client Name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label class="text-dark">Project Name</mat-label>
+                        <input
+                            id="project_name"
+                            matInput
+                            [formControlName]="'name'"
+                        />
+                        <mat-error
+                            *ngIf="createForm.get('name').hasError('required')"
+                        >
+                            Project name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        *ngIf="role != 'Digital marketing Manager'"
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Employee Name</mat-label>
+
+                        <input
+                            id="project_name"
+                            (click)="openEmployeeList()"
+                            matInput
+                            [formControlName]="'employees'"
+                        />
+
+                        <mat-error
+                            *ngIf="
+                                createForm.get('employees').hasError('required')
+                            "
+                        >
+                            Employee Name is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        *ngIf="
+                            role == 'Digital marketing Manager' &&
+                            modifyData != null
+                        "
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Employee Name</mat-label>
+                        <mat-select
+                            [formControlName]="'employees'"
+                            placeholder="Name"
+                        >
+                            <mat-option
+                                *ngFor="let option of digitalEmployee"
+                                [value]="option._id"
+                            >
+                                {{ option.name }} {{ option?.lastName }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('employees').hasError('required')
+                            "
+                        >
+                            Employee Name is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label class="text-dark">Currency</mat-label>
+
+                        <mat-select
+                            matNativeControl
+                            required
+                            #category
+                            [formControlName]="'country'"
+                            (selectionChange)="selectedCategories($event.value)"
+                        >
+                            <mat-option
+                                *ngFor="let data of getallcoutries"
+                                value="{{ data._id }}"
+                                >{{ data.name }} -
+                                {{ data.currency }}</mat-option
+                            >
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('country').hasError('required')
+                            "
+                        >
+                            Currency is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Start Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker"
+                            [formControlName]="'start_date'"
+                            (click)="picker.open()"
+                            (dateInput)="addEvent('start', $event)"
+                            (dateChange)="addEvent('start', $event)"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('start_date')
+                                    .hasError('required')
+                            "
+                        >
+                            Starting Date is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Deadline</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker1"
+                            [formControlName]="'end_date'"
+                            (click)="picker1.open()"
+                            (dateInput)="addEvent('deadLine', $event)"
+                            (dateChange)="addEvent('deadLine', $event)"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <!--Stream Checkboxes -->
+                <div class="flex mb-3">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                    >
+                        <mat-label>Payment Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker2"
+                            [formControlName]="'paymentDate'"
+                            (click)="picker2.open()"
+                            (dateInput)="addEvent('payment', $event)"
+                            (dateChange)="addEvent('payment', $event)"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker2"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('paymentDate')
+                                    .hasError('required')
+                            "
+                        >
+                            Payment Date is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Technology</mat-label>
+                        <mat-select [formControlName]="'technology'" #time>
+                            <!-- (selectionChange)="selectedTimeline($event.value)" -->
+                            <mat-option
+                                *ngFor="let data of getTechnologylist"
+                                [value]="data._id"
+                            >
+                                {{ data.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('technology')
+                                    .hasError('required')
+                            "
+                        >
+                            Select Any of stream
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label class="text-dark">Project Url</mat-label>
+                        <input
+                            id="project_url"
+                            matInput
+                            [formControlName]="'project_url'"
+                        />
+                    </mat-form-field>
+                </div>
+                <!-- Hourly need time /amount -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <ng-container *ngIf="!modify">
+                        <mat-form-field
+                            appearance="fill"
+                            class="w-full fuse-mat-dense"
+                        >
+                            <mat-label>Department</mat-label>
+                            <mat-select
+                                [formControlName]="'department'"
+                                placeholder="Name"
+                            >
+                                <mat-option value="dev"> Dev </mat-option>
+                                <mat-option value="digital">
+                                    Digital
+                                </mat-option>
+                            </mat-select>
+                            <mat-error
+                                *ngIf="
+                                    createForm
+                                        .get('department')
+                                        .hasError('required')
+                                "
+                            >
+                                Department is required
+                            </mat-error>
+                        </mat-form-field></ng-container
+                    >
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                        *ngIf="modify"
+                        [ngClass]="modify ? '' : ''"
+                    >
+                        <mat-label>Status</mat-label>
+                        <mat-select
+                            [formControlName]="'status'"
+                            #time
+                            (selectionChange)="selectedStatus($event.value)"
+                        >
+                            <mat-option value="Completed">
+                                Completed</mat-option
+                            >
+                            <mat-option value="Stopped"> Stopped</mat-option>
+                            <mat-option value="Inprogress">
+                                Inprogress</mat-option
+                            >
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('status').hasError('required')
+                            "
+                        >
+                            Select Any of status
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                        [ngClass]="modify ? '' : ''"
+                    >
+                        <mat-label>Project Type</mat-label>
+                        <mat-select
+                            [formControlName]="'project_type'"
+                            #time
+                            (selectionChange)="selectedTimeline($event.value)"
+                        >
+                            <mat-option value="Monthly"> Monthly </mat-option>
+                            <mat-option value="Fixed"> Fixed </mat-option>
+                            <mat-option value="Hourly"> Hourly </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('project_type')
+                                    .hasError('required')
+                            "
+                        >
+                            Select Any of Timeline
+                        </mat-error>
+                    </mat-form-field>
+                    <div [ngClass]="timeLines ? '' : 'w-full'" class="w-full">
+                        <div class="flex" *ngIf="projectBudget">
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense w-full ml-5"
+                            >
+                                <mat-label class="text-dark">Budget</mat-label>
+                                <input
+                                    id="amount"
+                                    matInput
+                                    maxlength="9"
+                                    (keypress)="numberOnly($event)"
+                                    [formControlName]="'project_budget'"
+                                />
+                                <mat-error
+                                    *ngIf="
+                                        createForm
+                                            .get('project_budget')
+                                            .hasError('required')
+                                    "
+                                >
+                                    Amount is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex" *ngIf="timeLines == 'Fixed'"></div>
+
+                        <div class="flex" *ngIf="hourly">
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense ml-5"
+                            >
+                                <mat-label class="text-dark">Hours</mat-label>
+                                <input
+                                    id="amount"
+                                    matInput
+                                    maxlength="3"
+                                    (keypress)="numberOnly($event)"
+                                    [formControlName]="'hours'"
+                                />
+                                <mat-error
+                                    *ngIf="
+                                        createForm
+                                            .get('hours')
+                                            .hasError('required')
+                                    "
+                                >
+                                    Amount is required
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense ml-5"
+                            >
+                                <mat-label class="text-dark"
+                                    >Per Hour</mat-label
+                                >
+                                <input
+                                    id="amount"
+                                    maxlength="9"
+                                    (keypress)="numberOnly($event)"
+                                    matInput
+                                    [formControlName]="'project_budget'"
+                                />
+                                <mat-error
+                                    *ngIf="
+                                        createForm
+                                            .get('project_budget')
+                                            .hasError('required')
+                                    "
+                                >
+                                    Amount is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row gt-md:flex-row" *ngIf="showStatus">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                    >
+                        <mat-label>Stopped Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="pickerstop"
+                            [formControlName]="'stopped_date'"
+                            (click)="pickerstop.open()"
+                            (dateInput)="addEvent('stopped', $event)"
+                            (dateChange)="addEvent('stopped', $event)"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="pickerstop"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #pickerstop></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Reason</mat-label>
+                        <mat-select [formControlName]="'stoppedReason'">
+                            <mat-option
+                                [value]="e._id"
+                                *ngFor="let e of reasons"
+                            >
+                                {{ e.name }}</mat-option
+                            >
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('stoppedReason')
+                                    .hasError('required')
+                            "
+                        >
+                            Stopped Reason is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="" *ngIf="completedStatus">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-60"
+                    >
+                        <mat-label>Completed Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="pickerComp"
+                            [formControlName]="'completed_date'"
+                            (click)="pickerComp.open()"
+                            (dateInput)="addEvent('completed', $event)"
+                            (dateChange)="addEvent('completed', $event)"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="pickerComp"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #pickerComp></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-md:flex-row mt-3">
+                    <button
+                        type="submit"
+                        class="max-w-50 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        {{ modify ? "Update" : "Create" }} Project
+                    </button>
+                </div>
+            </form>
+
+            <!-- digtal manager create project -->
+            <form
+                [formGroup]="createDigitalForm"
+                class="flex flex-col create-form px-5 py-5"
+                *ngIf="
+                    role == 'Digital marketing Manager' && modifyData == null
+                "
+            >
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Client Name</mat-label>
+                        <mat-select
+                            [formControlName]="'client'"
+                            placeholder="Name"
+                        >
+                            <mat-option
+                                *ngFor="let option of clientslist"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createDigitalForm
+                                    .get('client')
+                                    .hasError('required')
+                            "
+                        >
+                        Client Name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label class="text-dark">Currency</mat-label>
+
+                        <mat-select
+                            matNativeControl
+                            required
+                            #category
+                            [formControlName]="'country'"
+                            (selectionChange)="selectedCategories($event.value)"
+                        >
+                            <mat-option
+                                *ngFor="let data of getallcoutries"
+                                value="{{ data._id }}"
+                                >{{ data.name }} -
+                                {{ data.currency }}</mat-option
+                            >
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createDigitalForm
+                                    .get('country')
+                                    .hasError('required')
+                            "
+                        >
+                            Currency is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label>Payment Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker2"
+                            [formControlName]="'paymentDate'"
+                            (click)="picker2.open()"
+                            (dateInput)="addEvent('payment', $event)"
+                            (dateChange)="addEvent('payment', $event)"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker2"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                createDigitalForm
+                                    .get('paymentDate')
+                                    .hasError('required')
+                            "
+                        >
+                            Payment Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <form [formGroup]="detailsForm">
+                    <div formArrayName="projectDetails">
+                        <div class="mt-3">
+                            <button
+                                class="text-sm text-primary_l flex items-center"
+                                (click)="addProject()"
+                            >
+                                <mat-icon
+                                    class="icon-size-2 text-primary_l"
+                                    svgIcon="heroicons_outline:plus-circle"
+                                ></mat-icon>
+                                Add Project
+                            </button>
+                        </div>
+                        <div
+                            class="mt-4 border rounded-lg pt-5 pl-5 pr-5 pb-2"
+                            *ngFor="
+                                let user of detailsForm.get('projectDetails')[
+                                    'controls'
+                                ];
+                                let i = index
+                            "
+                        >
+                            <div [formGroupName]="i">
+                                <div class="flex flex-row gt-md:flex-row">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <mat-label class="text-dark"
+                                            >Project Name</mat-label
+                                        >
+                                        <input
+                                            id="project_name"
+                                            matInput
+                                            [formControlName]="'name'"
+                                        />
+                                        <mat-error
+                                            *ngIf="
+                                                createForm
+                                                    .get('name')
+                                                    .hasError('required')
+                                            "
+                                        >
+                                            Project name is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full ml-5"
+                                    >
+                                        <mat-label class="text-dark"
+                                            >Project Url</mat-label
+                                        >
+                                        <input
+                                            id="project_url"
+                                            matInput
+                                            [formControlName]="'project_url'"
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field
+                                        appearance="fill"
+                                        class="flex-auto fuse-mat-dense w-full ml-5"
+                                    >
+                                        <mat-label>Technology</mat-label>
+                                        <mat-select
+                                            [formControlName]="'technology'"
+                                            #time
+                                        >
+                                            <mat-option
+                                                *ngFor="
+                                                    let data of getTechnologylist
+                                                "
+                                                [value]="data._id"
+                                            >
+                                                {{ data.name }}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="
+                                                createForm
+                                                    .get('technology')
+                                                    .hasError('required')
+                                            "
+                                        >
+                                            Select Any of stream
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field
+                                        appearance="fill"
+                                        class="w-full fuse-mat-dense ml-5"
+                                    >
+                                        <mat-label>Employee Name</mat-label>
+                                        <mat-select
+                                            [formControlName]="'employees'"
+                                            placeholder="Name"
+                                        >
+                                            <mat-option
+                                                *ngFor="
+                                                    let option of digitalEmployee
+                                                "
+                                                [value]="option._id"
+                                            >
+                                                {{ option.name }}
+                                                {{ option?.lastName }}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="
+                                                createForm
+                                                    .get('employees')
+                                                    .hasError('required')
+                                            "
+                                        >
+                                            Name is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex flex-row gt-md:flex-row">
+                                    <mat-form-field
+                                        appearance="fill"
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <mat-label>Start Date</mat-label>
+                                        <input
+                                            matInput
+                                            [matDatepicker]="picker"
+                                            [formControlName]="'start_date'"
+                                            (click)="picker.open()"
+                                            (dateInput)="
+                                                addEvent('start', $event)
+                                            "
+                                            (dateChange)="
+                                                addEvent('start', $event)
+                                            "
+                                        />
+                                        <mat-datepicker-toggle
+                                            matSuffix
+                                            [for]="picker"
+                                        ></mat-datepicker-toggle>
+                                        <mat-datepicker
+                                            #picker
+                                        ></mat-datepicker>
+                                        <mat-error
+                                            *ngIf="
+                                                createForm
+                                                    .get('start_date')
+                                                    .hasError('required')
+                                            "
+                                        >
+                                            Starting Date is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field
+                                        appearance="fill"
+                                        class="flex-auto fuse-mat-dense w-full ml-5"
+                                        [ngClass]="modify ? '' : ''"
+                                    >
+                                        <mat-label>Project Type</mat-label>
+                                        <mat-select
+                                            [formControlName]="'project_type'"
+                                            #time
+                                            (selectionChange)="
+                                                selectedTimeline($event.value)
+                                            "
+                                        >
+                                            <mat-option value="Monthly">
+                                                Monthly
+                                            </mat-option>
+                                            <mat-option value="Fixed">
+                                                Fixed
+                                            </mat-option>
+                                            <mat-option value="Hourly">
+                                                Hourly
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="
+                                                createForm
+                                                    .get('project_type')
+                                                    .hasError('required')
+                                            "
+                                        >
+                                            Select Any of Timeline
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <div
+                                        [ngClass]="timeLines ? '' : 'w-full'"
+                                        class="w-full"
+                                    >
+                                        <div class="flex" *ngIf="projectBudget">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-5"
+                                            >
+                                                <mat-label class="text-dark"
+                                                    >Budget</mat-label
+                                                >
+                                                <input
+                                                    id="amount"
+                                                    matInput
+                                                    maxlength="9"
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    [formControlName]="
+                                                        'project_budget'
+                                                    "
+                                                />
+                                                <mat-error
+                                                    *ngIf="
+                                                        createForm
+                                                            .get(
+                                                                'project_budget'
+                                                            )
+                                                            .hasError(
+                                                                'required'
+                                                            )
+                                                    "
+                                                >
+                                                    Amount is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div
+                                            class="flex"
+                                            *ngIf="timeLines == 'Fixed'"
+                                        ></div>
+
+                                        <div class="flex" *ngIf="hourly">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense ml-5"
+                                            >
+                                                <mat-label class="text-dark"
+                                                    >Hours</mat-label
+                                                >
+                                                <input
+                                                    id="amount"
+                                                    matInput
+                                                    maxlength="3"
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    [formControlName]="'hours'"
+                                                />
+                                                <mat-error
+                                                    *ngIf="
+                                                        createForm
+                                                            .get('hours')
+                                                            .hasError(
+                                                                'required'
+                                                            )
+                                                    "
+                                                >
+                                                    Amount is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense ml-5"
+                                            >
+                                                <mat-label class="text-dark"
+                                                    >Per Hour</mat-label
+                                                >
+                                                <input
+                                                    id="amount"
+                                                    maxlength="9"
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    matInput
+                                                    [formControlName]="
+                                                        'project_budget'
+                                                    "
+                                                />
+                                                <mat-error
+                                                    *ngIf="
+                                                        createForm
+                                                            .get(
+                                                                'project_budget'
+                                                            )
+                                                            .hasError(
+                                                                'required'
+                                                            )
+                                                    "
+                                                >
+                                                    Amount is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <button
+                                        class="ml-3"
+                                        (click)="removeProject(i)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-2 text-red"
+                                            svgIcon="heroicons_outline:minus-circle"
+                                        ></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="flex flex-col gt-md:flex-row mt-3">
+                    <button
+                        type="submit"
+                        class="max-w-50 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="saveDigital()"
+                    >
+                        {{ modify ? "Update" : "Create" }} Project
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

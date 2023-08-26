@@ -1,0 +1,244 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">
+                    {{ modify ? "Modify" : "Add" }} Client
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-5"
+            >
+                <!-- Name , country -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label class="text-dark">Client name</mat-label>
+                        <input id="name" matInput [formControlName]="'name'" />
+                        <mat-error
+                            *ngIf="createForm.get('name').hasError('required')"
+                        >
+                            Client name is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full ml-4 fuse-mat-dense"
+                    >
+                        <mat-label>Country</mat-label>
+                        <mat-select
+                            [formControlName]="'country'"
+                            placeholder="search"
+                        >
+                            <mat-option
+                                *ngFor="let option of getallcoutries"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('country').hasError('required')
+                            "
+                        >
+                            Country is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!--  hired  in paid-->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Hired In</mat-label>
+                        <mat-select
+                            [formControlName]="'hiredIn'"
+                            placeholder="search"
+                        >
+                            <mat-option
+                                *ngFor="let option of hiredin"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('hiredIn').hasError('required')
+                            "
+                        >
+                            HiredIn is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-4"
+                    >
+                        <mat-label>Paid Through</mat-label>
+                        <mat-select
+                            [formControlName]="'paidThrough'"
+                            placeholder="search"
+                        >
+                            <mat-option
+                                *ngFor="let option of getallpaids"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('paidThrough')
+                                    .hasError('required')
+                            "
+                        >
+                            Paid is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!--   phone/ email-->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="flex-auto fuse-mat-dense">
+                        <mat-label class="text-dark">Phone Number</mat-label>
+                        <input
+                            id="phone"
+                            matInput
+                            [formControlName]="'phone_number'"
+                            (keypress)="numberOnly($event)"
+                        />
+                        <!-- <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('phone_number')
+                                    .hasError('required')
+                            "
+                        >
+                            Phone Number is required
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto fuse-mat-dense ml-4">
+                        <mat-label class="text-dark">Email</mat-label>
+                        <input
+                            id="email"
+                            matInput
+                            [formControlName]="'email'"
+                        />
+                        <!-- <mat-error
+                            *ngIf="createForm.get('email').hasError('required')"
+                        >
+                            Email is required
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+
+                <!-- checkboxes -dev/digital -->
+
+                <div class="flex flex-row gt-md:flex-row mb-3">
+                    <div style="width: 100%">
+                        <mat-label>Department</mat-label>
+                        <section class="w-full d-flex mt-3">
+                            <mat-checkbox
+                                [formControlName]="'develepment'"
+                                class="mr-3"
+                                >Dev</mat-checkbox
+                            >
+                            <mat-checkbox
+                                [formControlName]="'digital_marketing'"
+                                class=""
+                                >Digital</mat-checkbox
+                            >
+                        </section>
+                    </div>
+
+                    <!-- 
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Department</mat-label>
+                    
+                        
+                        <mat-select multiple 
+                        [formControlName]="'department'"
+                        (selectionChange)="seleteddepartment($event.value)">
+                            <mat-option value="dev" >Dev</mat-option>
+                            <mat-option value="digital">Digital</mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('department')
+                                    .hasError('required')
+                            "
+                        >
+                            Department is required
+                        </mat-error>
+                    </mat-form-field> -->
+
+                    <mat-form-field
+                        *ngIf="modifyData"
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-4"
+                    >
+                        <mat-label>Status</mat-label>
+                        <mat-select
+                            [formControlName]="'status'"
+                            placeholder="search"
+                        >
+                            <mat-option value="Active"> Active </mat-option>
+                            <mat-option value="InActive"> InActive </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('status').hasError('required')
+                            "
+                        >
+                            Paid is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field appearance="fill" class="ml-5 w-full">
+                        <mat-label>Passsword</mat-label>
+                        <input
+                        id="amount"
+                        matInput
+                        [formControlName]="'password'"
+                    />
+                  
+                    </mat-form-field> -->
+                </div>
+
+                <div class="flex flex-col gt-md:flex-row mt-3">
+                    <button
+                        type="submit"
+                        class="max-w-50 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        {{ modify ? "Update" : "Add" }} Client
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

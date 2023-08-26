@@ -1,0 +1,198 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <mat-tab-group
+                class="tab-group main_tab"
+                [animationDuration]="'0'"
+                (selectedTabChange)="tabClickMain($event)"
+            >
+                <!-- monthly tab -->
+                <mat-tab label="projects">
+                    <ng-template mat-tab-label>
+                        <button
+                            class="btn h-8 rounded-full text-xs+ font-medium hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 focus:text-slate-800 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 dark:hover:text-navy-100 dark:focus:text-navy-100"
+                        >
+                            Projects
+                        </button>
+                    </ng-template>
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+                    >
+                        <div
+                            class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                        >
+                            <div
+                                class="flex items-center justify-between width-7"
+                            >
+                                <div
+                                    class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                                >
+                                    Project Reports
+                                </div>
+                                <div
+                                    class="flex items-center justify-between report-form"
+                                >
+                                    <div class="flex">
+                                        <!-- <mat-form-field
+                                            class="w-full fuse-mat-dense fuse-mat-rounded"
+                                        >
+                                            <mat-select
+                                                [(ngModel)]="currencyName"
+                                                (selectionChange)="
+                                                    selectedCurrency(
+                                                        $event.value
+                                                    )
+                                                "
+                                            >
+                                                <mat-option
+                                                    *ngFor="
+                                                        let data of getallcoutries
+                                                    "
+                                                    value="{{ data._id._id }}"
+                                                    >{{ data._id.name }} -
+                                                    {{
+                                                        data._id.currency
+                                                    }}</mat-option
+                                                >
+                                            </mat-select>
+                                        </mat-form-field> -->
+                                        <mat-form-field
+                                            appearance="fill"
+                                            class="w-full fuse-mat-dense fuse-mat-rounded ml-3"
+                                        >
+                                            <mat-select
+                                                placeholder="Month"
+                                                [(ngModel)]="monthnumber"
+                                                (selectionChange)="
+                                                    monthValue($event)
+                                                "
+                                            >
+                                                <mat-option
+                                                    *ngFor="
+                                                        let option of months
+                                                    "
+                                                    [value]="option.val"
+                                                >
+                                                    {{ option.name }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field
+                                            appearance="fill"
+                                            class="w-full fuse-mat-dense ml-3 fuse-mat-rounded"
+                                        >
+                                            <mat-select
+                                                placeholder="Year"
+                                                [(ngModel)]="yearNumber"
+                                                (selectionChange)="
+                                                    selectedYear($event.value)
+                                                "
+                                            >
+                                                <mat-option
+                                                    *ngFor="let option of years"
+                                                    [value]="option"
+                                                >
+                                                    {{ option }}
+                                                </mat-option>
+                                            </mat-select></mat-form-field
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-project-reports
+                        [yearNumber]="yearNumber"
+                        [monthnumber]="monthnumber"
+                        [currencyName]="currencyName"
+                        [filterData]="filterData"
+                        (_tabClickName)="tabClickName($event)"
+                    ></app-project-reports>
+                </mat-tab>
+                <mat-tab label="clients">
+                    <ng-template mat-tab-label>
+                        <button
+                            class="btn h-8 rounded-full text-xs+ font-medium hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 focus:text-slate-800 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 dark:hover:text-navy-100 dark:focus:text-navy-100"
+                        >
+                            Clients
+                        </button>
+                    </ng-template>
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+                    >
+                        <div
+                            class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                        >
+                            <div
+                                class="flex items-center justify-between width-6"
+                            >
+                                <div
+                                    class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                                >
+                                    Client Reports
+                                </div>
+                                <div
+                                    class="flex items-center justify-between report-form"
+                                >
+                                    <div class="flex">
+                                        <mat-form-field
+                                            class="w-full fuse-mat-dense fuse-mat-rounded"
+                                        >
+                                            <mat-select
+                                                [(ngModel)]="currencyName"
+                                                (selectionChange)="
+                                                    selectedCurrency(
+                                                        $event.value
+                                                    )
+                                                "
+                                            >
+                                                <mat-option
+                                                    *ngFor="
+                                                        let data of getallcoutries
+                                                    "
+                                                    value="{{ data._id._id }}"
+                                                    >{{ data._id.name }} -
+                                                    {{
+                                                        data._id.currency
+                                                    }}</mat-option
+                                                >
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field
+                                            appearance="fill"
+                                            class="w-full fuse-mat-dense ml-3 fuse-mat-rounded"
+                                        >
+                                            <mat-select
+                                                placeholder="Year"
+                                                [(ngModel)]="yearNumber"
+                                                (selectionChange)="
+                                                    selectedYear($event.value)
+                                                "
+                                            >
+                                                <mat-option
+                                                    *ngFor="let option of years"
+                                                    [value]="option"
+                                                >
+                                                    {{ option }}
+                                                </mat-option>
+                                            </mat-select></mat-form-field
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tabNameMain == 'clients'">
+                        <app-client-reports
+                            [currencyName]="currencyName"
+                            [yearNumber]="yearNumber"
+                            [filterDataClients]="filterDataClients"
+                            (_tabClickName)="tabClickName($event)"
+                        ></app-client-reports
+                    ></ng-container>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

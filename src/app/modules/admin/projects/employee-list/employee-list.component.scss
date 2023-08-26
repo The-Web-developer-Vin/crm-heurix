@@ -1,0 +1,27 @@
+.list-table {
+    table {
+        border: 1px solid #e2e8f0;
+        td {
+            color: #1e293b;
+        }
+        thead {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th,
+        td {
+            padding: 10px 20px;
+            text-align: left;
+            border-right: 1px solid #e2e8f0;
+        }
+        tr {
+            border-bottom: 1px solid #e2e8f0;
+            &:last-child {
+                border-bottom: 0px !important;
+            }
+        }
+    }
+}
+.backen-list{
+    display: block;
+
+}

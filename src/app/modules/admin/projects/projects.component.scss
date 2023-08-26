@@ -1,0 +1,31 @@
+.bg-light {
+    background-color: #ddd !important;
+}
+::ng-deep body.light .mat-snack-bar-container,
+body .light .mat-snack-bar-container {
+    background: rgb(34 197 94);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container.alert-red {
+    background: rgb(239 68 68);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container .mat-button {
+    color: #fff;
+}
+
+tr.mat-row.cdk-row.last-row {
+    display: none;
+}
+tr.mat-row.cdk-row.last-row.ng-star-inserted:last-child {
+    display: block !important;
+}
+.w-50 {
+    width: 50% !important;
+}
+
+.all_btn {
+    // border: 1px solid red;
+    height: 40px;
+    color: #1e293b !important;
+}

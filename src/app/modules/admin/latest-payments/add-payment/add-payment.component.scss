@@ -1,0 +1,81 @@
+.rounded-2 {
+    border-radius: 6px !important;
+}
+
+.viewtable {
+    td {
+        text-align: center;
+    }
+}
+table {
+    box-shadow: none !important;
+    tr.mat-header-row {
+        height: 40px;
+    }
+    td {
+        font-size: 13px;
+    }
+}
+
+::ng-deep .views ::ng-deep .mat-dialog-container {
+    margin: 0px;
+    padding: 0px;
+    tr {
+        height: 38px !important;
+    }
+    th {
+        background-color: #f1f5f9;
+    }
+}
+::ng-deep body.light .mat-snack-bar-container,
+body .light .mat-snack-bar-container {
+    background: rgb(34 197 94);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container .mat-button {
+    color: #fff;
+}
+
+::ng-deep body.light .mat-snack-bar-container.alert-red {
+    background: rgb(239 68 68);
+    color: #fff !important;
+}
+.add_payment_table {
+    table {
+        td {
+            ::ng-deep
+                .mat-form-field.mat-form-field-appearance-fill
+                .mat-form-field-wrapper {
+                margin-top: 5px !important;
+                margin-bottom: 5px !important;
+                .mat-form-field-flex {
+                    min-height: 30px !important;
+                    padding: 0px 10px;
+                    input {
+                        padding: 5px 0;
+                    }
+                }
+            }
+        }
+    }
+    .table_1 {
+        width: 49.8% !important;
+        float: left;
+    }
+    .table_2 {
+        width: 49.8% !important;
+    }
+}
+.top_fields
+    ::ng-deep
+    .mat-form-field.mat-form-field-appearance-fill.fuse-mat-dense
+    .mat-form-field-wrapper
+    .mat-form-field-flex {
+    min-height: 45px;
+}
+.amonut-field {
+    width: 75px !important;
+}
+.inr-field {
+    width: 80px !important;
+}

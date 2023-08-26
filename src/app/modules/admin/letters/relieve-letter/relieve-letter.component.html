@@ -1,0 +1,202 @@
+<div class="flex flex-col flex-auto w-full p-6">
+    <div class="w-full max-w-screen-md mx-auto brd_cls shadow">
+        <div>
+            <div class="flex justify-end p-6 noprint">
+                <button
+                    (click)="printPage()"
+                    class="mr-3"
+                    mat-raised-button
+                    matTooltip="Print"
+                    aria-label="Button that displays a tooltip when focused or hovered over"
+                >
+                    <mat-icon
+                        svgIcon="local_printshop"
+                        class="text-primary_l icon-size-6"
+                    ></mat-icon>
+                </button>
+                <button
+                    (click)="downloadAsPDFRelieve()"
+                    mat-raised-button
+                    matTooltip="Download as PDF"
+                    aria-label="Button that displays a tooltip when focused or hovered over"
+                >
+                    <mat-icon
+                        svgIcon="sim_card_download"
+                        class="text-primary_l icon-size-6"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <div
+                class="inset-0 min-w-0 text-center overflow-auto print:overflow-visible pdf bg-white"
+                cdkScrollable
+            >
+                <div class="text-left print:p-0">
+                    <div class="pdf_table" id="section-to-print">
+                        <div
+                            class="flex justify-between border-b p-5 px-10 items-center"
+                        >
+                            <div>
+                                <img
+                                    src="../../../../../assets/images/logo/logo2.png"
+                                    style="width: 180px"
+                                />
+                            </div>
+                            <div class="font-semibold flex">
+                                <mat-icon
+                                    svgIcon="heroicons_outline:location-marker"
+                                    class="mr-3 text-primary"
+                                ></mat-icon>
+                                H.No : 6-259, Thimmapuram,<br />
+                                Behind Saibaba Temple, Kakinada-533005.
+                            </div>
+
+                            <div class="w-34 font-semibold flex items-center">
+                                <mat-icon
+                                    svgIcon="heroicons_outline:phone"
+                                    class="mr-3 text-primary"
+                                ></mat-icon>
+                                (+91) 9032722888
+                            </div>
+                        </div>
+                        <div class="p-11 mt-11 relative">
+                            <div
+                                class="text-center pt-11 font-bold text-3xl mb-10 uppercase"
+                            >
+                                Relieving Letter
+                            </div>
+                            <div class="flex items-start justify-between">
+                                <div
+                                    class="grid grid-cols-2 gap-x-4 gap-y-1"
+                                ></div>
+                                <div
+                                    class="grid auto-cols-max grid-flow-col text-right text-md"
+                                >
+                                    <div class="middle_cnt">
+                                        <div
+                                            class="font-medium flex justify-end"
+                                        >
+                                            Date:
+                                            <span class="font-bold"
+                                                >{{
+                                                    currentDate
+                                                        | date : "dd MMM yyyy"
+                                                }}
+                                            </span>
+                                        </div>
+                                        <div class="font-bold">Kakinada</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="middle_cnt">
+                                To
+                                <div class="text-xl font-bold capitalize mb-0">
+                                    <ng-container
+                                        >{{
+                                            employeeData?.nameTitle
+                                        }}.</ng-container
+                                    >
+                                    <ng-container
+                                        *ngIf="employeeData?.lastName"
+                                        >{{
+                                            employeeData?.lastName
+                                        }}</ng-container
+                                    >
+                                    {{ employeeData?.name }}
+                                </div>
+                                <div
+                                    class="mb-5 capitalize"
+                                    [innerHtml]="employeeData?.address"
+                                >
+                                    <!-- {{ employeeData?.address }} -->
+                                </div>
+                            </div>
+                            <div class="middle_cnt">
+                                <div class="font-medium">
+                                    Sub:
+                                    <span class="font-bold"
+                                        >Relieving Letter
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mt-10 middle_cnt">
+                                <div class="font-medium">
+                                    Dear
+                                    <span class="font-bold capitalize">
+                                        <ng-container
+                                            *ngIf="employeeData?.lastName"
+                                            >{{
+                                                employeeData?.lastName
+                                            }}</ng-container
+                                        >
+                                        {{ employeeData?.name }},</span
+                                    >
+                                </div>
+                                <div class="flex flex-col items-start mt-3">
+                                    <div class="mb-5">
+                                        This is in reference to your resignation
+                                        letter dated
+                                        <span class="font-bold"
+                                            >{{
+                                                employeeData?.resignationDate
+                                                    | date : "MMM dd, YYYY"
+                                            }}.</span
+                                        >
+                                        This is to inform you that your
+                                        resignation has been accepted and you
+                                        are relieved from the services of the
+                                        Company at the close of working hours on
+                                        <span class="font-bold capitalize"
+                                            >{{
+                                                employeeData?.relievingDate
+                                                    | date : "MMM dd, YYYY"
+                                            }}.</span
+                                        >
+                                    </div>
+                                    <div class="mb-3">
+                                        We also certify that your full and final
+                                        settlement of the account has been
+                                        cleared with the organization.
+                                    </div>
+
+                                    <div class="mb-0">
+                                        We wish you all success in your future
+                                        endeavors.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="p-11 mt-11 middle_cnt">
+                                <div class="font-medium mb-5">
+                                    <span class="">Best Wishes,</span>
+                                </div>
+
+                                <div class="font-bold capitalize">
+                                    <p class="mb-2">Manager -HR,</p>
+                                    <div class="text-left">
+                                        <span class="font-bold uppercase"
+                                            >Vinutnaa IT Services PVT.,
+                                            Ltd.</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer middle_cnt">
+                            <div
+                                class="vin-primary px-10 pt-4 pb-4 overflow-hidden font-semibold text-white flex justify-between items-center"
+                            >
+                                <!-- <div class="flex m-0 p-0">Phone: (+91) 9032722888</div> -->
+                                <div class="m-0 p-0">hr@vinutnaa.com</div>
+                                <div class="m-0 p-0">www.vinutnaa.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

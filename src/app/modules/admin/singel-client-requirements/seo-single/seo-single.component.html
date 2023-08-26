@@ -1,0 +1,507 @@
+<div class="flex flex-col flex-auto min-w-0 requirements">
+    <!-- Header -->
+    <div class="flex flex-wrap width_set max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="flex flex-col col-span-2">
+                <div class="flex items-center justify-end mb-5 mt-3">
+                    <button
+                        class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn text-white"
+                        mat-flat-button
+                        (click)="downloadAsPDF()"
+                    >
+                        <mat-icon
+                            svgIcon="mat_solid:picture_as_pdf"
+                            class="icon-size-5 mr-2 text-white"
+                        ></mat-icon>
+                        Download
+                    </button>
+                </div>
+                <div class="bg-card mb-5 shadow rounded-lg py-1">
+                    <div class="flex flex-col create-form">
+                        <div class="px-5 pt-5">
+                            <div
+                                class="mb-3 text-md font-bold client_bg text-white px-3 py-2"
+                            >
+                                Client Information :
+                            </div>
+                            <div
+                                class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5 mb-2"
+                                    >
+                                        <div class="label_ex">Client Name</div>
+                                        <div class="">
+                                            <p
+                                                class="font-medium mb-0 capitalize flex"
+                                            >
+                                                <span class="mr-2">:</span>
+                                                {{ details?.clientName }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                    >
+                                        <div class="label_ex">Phone Number</div>
+                                        <div class="">
+                                            <p class="font-medium mb-0">
+                                                <span class="mr-2">:</span>
+                                                {{
+                                                    details?.phoneNumber
+                                                        ? details?.phoneNumber
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-2"
+                                    >
+                                        <div class="label_ex">Email Id</div>
+                                        <div class="md:col-span-3">
+                                            <p
+                                                class="font-medium mb-0 word-wrap flex"
+                                            >
+                                                <span class="mr-2">:</span>
+                                                {{
+                                                    details?.mail
+                                                        ? details?.mail
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                    >
+                                        <div class="label_ex">Address</div>
+                                        <div class="md:col-span-3">
+                                            <p class="font-medium mb-0 flex">
+                                                <span class="mr-2">:</span>
+                                                {{
+                                                    details?.address
+                                                        ? details?.address
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="requirementDetails" class="px-5 pt-5">
+                            <div
+                                class="mb-2 text-md font-bold wesite_bg text-white px-3 pt-0 pb-3"
+                            >
+                                Website Details :
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">1.</span>What is your
+                                    website URL?
+                                </div>
+                                <div class="font-medium mb-1 word-wrap flex">
+                                    <span class="mr-2">:</span>
+                                    <a
+                                        href="{{ details?.websiteUrl }}"
+                                        target="_blank"
+                                    >
+                                        {{ details?.websiteUrl }}</a
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">2.</span>Please mention
+                                    if any Targeted Audience or Targeted
+                                    location of your business
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        {{ details?.targeted }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">3.</span
+                                    ><span
+                                        >Please list out your competitors</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        <ng-container
+                                            *ngFor="
+                                                let e of details?.competitorsList
+                                            "
+                                        >
+                                            <p class="mb-0 word-wrap">
+                                                <a
+                                                    href="{{ e?.competitors }}"
+                                                    target="_blank"
+                                                >
+                                                    {{ e.competitors }}</a
+                                                >
+                                            </p>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.competitorsList
+                                                    ?.length == 0
+                                            "
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">4.</span
+                                    ><span
+                                        >Please list the targeted keywords, if
+                                        have any</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        <ng-container
+                                            *ngFor="
+                                                let e of details?.targetedKeywords
+                                            "
+                                        >
+                                            <p class="mb-0 word-wrap">
+                                                {{ e.keywords }}
+                                            </p>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.targetedKeywords
+                                                    ?.length == 0
+                                            "
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">5.</span
+                                    ><span>Project Goals/Objective</span>
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        <ng-container
+                                            *ngFor="
+                                                let e of details?.projectGoals
+                                            "
+                                        >
+                                            <p class="mb-0 word-wrap">
+                                                {{ e.projectGoals }}
+                                            </p>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.projectGoals?.length ==
+                                                0
+                                            "
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">6.</span>Please let me
+                                    know if there are any specifications that I
+                                    need to focus while optimizing
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        {{ details?.specifications }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">7.</span>Project duration
+                                    (Ex:- 30 days)
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        {{ details?.projectDuration }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">8.</span
+                                    ><span
+                                        >Please Send Access
+                                        <b>suryainsights@gmail.com</b>
+                                        for Google Analytics Access and Search
+                                        Console Access, If there is no account
+                                        created we will create one</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div>
+                                        <ng-container
+                                            *ngFor="let e of details?.access"
+                                        >
+                                            <p class="mb-0">{{ e }}</p>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="details?.access?.length == 0"
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-5">
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-3"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">9.</span
+                                    ><span
+                                        >Please Provide Admin Logins, Cpanel
+                                        Logins, FTP Access</span
+                                    >
+                                </div>
+                                <div class="cmn_table mx-5">
+                                    <div
+                                        class="trs items-center grid grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-5"
+                                    >
+                                        <div class="label_ex font-semibold">
+                                            Server Logins
+                                        </div>
+
+                                        <ng-container
+                                            *ngIf="
+                                                details?.serverLink ||
+                                                details?.serverUserName ||
+                                                details?.serverPassword
+                                            "
+                                        >
+                                            <div class="md:col-span-2">
+                                                <p class="label_ex mb-0">
+                                                    Server Url :
+                                                </p>
+                                                <p
+                                                    class="font-medium word-wrap mb-0"
+                                                >
+                                                    <a
+                                                        href="{{
+                                                            details?.serverLink
+                                                        }}"
+                                                        target="_blank"
+                                                    >
+                                                        {{
+                                                            details?.serverLink
+                                                                ? details?.serverLink
+                                                                : "--"
+                                                        }}</a
+                                                    >
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="label_ex mb-0">
+                                                    User Name :
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.serverUserName
+                                                            ? details?.serverUserName
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="label_ex mb-0">
+                                                    Password :
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.serverPassword
+                                                            ? details?.serverPassword
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div></ng-container
+                                        >
+                                        <ng-container
+                                            *ngIf="
+                                                !details?.serverLink ||
+                                                !details?.serverUserName ||
+                                                !details?.serverPassword
+                                            "
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                    <div
+                                        class="trs items-center grid grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-5"
+                                    >
+                                        <div class="label_ex font-semibold">
+                                            FTP Logins
+                                        </div>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.ftpIP ||
+                                                details?.ftpUserName ||
+                                                details?.ftpPassword
+                                            "
+                                        >
+                                            <div class="md:col-span-2">
+                                                <p class="label_ex mb-0">
+                                                    FTP IP :
+                                                </p>
+                                                <p
+                                                    class="font-medium word-wrap mb-0"
+                                                >
+                                                    {{
+                                                        details?.ftpIP
+                                                            ? details?.ftpIP
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="label_ex mb-0">
+                                                    User Name :
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.ftpUserName
+                                                            ? details?.ftpUserName
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="label_ex mb-0">
+                                                    Password :
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.ftpPassword
+                                                            ? details?.ftpPassword
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div></ng-container
+                                        >
+                                        <ng-container
+                                            *ngIf="
+                                                !details?.ftpIP ||
+                                                !details?.ftpUserName ||
+                                                !details?.ftpPassword
+                                            "
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                    <div
+                                        class="trs items-center cmn_brd grid grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-5"
+                                    >
+                                        <div class="label_ex font-semibold">
+                                            cPanel Logins
+                                        </div>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.cPanelLink ||
+                                                details?.cPanelUserName ||
+                                                details?.cPanelPassword
+                                            "
+                                        >
+                                            <div class="md:col-span-2">
+                                                <p class="label_ex mb-0">
+                                                    cPanel Url :
+                                                </p>
+                                                <p
+                                                    class="font-medium word-wrap mb-0"
+                                                >
+                                                    <a
+                                                        href="{{
+                                                            details?.cPanelLink
+                                                        }}"
+                                                        target="_blank"
+                                                    >
+                                                        {{
+                                                            details?.cPanelLink
+                                                                ? details?.cPanelLink
+                                                                : "--"
+                                                        }}</a
+                                                    >
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="label_ex mb-0">
+                                                    User Name :
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.cPanelUserName
+                                                            ? details?.cPanelUserName
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="label_ex mb-0">
+                                                    Password :
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.cPanelPassword
+                                                            ? details?.cPanelPassword
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div></ng-container
+                                        >
+                                        <ng-container
+                                            *ngIf="
+                                                !details?.cPanelLink ||
+                                                !details?.cPanelUserName ||
+                                                !details?.cPanelPassword
+                                            "
+                                            >--</ng-container
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

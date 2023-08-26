@@ -1,0 +1,309 @@
+<div class="view_payment">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-lg font-semibold text-white">View Budget</div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon svgIcon="close" class="text-white"></mat-icon>
+                </button>
+            </div>
+            <!-- class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 mb-3" -->
+            <div class="milestones px-5 pt-6">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 mb-3"
+                >
+                    <div class="col">
+                        <div class="text-md font-medium">Project Name :</div>
+                        <div>
+                            <span
+                                class="flex capitalize cursor-pointer font-medium text-slate-700 dark:text-navy-10"
+                                matTooltip="{{
+                                    budgetData.Data.projectId.name
+                                }}"
+                                aria-label="Button that displays a tooltip when focused or hovered over"
+                                >{{
+                                    budgetData.Data.projectId.name
+                                        | slice : 0 : 15
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Client Name :</div>
+                        <div>
+                            <span
+                                class="flex capitalize cursor-pointer font-medium text-slate-700 dark:text-navy-10"
+                                >{{ budgetData.Data.client_name }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Total Budget :</div>
+                        <div>
+                            <span
+                                class="mr-6 inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-primary/10 text-primary_l"
+                            >
+                                ${{
+                                    details?.totalBudget
+                                        ? details?.totalBudget
+                                        : 0
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Total Paid :</div>
+                        <div>
+                            <span
+                                class="mr-6 inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                            >
+                                ${{
+                                    details?.totalPaid ? details?.totalPaid : 0
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Total Due :</div>
+                        <div>
+                            <span
+                                class="mr-6 inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                            >
+                                ${{
+                                    details?.totalDue ? details?.totalDue : 0
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 mb-3"
+                ></div>
+            </div>
+        </div>
+    </div>
+    <div class="px-5 pt-2 pb-5">
+        <div class="">
+            <table
+                mat-table
+                [dataSource]="dataSourceBudget"
+                class="w-full border is-hoverable"
+            >
+                <!-- month -->
+                <ng-container matColumnDef="month">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Month
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction; let i = index"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span class="flex capitalize cursor-pointer text-xs+">
+                            {{
+                                (transaction?.date | date : "MMM yyyy")
+                                    ? (transaction?.date | date : "MMM yyyy")
+                                    : "--"
+                            }}
+                        </span>
+                    </td>
+                </ng-container>
+                <!-- budget -->
+                <ng-container matColumnDef="budget">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Budget
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span
+                            class="badge bg-primary/10 text-primary_l amounts"
+                        >
+                            ${{
+                                transaction?.budgetAmt
+                                    ? transaction?.budgetAmt
+                                    : 0
+                            }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- paidThrough -->
+                <ng-container matColumnDef="paidThrough">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Paid Through
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span class="text-xs+ capitalize">
+                            {{
+                                transaction.paidThrough
+                                    ? transaction.paidThrough
+                                    : "--"
+                            }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- paidDate -->
+                <ng-container matColumnDef="paidDate">
+                    <th
+                        mat-header-cell
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                        *matHeaderCellDef
+                    >
+                        Paid Date
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span class="text-xs+ whitespace-nowrap">
+                            {{
+                                (transaction?.paidDate | date : "dd MMM, y")
+                                    ? (transaction?.paidDate
+                                      | date : "dd MMM, y")
+                                    : "--"
+                            }}
+                        </span>
+                    </td>
+                </ng-container>
+                <!-- receivedDate -->
+                <ng-container matColumnDef="receivedDate">
+                    <th
+                        mat-header-cell
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                        *matHeaderCellDef
+                    >
+                        Received Date
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span class="text-xs+ whitespace-nowrap">
+                            {{
+                                (transaction?.receivedDate | date : "dd MMM, y")
+                                    ? (transaction?.receivedDate
+                                      | date : "dd MMM, y")
+                                    : "--"
+                            }}
+                        </span>
+                    </td>
+                </ng-container>
+                <!-- paid -->
+                <ng-container matColumnDef="paid">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Paid
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span
+                            class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                        >
+                            ${{ transaction?.paid ? transaction?.paid : 0 }}
+                        </span>
+                    </td>
+                </ng-container>
+                <!-- paid -->
+                <ng-container matColumnDef="Inr">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        INR
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span
+                            class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                        >
+                            {{
+                                transaction?.inrAmount
+                                    ? transaction?.inrAmount
+                                    : 0
+                            }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- due -->
+                <ng-container matColumnDef="due">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Due
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let transaction"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span
+                            class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                        >
+                            ${{ transaction?.due ? transaction?.due : 0 }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <tr
+                    mat-header-row
+                    *matHeaderRowDef="displayedColumnsBudget"
+                ></tr>
+                <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumnsBudget"
+                ></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td
+                        class="mat-cell whitespace-nowrap px-3 py-3 sm:px-3 text-xs+"
+                        align="center"
+                        [attr.colspan]="displayedColumnsBudget.length"
+                    >
+                        There is No Data.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

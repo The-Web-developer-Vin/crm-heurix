@@ -1,0 +1,338 @@
+<div class="search p-4 flex items-center justify-between">
+    <div class="flex items-center relative">
+        <mat-form-field
+            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+            [floatLabel]="'always'"
+        >
+            <input
+                matInput
+                #search
+                placeholder="Search"
+                [(ngModel)]="searchName"
+                (keyup.enter)="doFilter(searchName)"
+            />
+        </mat-form-field>
+        <mat-icon
+            matPrefix
+            class="icon-size-5 cursor-pointer absolute right-4"
+            [svgIcon]="'heroicons_solid:search'"
+            (click)="doFilter(searchName)"
+        ></mat-icon>
+    </div>
+    <div class="flex items-start">
+        <button
+            class="ml-3"
+            (click)="exportTable()"
+            mat-raised-button
+            matTooltip="Download as Excel"
+            aria-label="Button that displays a tooltip when focused or hovered over"
+        >
+            <mat-icon
+                svgIcon="sim_card_download"
+                class="text-primary_l icon-size-6"
+            ></mat-icon>
+        </button>
+    </div>
+</div>
+<div class="overflow-x-auto w-full">
+    <table
+        id="BiddingTable"
+        class="w-full bg-transparent is-hoverable"
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        [trackBy]="trackByFn"
+        #clientsTable
+    >
+        <!-- position -->
+        <ng-container matColumnDef="position">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary pl-4 pr-0 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100"
+            >
+                S.No
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction; let i = index"
+                class="whitespace-nowrap pl-4 pr-0 py-3"
+            >
+                <span class="text-xs+ flex capitalize">
+                    {{ i + 1 }}
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- name -->
+        <ng-container matColumnDef="jobtitle">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'jobTitle')"
+            >
+                Job Title
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span
+                    mat-raised-button
+                    matTooltip="{{ transaction.jobTitle }}"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button cursor-pointer text-xs+ capitalize"
+                >
+                    {{ transaction.jobTitle | slice : 0 : 15 }}
+                </span>
+                <!-- {{ transaction.jobTitle }} -->
+            </td>
+        </ng-container>
+
+        <!-- email -->
+        <ng-container matColumnDef="bidUrl">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'bidUrl')"
+            >
+                Bid URL
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+ whitespace-nowrap">
+                    <a
+                        href="{{ transaction.bidUrl }}"
+                        target="_blank"
+                        class="text-primary hover:underline"
+                        >{{ transaction.bidUrl | slice : 0 : 20 }}</a
+                    >
+                </span>
+            </td>
+        </ng-container>
+        <!-- amount -->
+        <ng-container matColumnDef="account">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'account')"
+            >
+                Account
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+">
+                    {{ transaction.account?.name | titlecase }}</span
+                >
+            </td>
+        </ng-container>
+        <!-- technology -->
+        <ng-container matColumnDef="technology">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'technology')"
+            >
+                Tech
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+">
+                    {{ transaction.technology?.name }}</span
+                >
+            </td>
+        </ng-container>
+        <!-- time -->
+        <ng-container matColumnDef="time">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'createdAt')"
+            >
+                Date & Time
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+ whitespace-nowrap capitalize">
+                    {{ transaction.createdAt | date : "d MMM y HH:MM a" }}
+                </span>
+            </td>
+        </ng-container>
+        <!-- Response -->
+        <ng-container matColumnDef="response">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'response')"
+            >
+                Response
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span
+                    *ngIf="transaction.response == true"
+                    class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                    >Yes</span
+                >
+                <span
+                    *ngIf="transaction.response == false"
+                    class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                    >No</span
+                >
+            </td>
+        </ng-container>
+
+        <!-- converted -->
+        <ng-container matColumnDef="converted">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'converted')"
+            >
+                Converted
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+            >
+                <span
+                    *ngIf="transaction.converted == true"
+                    class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                    >Yes</span
+                >
+                <span
+                    *ngIf="transaction.converted == false"
+                    class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                    >No</span
+                >
+            </td>
+        </ng-container>
+        <!-- Reason -->
+        <ng-container matColumnDef="reason">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'reason')"
+            >
+                Reason
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+            >
+                <span class="text-xs+"> {{ transaction.reason }}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="crm">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                (click)="sorting($event, 'createdBy')"
+            >
+                CRM
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+            >
+                <span class="textxs+">
+                    {{ transaction.createdBy?.name | titlecase }}</span
+                >
+            </td>
+        </ng-container>
+        <!-- actions -->
+        <ng-container matColumnDef="actions">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+            >
+                Actions
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <div class="flex">
+                    <span
+                        (click)="editBidding(transaction)"
+                        class="flex items-center cursor-pointer"
+                    >
+                        <mat-icon
+                            svgIcon="edit"
+                            class="icon-size-5 mr-3 text-green-600"
+                        ></mat-icon>
+                    </span>
+                    <span
+                        class="flex items-center"
+                        (click)="deletebidding(transaction)"
+                    >
+                        <mat-icon
+                            class="icon-size-5 text-red cursor-pointer"
+                            [svgIcon]="'delete'"
+                        ></mat-icon>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td
+                class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                align="center"
+                [attr.colspan]="displayedColumns.length"
+            >
+                No data Found.
+            </td>
+        </tr>
+    </table>
+</div>
+<mat-paginator
+    [length]="pageLength"
+    [pageSize]="pageSize"
+    [pageIndex]="pageNumber - 1"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="getbiddigs()"
+>
+</mat-paginator>

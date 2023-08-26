@@ -1,0 +1,545 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="flex px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-4 justify-between"
+            >
+                <div
+                    class="capitalize text-lg font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                >
+                    {{ clientData?.name }} Projects
+                </div>
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2">
+                    <div
+                        class="flex items-center justify-center mr-3 border-r pr-3"
+                    >
+                        <div
+                            class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                        >
+                            Total Projects :
+                        </div>
+                        <div
+                            class="ml-2 lg:flex items-center h-6 px-2 rounded-full text-md font-semibold leading-6 badge bg-primary/10 text-primary"
+                        >
+                            {{
+                                projectsCount?.length
+                                    ? projectsCount?.length
+                                    : 0
+                            }}
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center justify-center mr-3 border-r pr-3"
+                    >
+                        <div
+                            class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                        >
+                            Paid M/s :
+                        </div>
+                        <div
+                            class="ml-2 lg:flex items-center h-6 px-2 rounded-full text-md font-semibold leading-6 badge text-violet"
+                        >
+                            {{
+                                totalCount?.total_milestone
+                                    ? totalCount?.total_milestone
+                                    : 0
+                            }}
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center justify-center mr-5 border-r pr-5"
+                    >
+                        <div
+                            class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                        >
+                            Total Amount :
+                        </div>
+                        <div
+                            class="ml-2 lg:flex items-center h-6 px-2 rounded-full text-md font-semibold leading-6 badge bg-warning/10 text-warning dark:bg-warning/15"
+                        >
+                            {{
+                                totalCount?.total_amount
+                                    | currency : currency : "symbol" : "1.0"
+                            }}
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center justify-center mr-5 border-r pr-5"
+                    >
+                        <div
+                            class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                        >
+                            Paid Amount :
+                        </div>
+                        <div
+                            class="ml-2 lg:flex items-center h-6 px-2 rounded-full text-md font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                        >
+                            {{
+                                totalCount?.total_amountPaid
+                                    | currency : currency : "symbol" : "1.0"
+                            }}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div
+                            class="font-medium text-slate-700 dark:text-navy-100 text-xs+"
+                        >
+                            Due Amount :
+                        </div>
+                        <div
+                            class="ml-2 lg:flex items-center h-6 px-2 rounded-full text-md font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                        >
+                            {{
+                                totalCount?.total_due
+                                    | currency : currency : "symbol" : "1.0"
+                            }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full">
+                <div class="flex flex-col flex-auto p-6 bg-card rounded shadow">
+                    <div class="flex">
+                        <div
+                            class="mb-4 text-lg font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                        >
+                            Client Personal Details
+                        </div>
+                    </div>
+                    <div class="details-sec">
+                        <div class="flex-col">
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-start justify-between"
+                                        >Name <span class="">:</span></label
+                                    >
+                                </div>
+                                <div
+                                    class="col-span-3 ml-2 word-wrap capitalize"
+                                >
+                                    {{ clientData?.name }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Phone Number
+                                        <span class="">:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{
+                                        clientData?.phone_number
+                                            ? clientData?.phone_number
+                                            : "--"
+                                    }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-start justify-between"
+                                        >Email <span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{
+                                        clientData?.email
+                                            ? clientData?.email
+                                            : "--"
+                                    }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Country <span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{ clientData?.country.name }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Hired In <span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{ clientData?.hiredIn.name }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Category <span>:</span></label
+                                    >
+                                </div>
+                                <div
+                                    class="ml-2 col-span-3 word-wrap"
+                                    *ngIf="clientData?.develepment == true"
+                                >
+                                    Developemt
+                                </div>
+                                <div
+                                    class="ml-2 col-span-3 word-wrap"
+                                    *ngIf="clientData?.develepment != true"
+                                >
+                                    Digital Marketing
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-col">
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Paid Through <span>:</span></label
+                                    >
+                                </div>
+                                <div
+                                    class="ml-2 col-span-3 word-wrap capitalize"
+                                >
+                                    {{ clientData?.paidThrough?.name }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Total Amount Paid <span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    <span
+                                        class="h-6 px-2 rounded-full text-md font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                                    >
+                                        {{
+                                            totalCount?.total_amountPaid
+                                                | currency
+                                                    : currency
+                                                    : "symbol"
+                                                    : "1.0"
+                                        }}</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6">
+                                <div class="capitalize col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Created By <span>:</span></label
+                                    >
+                                </div>
+                                <div
+                                    class="ml-2 col-span-3 word-wrap capitalize"
+                                >
+                                    {{ clientData?.createdByName }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="xl:col-span-2 flex flex-col flex-auto bg-card shadow rounded overflow-hidden"
+                >
+                    <div class="flex flex-col flex-auto">
+                        <div
+                            class="pt-5 px-5 pb-3 flex items-center justify-between"
+                        >
+                            <div
+                                class="text-lg font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                            >
+                                Project Details
+                            </div>
+                            <div>
+                                <div class="flex">
+                                    <button
+                                        class="all_btn rounded-full border w-20"
+                                        [ngClass]="
+                                            defaultAll
+                                                ? 'mat-button-toggle-checked'
+                                                : ''
+                                        "
+                                        (click)="getAll()"
+                                    >
+                                        <span class="">All</span>
+                                    </button>
+                                    <mat-form-field
+                                        appearance="fill"
+                                        class="ml-3 fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-50"
+                                    >
+                                        <input
+                                            matInput
+                                            [matDatepicker]="picker"
+                                            (click)="picker.open()"
+                                            [(ngModel)]="filterDate"
+                                            (dateChange)="addEvent($event)"
+                                            placeholder="dd-mm-yyyy"
+                                        />
+                                        <mat-datepicker-toggle
+                                            matSuffix
+                                            [for]="picker"
+                                        ></mat-datepicker-toggle>
+                                        <mat-datepicker
+                                            #picker
+                                        ></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto w-full">
+                            <table
+                                class="w-full bg-transparent is-hoverable"
+                                mat-table
+                                [dataSource]="dataSource"
+                                [trackBy]="trackByFn"
+                                #clientsTable
+                            >
+                                <!-- name -->
+                                <ng-container matColumnDef="name">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Project name
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            (click)="
+                                                openSingleProject(
+                                                    transaction.projectId._id
+                                                )
+                                            "
+                                            matTooltip="{{
+                                                transaction?.projectId?.name
+                                            }}"
+                                            aria-label="Button that displays a tooltip when focused or hovered over"
+                                            class="flex capitalize cursor-pointer text-xs+"
+                                        >
+                                            {{
+                                                transaction?.projectId?.name
+                                                    | slice : 0 : 14
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <!-- technology -->
+                                <ng-container matColumnDef="category">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Technology
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="text-xs+ whitespace-nowrap capitalize"
+                                        >
+                                            {{
+                                                transaction?.projectId
+                                                    ?.technology?.name
+                                            }}
+                                        </span>
+
+                                        <span
+                                            class="pr-3 text-lg font-medium tracking-tight"
+                                            *ngIf="transaction.totals"
+                                        >
+                                            Total
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <!-- budget -->
+                                <ng-container matColumnDef="total">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Total Budget
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="badge bg-primary/10 text-primary_l amounts"
+                                        >
+                                            {{
+                                                transaction?.total
+                                                    | currency
+                                                        : currency
+                                                        : "symbol"
+                                                        : "1.0"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+                                <!-- milstones -->
+                                <ng-container matColumnDef="milstones">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        M/s
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        (click)="viewBudget(transaction)"
+                                    >
+                                        <span
+                                            class="cursor-pointer amounts badge bg-warning/10 text-amber-500 dark:bg-warning/15"
+                                        >
+                                            {{
+                                                transaction?.milestones.length
+                                                    ? transaction?.milestones
+                                                          .length
+                                                    : 0
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+                                <!-- amount paid -->
+                                <ng-container matColumnDef="amount">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Total Paid
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                                        >
+                                            {{
+                                                transaction?.totalPaid
+                                                    | currency
+                                                        : currency
+                                                        : "symbol"
+                                                        : "1.0"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+                                <!-- due-->
+                                <ng-container matColumnDef="due">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Total Due
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                                        >
+                                            {{
+                                                transaction?.due
+                                                    | currency
+                                                        : currency
+                                                        : "symbol"
+                                                        : "1.0"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <!-- date -->
+                                <ng-container matColumnDef="date">
+                                    <th
+                                        mat-header-cell
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        *matHeaderCellDef
+                                    >
+                                        Start Date
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="text-xs+ whitespace-nowrap"
+                                        >
+                                            {{
+                                                transaction?.projectId
+                                                    ?.start_date
+                                                    | date : " d MMM y"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumns"
+                                ></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumns
+                                    "
+                                ></tr>
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td
+                                        class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                        align="center"
+                                        [attr.colspan]="displayedColumns.length"
+                                    >
+                                        No data Found.
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <mat-paginator
+                            [length]="pageLength"
+                            [pageSize]="pageSize"
+                            [pageIndex]="pageNumber - 1"
+                            [pageSizeOptions]="[5, 10, 25, 100]"
+                            (page)="getProjects()"
+                        >
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 w-full min-w-0"
+            ></div>
+        </div>
+    </div>
+</div>

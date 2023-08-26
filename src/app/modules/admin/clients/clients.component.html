@@ -1,0 +1,484 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                        >
+                            Clients
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                            *ngIf="role != 'Admin'"
+                        >
+                            <!-- *ngIf="role=='Manager'" -->
+                            <button
+                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                mat-flat-button
+                                (click)="add()"
+                            >
+                                <mat-icon
+                                    svgIcon="add"
+                                    class="icon-size-5 text-white"
+                                ></mat-icon>
+                                <span class="ml-1">Add Client</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+
+            <div class="bg-card mb-5 shadow rounded-lg py-1 bg_block">
+                <div class="search p-4 flex items-center justify-between">
+                    <div class="flex items-center relative">
+                        <mat-form-field
+                            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                            [floatLabel]="'always'"
+                        >
+                            <input
+                                matInput
+                                #search
+                                placeholder="Search"
+                                [(ngModel)]="searchName"
+                                (keyup.enter)="doFilter(searchName)"
+                            />
+                        </mat-form-field>
+                        <mat-icon
+                            matPrefix
+                            class="icon-size-5 cursor-pointer absolute right-4"
+                            [svgIcon]="'heroicons_solid:search'"
+                            (click)="doFilter(searchName)"
+                        ></mat-icon>
+                    </div>
+                    <div class="flex">
+                        <button
+                            *ngIf="role != 'Admin'"
+                            class="all_btn rounded-full border w-30"
+                            [ngClass]="
+                                defaultAll ? 'mat-button-toggle-checked' : ''
+                            "
+                            (click)="getAllClients()"
+                        >
+                            <span class="">All</span>
+                        </button>
+                        <mat-form-field
+                            *ngIf="role == 'Admin'"
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded"
+                        >
+                            <mat-select
+                                [(ngModel)]="categoryName"
+                                (selectionChange)="getCategory($event.value)"
+                            >
+                                <mat-option
+                                    value="dev"
+                                    (click)="getDevClients()"
+                                >
+                                    Dev
+                                </mat-option>
+                                <mat-option value="digital">
+                                    Digital
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                placeholder="Month"
+                                [(ngModel)]="monthnumber"
+                                (selectionChange)="getMonthValue($event.value)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of months"
+                                    [value]="option.val"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense ml-3 fuse-mat-rounded"
+                        >
+                            <mat-select
+                                placeholder="Year"
+                                [(ngModel)]="yearNumber"
+                                (selectionChange)="selectedYear($event.value)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of years"
+                                    [value]="option"
+                                >
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <button
+                            *ngIf="clearShow"
+                            class="mt-1 flex flex-0 items-center justify-center w-8 h-8 ml-3 rounded-full text-warn-600 bg-warn-100 dark:text-warn-50 dark:bg-warn-600 ng-star-inserted"
+                            (click)="clear()"
+                            matTooltip="Clear"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                        >
+                            <mat-icon
+                                svgIcon="mat_outline:clear"
+                                class="text-red icon-size-2"
+                            ></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto w-full">
+                    <table
+                        class="w-full bg-transparent is-hoverable"
+                        mat-table
+                        matSort
+                        [dataSource]="dataSource"
+                        [trackBy]="trackByFn"
+                        #clientsTable
+                    >
+                        <!-- position -->
+                        <ng-container matColumnDef="position">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                S.No
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{ i + 1 }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- name -->
+                        <ng-container matColumnDef="name">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'name')"
+                            >
+                                Client Name
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span
+                                    (click)="openSingleClient(element._id)"
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{ element.name | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- country -->
+                        <ng-container matColumnDef="country">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'country')"
+                            >
+                                Country
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span
+                                    class="whitespace-nowrap capitalize text-xs+"
+                                >
+                                    {{ element.country.name | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- hiredin -->
+                        <ng-container matColumnDef="hiredin">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'hiredIn')"
+                            >
+                                Hired In
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span
+                                    class="text-xs+ whitespace-nowrap capitalize"
+                                >
+                                    {{ element.hiredIn.name | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- paidThrough -->
+                        <ng-container matColumnDef="paidThrough">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'paidThrough')"
+                            >
+                                Paid Through
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span
+                                    class="text-xs+ whitespace-nowrap capitalize"
+                                >
+                                    {{ element.paidThrough.name | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- dev -->
+                        <ng-container matColumnDef="dev">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Dev
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <mat-checkbox
+                                    (change)="
+                                        onChange($event, element._id, 'dev')
+                                    "
+                                    [checked]="element.develepment"
+                                    color="primary"
+                                >
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- digital -->
+                        <ng-container matColumnDef="digital">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Digital
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <mat-checkbox
+                                    (change)="
+                                        onChange($event, element._id, 'digital')
+                                    "
+                                    [checked]="element.digital_marketing"
+                                    color="primary"
+                                >
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- createdBy -->
+                        <ng-container matColumnDef="createdBy">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'createBy')"
+                            >
+                                Created By
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span
+                                    class="text-xs+ whitespace-nowrap capitalize"
+                                >
+                                    {{ element.createBy | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- date -->
+                        <ng-container matColumnDef="date">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                *matHeaderCellDef
+                                (click)="sorting($event, 'createdAt')"
+                            >
+                                Date
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                            >
+                                <span class="text-xs+ whitespace-nowrap">
+                                    {{ element.createdAt | date : "dd MMM, y" }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- actions -->
+                        <!-- *ngIf="role=='Manager'" -->
+                        <ng-container matColumnDef="actions">
+                            <!-- <div *ngIf="role=='Manager'">  -->
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Actions
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                [ngClass]="
+                                    element.status == 'InActive'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                "
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <div class="flex">
+                                    <span
+                                        (click)="edit(element)"
+                                        class="flex items-center"
+                                    >
+                                        <mat-icon
+                                            svgIcon="edit"
+                                            class="icon-size-5 mr-3 text-green-600 cursor-pointer"
+                                        ></mat-icon>
+                                    </span>
+                                    <span
+                                        class="flex items-center"
+                                        (click)="deleteClient(element._id)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5 text-red cursor-pointer"
+                                            [svgIcon]="'delete'"
+                                        ></mat-icon>
+                                    </span>
+                                </div>
+                            </td>
+                            <!-- </div> -->
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                                align="center"
+                                [attr.colspan]="displayedColumns.length"
+                            >
+                                No data Found.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <mat-paginator
+                    [length]="pageLength"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageNumber - 1"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    (page)="getClients()"
+                >
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

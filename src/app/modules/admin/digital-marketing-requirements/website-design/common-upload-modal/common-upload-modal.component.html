@@ -1,0 +1,173 @@
+<ng-container *ngIf="logoData">
+    <div class="">
+        <div class="flex flex-col flex-auto form-Out">
+            <div class="flex-auto">
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+                >
+                    <div class="text-xl font-semibold text-white">
+                        Upload Logo
+                    </div>
+                    <button
+                        (click)="close()"
+                        type="button"
+                        mat-icon-button
+                        matDialogClose
+                    >
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:x'"
+                            class="text-white"
+                        ></mat-icon>
+                    </button>
+                </div>
+                <div class="flex flex-col px-5 pb-5 pt-10 text-center">
+                    <div class="text-md font-semibold mb-4">
+                        Upload only Png, Jpg, Svg, Webp, docx, Pdf Formats Only.
+                        <br />(File size not more than 20MB)
+                    </div>
+                    <div class="mb-3">
+                        <ng-container>
+                            {{ image }}
+                        </ng-container>
+                    </div>
+                    <div class="relative">
+                        <button
+                            class="browse_btn cursor-pointer bg-accent-700 mat-accent text-white px-5 py-2 rounded"
+                            mat-flat-button
+                            color="primary"
+                        >
+                            Browse
+                        </button>
+
+                        <input
+                            type="file"
+                            #fileInput
+                            id="uploadImage"
+                            name="uploadImage"
+                            accept="image/*,.doc, .docx,.pdf"
+                            (change)="fileSelectedImage($event)"
+                            class="browse-input"
+                        />
+                        <!-- .ppt, .pptx,.xlsx,.xls,.txt, -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></ng-container
+>
+<ng-container *ngIf="contentFile">
+    <div class="">
+        <div class="flex flex-col flex-auto form-Out">
+            <div class="flex-auto">
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+                >
+                    <div class="text-xl font-semibold text-white">
+                        Upload Content Files
+                    </div>
+                    <button
+                        (click)="close()"
+                        type="button"
+                        mat-icon-button
+                        matDialogClose
+                    >
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:x'"
+                            class="text-white"
+                        ></mat-icon>
+                    </button>
+                </div>
+                <div class="flex flex-col px-5 pb-5 pt-10 text-center">
+                    <div class="text-md font-semibold mb-4">
+                        Upload only docx, Pdf, xlsx, txt Formats Only.
+                        <br />(File size not more than 20MB)
+                    </div>
+                    <div class="mb-3">
+                        <ng-container *ngFor="let e of contectDoc">
+                            {{ e }}
+                        </ng-container>
+                    </div>
+                    <div class="relative">
+                        <button
+                            class="browse_btn cursor-pointer bg-accent-700 mat-accent text-white px-5 py-2 rounded"
+                            mat-flat-button
+                            color="primary"
+                        >
+                            Browse
+                        </button>
+
+                        <input
+                            type="file"
+                            multiple
+                            #fileInput
+                            id="uploadImage"
+                            name="uploadImage"
+                            accept=".doc, .docx,.pdf, .xlsx,.xls, .txt, image/*"
+                            (change)="fileSelectedDoc($event)"
+                            class="browse-input"
+                        />
+                        <!-- .ppt, .pptx,.xlsx,.xls,.txt, -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></ng-container
+>
+<ng-container *ngIf="otherFiles">
+    <div class="">
+        <div class="flex flex-col flex-auto form-Out">
+            <div class="flex-auto">
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+                >
+                    <div class="text-xl font-semibold text-white">
+                        Upload Files
+                    </div>
+                    <button
+                        (click)="close()"
+                        type="button"
+                        mat-icon-button
+                        matDialogClose
+                    >
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:x'"
+                            class="text-white"
+                        ></mat-icon>
+                    </button>
+                </div>
+                <div class="flex flex-col px-5 pb-5 pt-10 text-center">
+                    <div class="text-md font-semibold mb-4">
+                        Upload only docx, Pdf, xlsx, txt Formats Only.
+                        <br />(File size not more than 20MB)
+                    </div>
+                    <div class="mb-3">
+                        <ng-container *ngFor="let e of otherDocuments">
+                            {{ e }}
+                        </ng-container>
+                    </div>
+                    <div class="relative">
+                        <button
+                            class="browse_btn cursor-pointer bg-accent-700 mat-accent text-white px-5 py-2 rounded"
+                            mat-flat-button
+                            color="primary"
+                        >
+                            Browse
+                        </button>
+
+                        <input
+                            type="file"
+                            #fileInput
+                            accept=".doc, .docx,.pdf, .xlsx,.xls, .txt, image/*"
+                            id="uploadImage"
+                            name="uploadImage"
+                            (change)="fileSelectedOther($event)"
+                            class="browse-input"
+                            multiple
+                        />
+                        <!-- .ppt, .pptx,.xlsx,.xls,.txt, -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></ng-container
+>

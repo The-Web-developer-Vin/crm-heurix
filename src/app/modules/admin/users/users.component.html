@@ -1,0 +1,1007 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                        >
+                            Employees
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <button
+                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                mat-flat-button
+                                (click)="addEmployee()"
+                            >
+                                <mat-icon
+                                    svgIcon="add"
+                                    class="icon-size-5 text-white"
+                                ></mat-icon>
+                                <span class="ml-1">Add Employee</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-card mb-5 shadow rounded py-2 pt-4 tabs-setting relative bg_block"
+            >
+                <!-- common Filters -->
+                <div
+                    class="common_filters px-4 pb-4 flex items-center justify-between"
+                >
+                    <div class="flex items-center relative"></div>
+
+                    <div class="flex items-start">
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                [(ngModel)]="categoryName"
+                                (selectionChange)="getCategory($event.value)"
+                            >
+                                <mat-option value="all"> All </mat-option>
+                                <mat-option value="dev"> Dev </mat-option>
+                                <mat-option value="digital">
+                                    Digital
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                placeholder="Month"
+                                [(ngModel)]="monthNumber"
+                                (selectionChange)="selecteMonth($event, months)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of months"
+                                    [value]="option.val"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense ml-3 fuse-mat-rounded"
+                        >
+                            <mat-select
+                                placeholder="Year"
+                                [(ngModel)]="yearNumber"
+                                (selectionChange)="selectedYear($event)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of years"
+                                    [value]="option"
+                                >
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <button
+                            *ngIf="clearShow"
+                            class="mt-1 flex flex-0 items-center justify-center w-8 h-8 ml-3 rounded-full text-warn-600 bg-warn-100 dark:text-warn-50 dark:bg-warn-600 ng-star-inserted"
+                            (click)="clear()"
+                            matTooltip="Clear"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                        >
+                            <mat-icon
+                                svgIcon="mat_outline:clear"
+                                class="text-red icon-size-2"
+                            ></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <mat-tab-group
+                    class="tab-group"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="selectedTabChange($event)"
+                >
+                    <mat-tab label="Working Employees">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Working Employees
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.workingCount
+                                            ? count?.workingCount
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div
+                                class="search p-4 flex items-center justify-between"
+                            >
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="searchWorking"
+                                            (keyup.enter)="
+                                                searchWorkingEvent(
+                                                    searchWorking
+                                                )
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="
+                                            searchWorkingEvent(searchWorking)
+                                        "
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSourceworking"
+                                    [trackBy]="trackByFn"
+                                    #clientsTable
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize cursor-pointer"
+                                            >
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- image -->
+                                    <ng-container matColumnDef="image">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                        >
+                                            Profile
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-1 sm:px-5"
+                                        >
+                                            <img
+                                                src="{{
+                                                    baseUrl + transaction.image
+                                                }}"
+                                                alt="{{ transaction.name }}"
+                                                class="employee-image"
+                                            />
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- name -->
+                                    <ng-container matColumnDef="name">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Name
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                (click)="
+                                                    singleEmployee(
+                                                        transaction._id
+                                                    )
+                                                "
+                                                class="flex capitalize cursor-pointer text-xs+"
+                                            >
+                                                {{
+                                                    transaction.name | titlecase
+                                                }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- DOJ -->
+                                    <ng-container matColumnDef="DOJ">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="
+                                                sorting($event, 'date_of_join')
+                                            "
+                                        >
+                                            Doj
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="whitespace-nowrap capitalize text-xs+ text-success-l"
+                                            >
+                                                {{
+                                                    transaction.date_of_join
+                                                        | date : " d MMM y"
+                                                }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!--emp id-->
+                                    <ng-container matColumnDef="emp_id">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'empId')"
+                                        >
+                                            Emp Id
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="whitespace-nowrap capitalize text-xs+"
+                                            >
+                                                {{ transaction.empId }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- role -->
+                                    <ng-container matColumnDef="role">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'role')"
+                                        >
+                                            Designation
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="amounts badge bg-primary/10 text-primary dark:bg-primary/15"
+                                            >
+                                                {{ transaction.role }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- stream -->
+                                    <ng-container matColumnDef="stream">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="
+                                                sorting($event, 'technology')
+                                            "
+                                        >
+                                            Technology
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="capitalize text-xs+">
+                                                <span
+                                                    *ngFor="
+                                                        let tech of transaction.technology
+                                                    "
+                                                >
+                                                    {{ tech.name }}
+                                                    <span> &nbsp;</span>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Status -->
+                                    <ng-container matColumnDef="status">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'status')"
+                                        >
+                                            Status
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div
+                                                class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-error"
+                                                *ngIf="
+                                                    transaction.status ==
+                                                    'Relieved'
+                                                "
+                                            >
+                                                <div
+                                                    class="h-2 w-2 rounded-full bg-current"
+                                                ></div>
+                                                <span>
+                                                    {{
+                                                        transaction.status
+                                                            | titlecase
+                                                    }}
+                                                </span>
+                                            </div>
+
+                                            <div
+                                                class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-success-l"
+                                                *ngIf="
+                                                    transaction.status ==
+                                                    'Working'
+                                                "
+                                            >
+                                                <div
+                                                    class="h-2 w-2 rounded-full bg-current"
+                                                ></div>
+                                                <span> Working </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let element"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex items-start">
+                                                <span
+                                                    (click)="
+                                                        editEmployee(element)
+                                                    "
+                                                    class="flex items-center cursor-pointer"
+                                                >
+                                                    <mat-icon
+                                                        svgIcon="edit"
+                                                        class="icon-size-5 mr-3 text-green-600"
+                                                    ></mat-icon>
+                                                </span>
+
+                                                <span
+                                                    class="flex items-center cursor-pointer"
+                                                    (click)="
+                                                        editStatus(element)
+                                                    "
+                                                    ><mat-icon
+                                                        svgIcon="feather:check-circle"
+                                                        class="icon-size-5 text-primary_l mr-3"
+                                                    ></mat-icon
+                                                ></span>
+                                                <span>
+                                                    <button
+                                                        mat-button
+                                                        [matMenuTriggerFor]="
+                                                            theMenu
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="icon-size-5 mr-2"
+                                                            svgIcon="heroicons_outline:dots-vertical"
+                                                        ></mat-icon>
+                                                    </button>
+                                                    <mat-menu
+                                                        #theMenu="matMenu"
+                                                    >
+                                                        <button
+                                                            mat-menu-item
+                                                            (click)="
+                                                                generateOffer(
+                                                                    element._id,
+                                                                    'offer'
+                                                                )
+                                                            "
+                                                        >
+                                                            Generate Offer
+                                                            Letter
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+
+                                                <span
+                                                    class="flex items-center"
+                                                    mat-raised-button
+                                                    (click)="
+                                                        changePassword(element)
+                                                    "
+                                                    *ngIf="
+                                                        element.role ==
+                                                            'Admin' ||
+                                                        element.role ==
+                                                            'Manager' ||
+                                                        element.role ==
+                                                            'Digital marketing Manager' ||
+                                                        element.role == 'Sales'
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 cursor-pointer text-amber-500"
+                                                        svgIcon="heroicons_outline:eye-off"
+                                                    ></mat-icon>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="displayedColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: displayedColumns
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                                            align="center"
+                                            [attr.colspan]="
+                                                displayedColumns.length
+                                            "
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <mat-paginator
+                                #paginator
+                                [length]="pageLengthWorking"
+                                [pageIndex]="pageNumber - 1"
+                                [pageSize]="pageSize"
+                                [pageSizeOptions]="[5, 10, 25, 100]"
+                                (page)="getworkingEmployees()"
+                            >
+                            </mat-paginator> </ng-template
+                    ></mat-tab>
+                    <mat-tab label="Relieved Employees">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Relieved Employees
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.relivedCount
+                                            ? count?.relivedCount
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div
+                                class="search p-4 flex items-center justify-between"
+                            >
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="searchRelieve"
+                                            (keyup.enter)="
+                                                searchRelievEvent(searchRelieve)
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="
+                                            searchRelievEvent(searchRelieve)
+                                        "
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSource"
+                                    [trackBy]="trackByFn"
+                                    #clientsTable
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="whitespace-nowrap capitalize text-xs+"
+                                            >
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- image -->
+                                    <ng-container matColumnDef="image">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                        >
+                                            Image
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-0 sm:px-5"
+                                        >
+                                            <img
+                                                src="{{
+                                                    baseUrl + transaction.image
+                                                }}"
+                                                class="employee-image"
+                                            />
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- name -->
+                                    <ng-container matColumnDef="name">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 bg-light-primary whitespace-nowrap px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Name
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                (click)="
+                                                    singleEmployee(
+                                                        transaction._id
+                                                    )
+                                                "
+                                                class="flex capitalize cursor-pointer text-xs+"
+                                                matTooltip="{{
+                                                    transaction?.workDuration
+                                                }}"
+                                                aria-label="Button that displays a tooltip when focused or hovered over"
+                                            >
+                                                {{
+                                                    transaction.name | titlecase
+                                                }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="DOJ">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="
+                                                sorting($event, 'date_of_join')
+                                            "
+                                        >
+                                            Doj
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="whitespace-nowrap capitalize text-xs+ text-success-l"
+                                            >
+                                                {{
+                                                    transaction.date_of_join
+                                                        | date : " d MMM y"
+                                                }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="DOR">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="
+                                                sorting($event, 'relievingDate')
+                                            "
+                                        >
+                                            Dor
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="whitespace-nowrap capitalize text-xs+ text-error"
+                                            >
+                                                {{
+                                                    transaction.relievingDate
+                                                        | date : " d MMM y"
+                                                }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="emp_id">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'empId')"
+                                        >
+                                            Emp Id
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="whitespace-nowrap capitalize text-xs+"
+                                            >
+                                                {{ transaction.empId }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- role -->
+                                    <ng-container matColumnDef="role">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'role')"
+                                        >
+                                            Designation
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="amounts badge bg-primary/10 text-primary dark:bg-primary/15"
+                                            >
+                                                {{ transaction.role }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- stream -->
+                                    <ng-container matColumnDef="stream">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="
+                                                sorting($event, 'technology')
+                                            "
+                                        >
+                                            Technology
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="capitalize text-xs+">
+                                                <span
+                                                    *ngFor="
+                                                        let tech of transaction.technology
+                                                    "
+                                                >
+                                                    {{ tech.name }}
+                                                    <span> &nbsp;</span>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Status -->
+                                    <ng-container matColumnDef="status">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                            (click)="sorting($event, 'status')"
+                                        >
+                                            Status
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div
+                                                class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-error"
+                                                *ngIf="
+                                                    transaction.status ==
+                                                    'Relieved'
+                                                "
+                                            >
+                                                <div
+                                                    class="h-2 w-2 rounded-full bg-current"
+                                                ></div>
+                                                <span>
+                                                    {{
+                                                        transaction.status
+                                                            | titlecase
+                                                    }}
+                                                </span>
+                                            </div>
+
+                                            <div
+                                                class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-success-l"
+                                                *ngIf="
+                                                    transaction.status ==
+                                                    'Working'
+                                                "
+                                            >
+                                                <div
+                                                    class="h-2 w-2 rounded-full bg-current"
+                                                ></div>
+                                                <span> Working </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let element"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex items-start">
+                                                <span
+                                                    (click)="
+                                                        editEmployee(element)
+                                                    "
+                                                    class="flex items-center cursor-pointer"
+                                                >
+                                                    <mat-icon
+                                                        svgIcon="edit"
+                                                        class="icon-size-5 mr-3 text-green-600"
+                                                    ></mat-icon>
+                                                </span>
+                                                <!-- *ngIf="element.role == 2" -->
+                                                <span
+                                                    class="flex items-center"
+                                                    mat-raised-button
+                                                    (click)="
+                                                        changePassword(element)
+                                                    "
+                                                    *ngIf="
+                                                        element.role ==
+                                                            'Admin' ||
+                                                        element.role ==
+                                                            'Manager'
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 mr-3 cursor-pointer text-amber-500"
+                                                        svgIcon="heroicons_outline:eye-off"
+                                                    ></mat-icon>
+                                                </span>
+
+                                                <span
+                                                    class="flex items-center cursor-pointer"
+                                                    (click)="
+                                                        editStatus(element)
+                                                    "
+                                                    ><mat-icon
+                                                        svgIcon="feather:check-circle"
+                                                        class="icon-size-5 text-primary_l mr-3"
+                                                    ></mat-icon
+                                                ></span>
+                                                <span>
+                                                    <button
+                                                        mat-button
+                                                        [matMenuTriggerFor]="
+                                                            theMenu
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            svgIcon="heroicons_outline:dots-vertical"
+                                                            class="icon-size-5 mr-2"
+                                                        ></mat-icon>
+                                                    </button>
+                                                    <mat-menu
+                                                        #theMenu="matMenu"
+                                                    >
+                                                        <button
+                                                            mat-menu-item
+                                                            (click)="
+                                                                generaterelieving(
+                                                                    element._id,
+                                                                    'relieve'
+                                                                )
+                                                            "
+                                                        >
+                                                            Generate Relieving
+                                                            Letter
+                                                        </button>
+                                                        <button
+                                                            mat-menu-item
+                                                            (click)="
+                                                                generateExpLetter(
+                                                                    element._id,
+                                                                    'experience'
+                                                                )
+                                                            "
+                                                        >
+                                                            Generate Experience
+                                                            Letter
+                                                        </button>
+
+                                                        <button
+                                                            mat-menu-item
+                                                            (click)="
+                                                                generateOffer(
+                                                                    element._id,
+                                                                    'offer'
+                                                                )
+                                                            "
+                                                        >
+                                                            Generate Offer
+                                                            Letter
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="displayedColumns2"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: displayedColumns2
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                            align="center"
+                                            [attr.colspan]="
+                                                displayedColumns2.length
+                                            "
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <mat-paginator
+                                #paginator2
+                                [pageSize]="pageSize2"
+                                [length]="pageLength"
+                                [pageSizeOptions]="[5, 10, 25, 100]"
+                                (page)="getRelievingEmployees()"
+                            >
+                            </mat-paginator> </ng-template
+                    ></mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

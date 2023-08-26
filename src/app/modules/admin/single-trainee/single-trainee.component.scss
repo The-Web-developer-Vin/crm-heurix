@@ -1,0 +1,15 @@
+.word-wrap {
+    width: auto;
+    word-wrap: break-word;
+}
+.vin-primary-600 {
+    background-color: rgba(6, 178, 255, 0.6) !important;
+}
+.vin-primary-200 {
+    background-color: rgba(6, 178, 255, 0.2) !important;
+}
+img {
+    width: 130px !important;
+    height: 130px !important;
+    object-fit: cover;
+}

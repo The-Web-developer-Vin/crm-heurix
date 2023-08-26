@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,IAAI,CAAJ,4BAAI;AACJ,IAAI,CAAJ,4BAAI;AACJ,IAAI,CAAJ,0BAAI;AACJ,IAAI,CAAJ,yBAAI",
+    "sources": [
+        "vertical.component.scss"
+    ],
+    "names": [],
+    "file": "vertical.component.css"
+}

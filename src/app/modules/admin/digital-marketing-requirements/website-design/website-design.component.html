@@ -1,0 +1,1694 @@
+<ng-container *ngIf="!successMsgShow">
+    <div class="flex flex-col flex-auto min-w-0 requirements">
+        <!-- Header -->
+        <div
+            class="flex flex-wrap width_set max-w-screen-xl mx-auto p-6 md:p-8"
+        >
+            <div class="w-full max-w-screen-xl mx-auto">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+                >
+                    <div
+                        class="flex flex-col flex-auto px-4 py-4 bg-light-primary rounded-lg overflow-hidden mb-5"
+                    >
+                        <div class="flex items-center justify-between">
+                            <div
+                                class="flex items-center text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                            >
+                                <span class="img_tp_sec mr-4">
+                                    <img
+                                        src="../../../../../assets/images/employees/website.png"
+                                        alt=""
+                                    />
+                                </span>
+                                Website Design Requirements
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col col-span-2">
+                    <div class="bg-card mb-5 shadow rounded-lg py-1">
+                        <form
+                            [formGroup]="websiteDesignForm"
+                            class="flex flex-col create-form px-5 py-5"
+                        >
+                            <div class="">
+                                <div
+                                    class="mb-3 text-md font-bold client_bg text-white px-3 py-2"
+                                >
+                                    Client Information :
+                                </div>
+                                <div
+                                    class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Client Name *
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full no_margin"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'clientName'
+                                                        "
+                                                    />
+                                                    <mat-error
+                                                        *ngIf="
+                                                            websiteDesignForm
+                                                                .get(
+                                                                    'clientName'
+                                                                )
+                                                                .hasError(
+                                                                    'required'
+                                                                )
+                                                        "
+                                                    >
+                                                        Client Name is required
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Phone Number
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full no_margin"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'phoneNumber'
+                                                        "
+                                                        (keypress)="
+                                                            numberOnly($event)
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Email Id
+                                            </div>
+                                            <div class="md:col-span-3">
+                                                <mat-form-field
+                                                    class="no_margin flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'mail'
+                                                        "
+                                                    />
+                                                    <mat-error
+                                                        *ngIf="
+                                                            websiteDesignForm
+                                                                .get('mail')
+                                                                .hasError(
+                                                                    'email'
+                                                                )
+                                                        "
+                                                    >
+                                                        Please enter a valid
+                                                        email address
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Address
+                                            </div>
+                                            <div class="md:col-span-3">
+                                                <mat-form-field
+                                                    class="no_margin flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'address'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="mb-3 text-md font-bold wesite_bg text-white mt-2 px-3 py-2"
+                            >
+                                Website Details :
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex mt-label">
+                                    <span class="mr-3">1.</span>Please provide
+                                    the logo or we will create a one
+                                </div>
+                                <div class="flex">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            placeholder="Logo Text"
+                                            [formControlName]="'logoText'"
+                                        />
+                                    </mat-form-field>
+                                    <mat-form-field
+                                        class="fuse-mat-dense w-full ml-3"
+                                    >
+                                        <input
+                                            class="truncate"
+                                            matInput
+                                            readonly
+                                            name="image"
+                                            [(ngModel)]="imageAttr"
+                                            [formControlName]="'logoImage'"
+                                        />
+
+                                        <button
+                                            class="browse_btn bg-accent-700 mat-accent text-white px-3 py-1 rounded"
+                                            mat-flat-button
+                                            color="primary"
+                                            (click)="uploadLogoImage('logo')"
+                                        >
+                                            Browse
+                                        </button>
+
+                                        <!-- <input
+                                        type="file"
+                                        #fileInput
+                                        id="uploadImage"
+                                        name="uploadImage"
+                                        accept="image/*"
+                                        (change)="fileSelectedImage($event)"
+                                        class="browse-input"
+                                    /> -->
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex mt-label">
+                                    <span class="mr-3">2.</span
+                                    ><span>What is your Company Tagline? </span>
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            id="name"
+                                            matInput
+                                            [formControlName]="'companyTagLine'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex mt-label">
+                                    <span class="mr-3">3.</span>What does your
+                                    company do?
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            id="name"
+                                            matInput
+                                            [formControlName]="'companyDo'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex mt-label">
+                                    <span class="mr-3">4.</span
+                                    ><span
+                                        >Who is your target audience?
+                                        <i>(Ex:- Age)</i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            [formControlName]="'targetAudience'"
+                                        />
+                                    </mat-form-field>
+                                    <!-- <mat-form-field
+                                    class="flex-auto fuse-mat-dense w-full"
+                                >
+                                    <mat-select
+                                        multiple
+                                        placeholder=""
+                                        [formControlName]="'targetAudience'"
+                                        (selectionChange)="getAge($event.value)"
+                                    >
+                                        <mat-option value="0 - 15">
+                                            0 - 15
+                                        </mat-option>
+                                        <mat-option value="16 - 25">
+                                            16 - 25
+                                        </mat-option>
+                                        <mat-option value="26 - 30">
+                                            26 - 30
+                                        </mat-option>
+                                        <mat-option value="30 -above">
+                                            30 -above
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex mt-label">
+                                    <span class="mr-3">5.</span
+                                    ><span
+                                        >What is the URL of your existing
+                                        website (if any)?
+                                    </span>
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            id="name"
+                                            matInput
+                                            [formControlName]="'existingUrl'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">6.</span
+                                    ><span>
+                                        What do you like and dislike about your
+                                        existing website?
+                                    </span>
+                                </div>
+                                <div>
+                                    <form [formGroup]="existingLikeForm">
+                                        <div
+                                            formArrayName="existingLikeDetails"
+                                            class=""
+                                        >
+                                            <div
+                                                class=""
+                                                *ngFor="
+                                                    let refer of existingLikeForm.get(
+                                                        'existingLikeDetails'
+                                                    )['controls'];
+                                                    let i = index
+                                                "
+                                            >
+                                                <div [formGroupName]="i">
+                                                    <div
+                                                        class="flex flex-row gt-md:flex-row"
+                                                    >
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-full"
+                                                        >
+                                                            <input
+                                                                matInput
+                                                                placeholder=""
+                                                                [formControlName]="
+                                                                    'existingLike'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+
+                                                        <div
+                                                            class="flex items-start ml-2 mt-2"
+                                                        >
+                                                            <span
+                                                                (click)="
+                                                                    addExisting()
+                                                                "
+                                                                class="flex items-center cursor-pointer"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-2 text-primary_l"
+                                                                    svgIcon="heroicons_outline:plus-circle"
+                                                                ></mat-icon>
+                                                            </span>
+                                                            <span
+                                                                class="flex items-center cursor-pointer"
+                                                                (click)="
+                                                                    deleteExisting(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-5 text-red ml-2"
+                                                                    [svgIcon]="
+                                                                        'delete'
+                                                                    "
+                                                                ></mat-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">7.</span
+                                    ><span>
+                                        Does your company have a brand book
+                                        covering things like colors and fonts?
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <form [formGroup]="colorForm">
+                                        <div
+                                            formArrayName="colorDetails"
+                                            class=""
+                                        >
+                                            <div
+                                                class=""
+                                                *ngFor="
+                                                    let features of colorForm.get(
+                                                        'colorDetails'
+                                                    )['controls'];
+                                                    let i = index
+                                                "
+                                            >
+                                                <div [formGroupName]="i">
+                                                    <div class="flex">
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-full"
+                                                        >
+                                                            <input
+                                                                matInput
+                                                                autocomplete="off"
+                                                                [(colorPicker)]="
+                                                                    color
+                                                                "
+                                                                [cpPosition]="
+                                                                    'bottom'
+                                                                "
+                                                                [formControlName]="
+                                                                    'color'
+                                                                "
+                                                                placeholder="Colour"
+                                                            />
+                                                        </mat-form-field>
+                                                        <mat-form-field
+                                                            class="flex-auto ml-2 fuse-mat-dense w-full"
+                                                        >
+                                                            <input
+                                                                id="project_url"
+                                                                matInput
+                                                                placeholder="Font"
+                                                                [formControlName]="
+                                                                    'font'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+
+                                                        <div
+                                                            class="flex items-start ml-2 mt-2"
+                                                        >
+                                                            <span
+                                                                (click)="
+                                                                    addColor()
+                                                                "
+                                                                class="flex items-center cursor-pointer"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-2 text-primary_l"
+                                                                    svgIcon="heroicons_outline:plus-circle"
+                                                                ></mat-icon>
+                                                            </span>
+                                                            <span
+                                                                class="flex items-center cursor-pointer"
+                                                                (click)="
+                                                                    deleteColor(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-5 text-red ml-2"
+                                                                    [svgIcon]="
+                                                                        'delete'
+                                                                    "
+                                                                ></mat-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">8.</span
+                                    ><span
+                                        >Do you want to improve an existing
+                                        website, or create a website from
+                                        scratch?
+                                    </span>
+                                </div>
+                                <div>
+                                    <mat-radio-group
+                                        aria-label="Select an option"
+                                        (change)="checkwebsite($event)"
+                                        [(ngModel)]="websiteImprove"
+                                        [ngModelOptions]="{ standalone: true }"
+                                    >
+                                        <mat-radio-button
+                                            value="Existing Website"
+                                            class="mr-4"
+                                            >Existing Website</mat-radio-button
+                                        >
+                                        <mat-radio-button
+                                            value="Create a Website from Scratch"
+                                            >Create a Website from
+                                            Scratch</mat-radio-button
+                                        >
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+
+                            <!-- <div
+                            class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                        >
+                            <div class="label_ex flex">
+                                <span class="mr-3">9.</span
+                                ><span
+                                    >Do you want your website to be optimized
+                                    for SEO? Do you have a list of keywords
+                                    you’d like to target?
+                                </span>
+                            </div>
+                            <div>
+                                <form [formGroup]="keywordsForm">
+                                    <div
+                                        formArrayName="keywordsDetails"
+                                        class=""
+                                    >
+                                        <div
+                                            class=""
+                                            *ngFor="
+                                                let refer of keywordsForm.get(
+                                                    'keywordsDetails'
+                                                )['controls'];
+                                                let i = index
+                                            "
+                                        >
+                                            <div [formGroupName]="i">
+                                                <div
+                                                    class="flex flex-row gt-md:flex-row"
+                                                >
+                                                    <mat-form-field
+                                                        class="flex-auto fuse-mat-dense w-full"
+                                                    >
+                                                        <input
+                                                            id="project_url"
+                                                            matInput
+                                                            placeholder="keywords"
+                                                            [formControlName]="
+                                                                'keywordsList'
+                                                            "
+                                                        />
+                                                    </mat-form-field>
+
+                                                    <div
+                                                        class="flex items-start ml-4 mt-2"
+                                                    >
+                                                        <span
+                                                            (click)="
+                                                                addkeywords()
+                                                            "
+                                                            class="flex items-center cursor-pointer"
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-2 text-primary_l"
+                                                                svgIcon="heroicons_outline:plus-circle"
+                                                            ></mat-icon>
+                                                        </span>
+                                                        <span
+                                                            class="flex items-center cursor-pointer"
+                                                            (click)="
+                                                                deletekeywords(
+                                                                    i
+                                                                )
+                                                            "
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5 text-red ml-2"
+                                                                [svgIcon]="
+                                                                    'delete'
+                                                                "
+                                                            ></mat-icon>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div> -->
+
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">9.</span
+                                    ><span
+                                        >What is the URL of 2-3 reference
+                                        websites that you like? What do you like
+                                        about these websites?
+                                    </span>
+                                </div>
+                                <div>
+                                    <form [formGroup]="referenceUrlForm">
+                                        <div
+                                            formArrayName="referenceDetails"
+                                            class=""
+                                        >
+                                            <div
+                                                class=""
+                                                *ngFor="
+                                                    let refer of referenceUrlForm.get(
+                                                        'referenceDetails'
+                                                    )['controls'];
+                                                    let i = index
+                                                "
+                                            >
+                                                <div [formGroupName]="i">
+                                                    <div
+                                                        class="flex flex-row gt-md:flex-row"
+                                                    >
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-full"
+                                                        >
+                                                            <input
+                                                                id="project_url"
+                                                                matInput
+                                                                placeholder="Reference URL"
+                                                                [formControlName]="
+                                                                    'url'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-full ml-2"
+                                                        >
+                                                            <input
+                                                                id="project_url"
+                                                                matInput
+                                                                placeholder="You Like"
+                                                                [formControlName]="
+                                                                    'liked'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                        <div
+                                                            class="flex items-start ml-2 mt-2"
+                                                        >
+                                                            <span
+                                                                (click)="
+                                                                    addRefer()
+                                                                "
+                                                                class="flex items-center cursor-pointer"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-2 text-primary_l"
+                                                                    svgIcon="heroicons_outline:plus-circle"
+                                                                ></mat-icon>
+                                                            </span>
+                                                            <span
+                                                                class="flex items-center cursor-pointer"
+                                                                (click)="
+                                                                    deleteRefer(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-5 text-red ml-2"
+                                                                    [svgIcon]="
+                                                                        'delete'
+                                                                    "
+                                                                ></mat-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">10.</span
+                                    ><span>
+                                        Do you know what platform you want to
+                                        use for your site?
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <div class="">
+                                        <mat-radio-group
+                                            aria-label="Select an option"
+                                            (change)="checkPlatform($event)"
+                                            [(ngModel)]="platform"
+                                            [ngModelOptions]="{
+                                                standalone: true
+                                            }"
+                                        >
+                                            <mat-radio-button
+                                                value="Wordpress"
+                                                class="mr-4"
+                                                >Wordpress</mat-radio-button
+                                            >
+                                            <mat-radio-button
+                                                value="Custom CMS"
+                                                class="mr-4"
+                                                >Custom CMS</mat-radio-button
+                                            >
+                                            <mat-radio-button value="Other"
+                                                >Other</mat-radio-button
+                                            >
+                                        </mat-radio-group>
+                                    </div>
+                                    <div *ngIf="otherShow" class="mt-3">
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                id="name"
+                                                matInput
+                                                [(ngModel)]="platform"
+                                                placeholder="Platform Name"
+                                                [formControlName]="'platform'"
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-3"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">11.</span
+                                    ><span
+                                        >What pages do you need on your website?
+                                    </span>
+                                </div>
+                                <div class="mb-1">
+                                    <div
+                                        class="pl-6 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-3"
+                                    >
+                                        <div
+                                            class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-2"
+                                        >
+                                            <div
+                                                *ngFor="
+                                                    let item of checkPagesList
+                                                "
+                                            >
+                                                <mat-checkbox
+                                                    class="example-margin"
+                                                    (change)="
+                                                        checkPages(
+                                                            $event.checked,
+                                                            item.name
+                                                        )
+                                                    "
+                                                    name="{{ item.name }}"
+                                                    [(ngModel)]="item.checked"
+                                                    [ngModelOptions]="{
+                                                        standalone: true
+                                                    }"
+                                                    ><span class="">{{
+                                                        item.label
+                                                    }}</span></mat-checkbox
+                                                >
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex">
+                                                <mat-checkbox
+                                                    class="example-margin"
+                                                    (change)="
+                                                        checkPages(
+                                                            $event.checked,
+                                                            'other'
+                                                        )
+                                                    "
+                                                    [checked]="
+                                                        otherCheck.length != 0
+                                                    "
+                                                    ><span class=""
+                                                        >Other</span
+                                                    ></mat-checkbox
+                                                >
+                                                <span
+                                                    (click)="addPage()"
+                                                    class="ml-12 flex items-center cursor-pointer"
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-2 text-primary_l"
+                                                        svgIcon="heroicons_outline:plus-circle"
+                                                    ></mat-icon>
+                                                </span>
+                                            </div>
+                                            <form
+                                                [formGroup]="pagesForm"
+                                                class="mt-2"
+                                            >
+                                                <div
+                                                    formArrayName="others"
+                                                    class=""
+                                                >
+                                                    <div
+                                                        class=""
+                                                        *ngFor="
+                                                            let page of pagesForm.get(
+                                                                'others'
+                                                            )['controls'];
+                                                            let i = index
+                                                        "
+                                                    >
+                                                        <div
+                                                            [formGroupName]="i"
+                                                        >
+                                                            <div class="flex">
+                                                                <mat-form-field
+                                                                    class="flex-auto fuse-mat-dense"
+                                                                >
+                                                                    <input
+                                                                        id="project_url"
+                                                                        matInput
+                                                                        placeholder="Page Name"
+                                                                        [formControlName]="
+                                                                            'page'
+                                                                        "
+                                                                    />
+                                                                </mat-form-field>
+
+                                                                <div
+                                                                    class="flex items-start ml-2 mt-2"
+                                                                >
+                                                                    <span
+                                                                        class="flex items-center cursor-pointer"
+                                                                        (click)="
+                                                                            deletePage(
+                                                                                i
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        <mat-icon
+                                                                            class="icon-size-5 text-red ml-2"
+                                                                            [svgIcon]="
+                                                                                'delete'
+                                                                            "
+                                                                        ></mat-icon>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="">
+                                            <div class="flex">
+                                                <mat-checkbox
+                                                    class="example-margin"
+                                                    (change)="
+                                                        checkPages(
+                                                            $event.checked,
+                                                            'servicePage'
+                                                        )
+                                                    "
+                                                    [checked]="
+                                                        servicesPageList.length !=
+                                                        0
+                                                    "
+                                                    ><span class=""
+                                                        >Services</span
+                                                    ></mat-checkbox
+                                                >
+                                                <span
+                                                    (click)="addServices()"
+                                                    class="ml-12 flex items-center cursor-pointer"
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-2 text-primary_l"
+                                                        svgIcon="heroicons_outline:plus-circle"
+                                                    ></mat-icon>
+                                                </span>
+                                            </div>
+                                            <form
+                                                [formGroup]="serviceForm"
+                                                class="mt-2"
+                                            >
+                                                <div formArrayName="services">
+                                                    <div
+                                                        *ngFor="
+                                                            let employee of services()
+                                                                .controls;
+                                                            let i = index
+                                                        "
+                                                    >
+                                                        <div
+                                                            [formGroupName]="i"
+                                                        >
+                                                            <div class="flex">
+                                                                <mat-form-field
+                                                                    class="flex-auto fuse-mat-dense service_text"
+                                                                >
+                                                                    <input
+                                                                        id="project_url"
+                                                                        matInput
+                                                                        placeholder="Service"
+                                                                        [formControlName]="
+                                                                            'service'
+                                                                        "
+                                                                    />
+                                                                </mat-form-field>
+                                                                <div
+                                                                    class="flex items-start ml-2 mt-2"
+                                                                >
+                                                                    <span
+                                                                        (click)="
+                                                                            addSubService(
+                                                                                i
+                                                                            )
+                                                                        "
+                                                                        class="flex items-center cursor-pointer"
+                                                                    >
+                                                                        <mat-icon
+                                                                            class="icon-size-2 text-primary_l"
+                                                                            svgIcon="heroicons_outline:plus-circle"
+                                                                        ></mat-icon>
+                                                                    </span>
+                                                                    <span
+                                                                        class="flex items-center cursor-pointer"
+                                                                        (click)="
+                                                                            removeService(
+                                                                                i
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        <mat-icon
+                                                                            class="icon-size-5 text-red ml-2"
+                                                                            [svgIcon]="
+                                                                                'delete'
+                                                                            "
+                                                                        ></mat-icon>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                formArrayName="subService"
+                                                                class="pl-2"
+                                                            >
+                                                                <div
+                                                                    *ngFor="
+                                                                        let skill of employeeSkills(
+                                                                            i
+                                                                        )
+                                                                            .controls;
+                                                                        let subIndex = index
+                                                                    "
+                                                                >
+                                                                    <div
+                                                                        [formGroupName]="
+                                                                            subIndex
+                                                                        "
+                                                                    >
+                                                                        <div
+                                                                            class="flex"
+                                                                        >
+                                                                            <mat-form-field
+                                                                                class="flex-auto fuse-mat-dense service_sub_text"
+                                                                            >
+                                                                                <input
+                                                                                    matInput
+                                                                                    placeholder="Subservice"
+                                                                                    [formControlName]="
+                                                                                        'subService'
+                                                                                    "
+                                                                                />
+                                                                            </mat-form-field>
+                                                                            <div
+                                                                                class="flex items-start ml-2 mt-2"
+                                                                            >
+                                                                                <span
+                                                                                    class="flex items-center cursor-pointer"
+                                                                                    (click)="
+                                                                                        removeSubService(
+                                                                                            i,
+                                                                                            subIndex
+                                                                                        )
+                                                                                    "
+                                                                                >
+                                                                                    <mat-icon
+                                                                                        class="icon-size-5 text-red ml-2"
+                                                                                        [svgIcon]="
+                                                                                            'delete'
+                                                                                        "
+                                                                                    ></mat-icon>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-3"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">12.</span
+                                    ><span
+                                        >What features do you need on your Home
+                                        Page?
+                                    </span>
+                                </div>
+
+                                <div class="mb-1">
+                                    <div
+                                        class="pl-6 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-3 lg:grid-cols-3 gap-3"
+                                    >
+                                        <div *ngFor="let item of homePagesList">
+                                            <mat-checkbox
+                                                class="example-margin"
+                                                (change)="
+                                                    checkFeatures(
+                                                        $event.checked,
+                                                        item.name
+                                                    )
+                                                "
+                                                name="{{ item.name }}"
+                                                [(ngModel)]="item.checked"
+                                                [ngModelOptions]="{
+                                                    standalone: true
+                                                }"
+                                                ><span class="">{{
+                                                    item.label
+                                                }}</span></mat-checkbox
+                                            >
+                                            <div
+                                                *ngIf="
+                                                    headerShow &&
+                                                    item.name == 'headerBanner'
+                                                "
+                                                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-1 mt-2 pl-3"
+                                            >
+                                                <div
+                                                    class=""
+                                                    *ngFor="
+                                                        let sub of item.children
+                                                    "
+                                                >
+                                                    <mat-checkbox
+                                                        class="example-margin"
+                                                        (change)="
+                                                            checkSubHeaderFeatures(
+                                                                $event.checked,
+                                                                sub.name
+                                                            )
+                                                        "
+                                                        name="{{ sub.name }}"
+                                                        [(ngModel)]="
+                                                            sub.checked
+                                                        "
+                                                        [ngModelOptions]="{
+                                                            standalone: true
+                                                        }"
+                                                        ><span class="">{{
+                                                            sub.label
+                                                        }}</span></mat-checkbox
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    iconShow &&
+                                                    item.name ==
+                                                        'socialMediaIcons'
+                                                "
+                                                class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-1 mt-2 pl-3"
+                                            >
+                                                <div
+                                                    class=""
+                                                    *ngFor="
+                                                        let sub of item.children
+                                                    "
+                                                >
+                                                    <mat-checkbox
+                                                        class="example-margin"
+                                                        (change)="
+                                                            checkSubSocialFeatures(
+                                                                $event.checked,
+                                                                sub.name
+                                                            )
+                                                        "
+                                                        name="{{ sub.name }}"
+                                                        [(ngModel)]="
+                                                            sub.checked
+                                                        "
+                                                        [ngModelOptions]="{
+                                                            standalone: true
+                                                        }"
+                                                        ><span class="">{{
+                                                            sub.label
+                                                        }}</span></mat-checkbox
+                                                    >
+                                                </div>
+                                            </div>
+                                            <ng-container
+                                                *ngIf="
+                                                    otherFeaturesShow &&
+                                                    item.name == 'other'
+                                                "
+                                            >
+                                                <form
+                                                    [formGroup]="featuresForm"
+                                                    class="mt-3"
+                                                >
+                                                    <div
+                                                        formArrayName="other"
+                                                        class=""
+                                                    >
+                                                        <div
+                                                            class=""
+                                                            *ngFor="
+                                                                let features of featuresForm.get(
+                                                                    'other'
+                                                                )['controls'];
+                                                                let i = index
+                                                            "
+                                                        >
+                                                            <div
+                                                                [formGroupName]="
+                                                                    i
+                                                                "
+                                                            >
+                                                                <div
+                                                                    class="flex"
+                                                                >
+                                                                    <mat-form-field
+                                                                        class="flex-auto fuse-mat-dense w-100"
+                                                                    >
+                                                                        <input
+                                                                            id="project_url"
+                                                                            matInput
+                                                                            placeholder="Feature"
+                                                                            [formControlName]="
+                                                                                'feature'
+                                                                            "
+                                                                        />
+                                                                    </mat-form-field>
+
+                                                                    <div
+                                                                        class="flex items-start ml-2 mt-2"
+                                                                    >
+                                                                        <span
+                                                                            (click)="
+                                                                                addFeature()
+                                                                            "
+                                                                            class="flex items-center cursor-pointer"
+                                                                        >
+                                                                            <mat-icon
+                                                                                class="icon-size-2 text-primary_l"
+                                                                                svgIcon="heroicons_outline:plus-circle"
+                                                                            ></mat-icon>
+                                                                        </span>
+                                                                        <span
+                                                                            class="flex items-center cursor-pointer"
+                                                                            (click)="
+                                                                                deleteFeature(
+                                                                                    i
+                                                                                )
+                                                                            "
+                                                                        >
+                                                                            <mat-icon
+                                                                                class="icon-size-5 text-red ml-2"
+                                                                                [svgIcon]="
+                                                                                    'delete'
+                                                                                "
+                                                                            ></mat-icon>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div></form
+                                            ></ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">13.</span
+                                    ><span>
+                                        Do you have the content ready for your
+                                        site?
+                                    </span>
+                                </div>
+                                <div class="mb-1">
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3"
+                                    >
+                                        <mat-radio-group
+                                            aria-label="Select an option"
+                                            (change)="handleChange($event)"
+                                            [(ngModel)]="contentData"
+                                            [ngModelOptions]="{
+                                                standalone: true
+                                            }"
+                                        >
+                                            <mat-radio-button
+                                                value="Yes"
+                                                class="mr-4"
+                                                >Yes</mat-radio-button
+                                            >
+                                            <mat-radio-button value="No"
+                                                >No</mat-radio-button
+                                            >
+                                        </mat-radio-group>
+                                        <div
+                                            *ngIf="contentUploadShow"
+                                            class="lg:col-span-2"
+                                        >
+                                            <mat-form-field
+                                                class="fuse-mat-dense w-full"
+                                            >
+                                                <input
+                                                    class="truncate"
+                                                    matInput
+                                                    readonly
+                                                    placeholder="Upload A File Here"
+                                                    name="image"
+                                                    [(ngModel)]="docAttr"
+                                                    [formControlName]="
+                                                        'contentFile'
+                                                    "
+                                                />
+
+                                                <button
+                                                    class="browse_btn bg-accent-700 mat-accent text-white px-3 py-1 rounded"
+                                                    mat-flat-button
+                                                    color="primary"
+                                                    (click)="
+                                                        uploadLogoImage(
+                                                            'content'
+                                                        )
+                                                    "
+                                                >
+                                                    Browse
+                                                </button>
+
+                                                <!-- <input
+                                                type="file"
+                                                #fileInput
+                                                id="uploadImage"
+                                                name="uploadImage"
+                                                accept=""
+                                                (change)="
+                                                    fileSelectedDoc($event)
+                                                "
+                                                multiple
+                                                class="browse-input"
+                                            /> -->
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex mt-label">
+                                    <span class="mr-2">14.</span
+                                    ><span>
+                                        What is your budget for the website?
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <mat-form-field
+                                        class="no_margin flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            [formControlName]="'budget'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">15.</span
+                                    ><span> Do you have Hosting? </span>
+                                </div>
+                                <div class="mb-1">
+                                    <mat-radio-group
+                                        aria-label="Select an option"
+                                        (change)="handleChangeHost($event)"
+                                        [(ngModel)]="hostingData"
+                                        [ngModelOptions]="{ standalone: true }"
+                                    >
+                                        <mat-radio-button
+                                            value="Yes"
+                                            class="mr-4"
+                                            >Yes</mat-radio-button
+                                        >
+                                        <mat-radio-button value="No"
+                                            >No</mat-radio-button
+                                        >
+                                    </mat-radio-group>
+                                    <div
+                                        *ngIf="hostShow"
+                                        class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-2 mt-3"
+                                    >
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                matInput
+                                                placeholder="Host URL"
+                                                [formControlName]="'hostUrl'"
+                                            />
+                                        </mat-form-field>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                matInput
+                                                placeholder="User Name"
+                                                [formControlName]="
+                                                    'hostUserName'
+                                                "
+                                            />
+                                        </mat-form-field>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                matInput
+                                                placeholder="Password"
+                                                [formControlName]="
+                                                    'hostPassword'
+                                                "
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">16.</span
+                                    ><span> Do you have Domain? </span>
+                                </div>
+                                <div class="mb-1">
+                                    <mat-radio-group
+                                        aria-label="Select an option"
+                                        (change)="handleChangeDomain($event)"
+                                        [(ngModel)]="domainData"
+                                        [ngModelOptions]="{ standalone: true }"
+                                    >
+                                        <mat-radio-button
+                                            value="Yes"
+                                            class="mr-4"
+                                            >Yes</mat-radio-button
+                                        >
+                                        <mat-radio-button value="No"
+                                            >No</mat-radio-button
+                                        >
+                                    </mat-radio-group>
+                                    <div
+                                        *ngIf="domainShow"
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-2 mt-3"
+                                    >
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                id="name"
+                                                matInput
+                                                placeholder="User Name"
+                                                [formControlName]="
+                                                    'domainUserName'
+                                                "
+                                            />
+                                        </mat-form-field>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                id="name"
+                                                matInput
+                                                placeholder="Password"
+                                                [formControlName]="
+                                                    'domainPassword'
+                                                "
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex mt-label">
+                                    <span class="mr-2">17.</span
+                                    ><span
+                                        >When would you like to launch your new
+                                        site?
+                                    </span>
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            [matDatepicker]="picker"
+                                            [formControlName]="'launchingDate'"
+                                            [(ngModel)]="launchingDate"
+                                            (dateChange)="selectedDate($event)"
+                                        />
+
+                                        <mat-datepicker-toggle
+                                            matIconSuffix
+                                            [for]="picker"
+                                        ></mat-datepicker-toggle>
+                                        <mat-datepicker
+                                            #picker
+                                        ></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-3"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">18.</span
+                                    ><span
+                                        >Do You Need any Additional Services?
+                                    </span>
+                                </div>
+                                <div class="mb-1">
+                                    <div
+                                        class="pl-6 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-3"
+                                    >
+                                        <div
+                                            *ngFor="
+                                                let item of additionalServicesList
+                                            "
+                                        >
+                                            <mat-checkbox
+                                                class="example-margin"
+                                                (change)="
+                                                    checkAdditional(
+                                                        $event.checked,
+                                                        item.name
+                                                    )
+                                                "
+                                                name="{{ item.name }}"
+                                                [(ngModel)]="item.checked"
+                                                [ngModelOptions]="{
+                                                    standalone: true
+                                                }"
+                                                ><span class="">{{
+                                                    item.label
+                                                }}</span></mat-checkbox
+                                            >
+
+                                            <!-- [checked]="
+                                        additionalDetails.length != 0 &&
+                                        item.label == 'Other'
+                                    " -->
+                                            <ng-container
+                                                *ngIf="
+                                                    otherServiceShow &&
+                                                    item.name == 'other'
+                                                "
+                                            >
+                                                <form
+                                                    [formGroup]="additionalForm"
+                                                    class="mt-2"
+                                                >
+                                                    <div
+                                                        formArrayName="additionalDetails"
+                                                        class=""
+                                                    >
+                                                        <div
+                                                            class=""
+                                                            *ngFor="
+                                                                let page of additionalForm.get(
+                                                                    'additionalDetails'
+                                                                )['controls'];
+                                                                let i = index
+                                                            "
+                                                        >
+                                                            <div
+                                                                [formGroupName]="
+                                                                    i
+                                                                "
+                                                            >
+                                                                <div
+                                                                    class="flex"
+                                                                >
+                                                                    <mat-form-field
+                                                                        class="flex-auto fuse-mat-dense"
+                                                                    >
+                                                                        <input
+                                                                            id="project_url"
+                                                                            matInput
+                                                                            placeholder="Service"
+                                                                            [formControlName]="
+                                                                                'service'
+                                                                            "
+                                                                        />
+                                                                    </mat-form-field>
+
+                                                                    <div
+                                                                        class="flex items-start ml-2 mt-2"
+                                                                    >
+                                                                        <span
+                                                                            (click)="
+                                                                                addadditional()
+                                                                            "
+                                                                            class="flex items-center cursor-pointer"
+                                                                        >
+                                                                            <mat-icon
+                                                                                class="icon-size-2 text-primary_l"
+                                                                                svgIcon="heroicons_outline:plus-circle"
+                                                                            ></mat-icon>
+                                                                        </span>
+                                                                        <span
+                                                                            class="flex items-center cursor-pointer"
+                                                                            (click)="
+                                                                                deleteadditional(
+                                                                                    i
+                                                                                )
+                                                                            "
+                                                                        >
+                                                                            <mat-icon
+                                                                                class="icon-size-5 text-red ml-2"
+                                                                                [svgIcon]="
+                                                                                    'delete'
+                                                                                "
+                                                                            ></mat-icon>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">19.</span
+                                    ><span>
+                                        Do you need E-Commerce Website?
+                                    </span>
+                                </div>
+                                <div class="mb-1">
+                                    <mat-radio-group
+                                        aria-label="Select an option"
+                                        (change)="handleChangeCommerce($event)"
+                                        [(ngModel)]="ecommerceNeed"
+                                        [ngModelOptions]="{ standalone: true }"
+                                    >
+                                        <mat-radio-button
+                                            value="Yes"
+                                            class="mr-4"
+                                            >Yes</mat-radio-button
+                                        >
+                                        <mat-radio-button value="No"
+                                            >No</mat-radio-button
+                                        >
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex mt-label">
+                                    <span class="mr-2">20.</span>Attach any
+                                    other Documents
+                                </div>
+                                <div class="">
+                                    <mat-form-field
+                                        class="fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            class="truncate"
+                                            matInput
+                                            readonly
+                                            name="image"
+                                            [(ngModel)]="otherAttr"
+                                            [formControlName]="'otherDoc'"
+                                        />
+
+                                        <button
+                                            class="browse_btn bg-accent-700 mat-accent text-white px-3 py-1 rounded"
+                                            mat-flat-button
+                                            color="primary"
+                                            (click)="uploadLogoImage('other')"
+                                        >
+                                            Browse
+                                        </button>
+
+                                        <!-- <input
+                                        type="file"
+                                        #fileInput
+                                        id="uploadImage"
+                                        name="uploadImage"
+                                        (change)="fileSelectedOther($event)"
+                                        class="browse-input"
+                                        multiple
+                                    /> -->
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gt-md:flex-row mt-3">
+                                <button
+                                    type="submit"
+                                    class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn text-white"
+                                    mat-flat-button
+                                    (click)="save()"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></ng-container
+>
+<ng-container *ngIf="successMsgShow">
+    <div class="flex flex-col flex-auto min-w-0 requirements">
+        <div
+            class="flex flex-wrap width_success max-w-screen-xl mx-auto p-6 md:p-8"
+        >
+            <div class="w-full max-w-screen-xl mx-auto">
+                <div class="flex flex-col col-span-2 mt-12">
+                    <div class="bg-card mb-5 shadow rounded-lg py-1 sce_sec">
+                        <div
+                            class="flex flex-col items-center justify-center px-5 py-16"
+                        >
+                            <img
+                                src="../../../../../assets/images/employees/check-ex.webp"
+                                alt="check"
+                                class="w-20 mb-3"
+                            />
+                            <div class="text-lg">
+                                Successfully Created Website Design Requirement.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

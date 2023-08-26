@@ -1,0 +1,441 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="flex px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-4 justify-between"
+            >
+                <div
+                    class="text-lg font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                >
+                    Employee Details
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full">
+                <div class="flex flex-col flex-auto p-6 bg-card rounded shadow">
+                    <div class="flex">
+                        <div
+                            class="mb-4 text-lg font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                        >
+                            Employee Details
+                        </div>
+                    </div>
+                    <div class="details-sec">
+                        <div class="flex items-center justify-center mb-4">
+                            <img
+                                class="rounded-full"
+                                src="{{ baseUrl + employeeData?.image }}"
+                                alt="{{ employeeData?.name }}"
+                            />
+                        </div>
+                        <div class="flex-col">
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-start justify-between"
+                                        >Employee Name
+                                        <span class="">:</span></label
+                                    >
+                                </div>
+                                <div class="col-span-3 ml-2 word-wrap">
+                                    {{ employeeData?.lastName | titlecase }}
+                                    {{ employeeData?.name | titlecase }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-start justify-between"
+                                        >Email <span class="">:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{ employeeData?.email }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Date Of Joining <span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3">
+                                    {{
+                                        employeeData?.date_of_join
+                                            | date : " d MMM y"
+                                    }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Employee ID <span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3">
+                                    {{ employeeData?.empId }}
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Role<span>:</span></label
+                                    >
+                                </div>
+                                <div
+                                    class="ml-2 col-span-3 word-wrap capitalize"
+                                >
+                                    {{ employeeData?.role }}
+                                </div>
+                            </div>
+                            <ng-container
+                                *ngIf="employeeData?.experience == true"
+                            >
+                                <div class="grid grid-cols-6 mb-2">
+                                    <div class="capitalize mb-1 col-span-3">
+                                        <label
+                                            class="font-semibold flex items-center justify-between"
+                                            >Experience<span>:</span></label
+                                        >
+                                    </div>
+                                    <div
+                                        class="ml-2 col-span-3 word-wrap capitalize"
+                                    >
+                                        {{ employeeData?.experienceYrs }}
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-6 mb-2">
+                                    <div class="capitalize mb-1 col-span-3">
+                                        <label
+                                            class="font-semibold flex items-center justify-between"
+                                            >Previous Company<span
+                                                >:</span
+                                            ></label
+                                        >
+                                    </div>
+                                    <div
+                                        class="ml-2 col-span-3 word-wrap capitalize"
+                                    >
+                                        {{ employeeData?.previousCompany }}
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Contact Number<span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{ employeeData?.phoneNumber }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-start justify-between"
+                                        >Alternative Contact Number<span
+                                            >:</span
+                                        ></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    {{
+                                        employeeData?.alternativeNumber
+                                            ? employeeData?.alternativeNumber
+                                            : "--"
+                                    }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >10th Original<span>:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3">
+                                    <span
+                                        class="h-6 px-2 rounded-full text-md font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                                        *ngIf="
+                                            employeeData?.certificateOriginal ==
+                                            true
+                                        "
+                                    >
+                                        Submitted
+                                        <mat-icon
+                                            svgIcon="mat_outline:check"
+                                            class="text-success-l icon-size-1"
+                                        ></mat-icon>
+                                    </span>
+                                    <span
+                                        class="h-6 px-2 rounded-full text-md font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                                        *ngIf="
+                                            employeeData?.certificateOriginal !=
+                                            true
+                                        "
+                                    >
+                                        Not Submitted
+                                        <mat-icon
+                                            svgIcon="mat_outline:close"
+                                            class="text-error icon-size-1"
+                                        ></mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-start justify-between"
+                                        >Address <span class="">:</span></label
+                                    >
+                                </div>
+                                <div class="ml-2 col-span-3 word-wrap">
+                                    <span
+                                        class="capitalize"
+                                        [innerHtml]="employeeData?.address"
+                                    ></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-6 mb-2">
+                                <div class="capitalize mb-1 col-span-3">
+                                    <label
+                                        class="font-semibold flex items-center justify-between"
+                                        >Status<span>:</span></label
+                                    >
+                                </div>
+
+                                <div
+                                    class="ml-2 col-span-3 word-wrap"
+                                    *ngIf="employeeData?.status == 'Relieved'"
+                                >
+                                    <span
+                                        class="h-6 px-2 rounded-full text-md font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                                    >
+                                        {{ employeeData?.status }}
+                                    </span>
+                                </div>
+                                <div
+                                    class="ml-2 col-span-3 word-wrap"
+                                    *ngIf="employeeData?.status == 'Working'"
+                                >
+                                    <span
+                                        class="h-6 px-2 rounded-full text-md font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                                    >
+                                        {{ employeeData?.status }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="xl:col-span-2 flex flex-col flex-auto bg-card shadow rounded overflow-hidden"
+                >
+                    <div class="flex flex-col flex-auto">
+                        <div
+                            class="pt-5 px-5 pb-2 flex items-center justify-between"
+                        >
+                            <div
+                                class="text-lg font-semibold tracking-tight leading-7 md:leading-snug truncate mb-3"
+                            >
+                                Project Details
+                            </div>
+                            <div></div>
+                        </div>
+                        <div class="overflow-x-auto w-full">
+                            <table
+                                class="w-full bg-transparent is-hoverable"
+                                mat-table
+                                matSort
+                                [dataSource]="dataSource"
+                                #clientsTable
+                            >
+                                <!-- name -->
+                                <ng-container matColumnDef="project_name">
+                                    <th
+                                        mat-header-cell
+                                        mat-sort-header
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Project Name
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            (click)="
+                                                singleProject(transaction._id)
+                                            "
+                                            class="flex capitalize text-xs+ cursor-pointer"
+                                        >
+                                            {{ transaction.name }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="client_name">
+                                    <th
+                                        mat-header-cell
+                                        mat-sort-header
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Client Name
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            (click)="
+                                                singleClient(
+                                                    transaction.client._id
+                                                )
+                                            "
+                                            class="capitalize cursor-pointer text-xs+"
+                                        >
+                                            {{ transaction.client?.name }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="start_date">
+                                    <th
+                                        mat-header-cell
+                                        mat-sort-header
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Start Date
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                                        >
+                                            {{
+                                                transaction.start_date
+                                                    | date : " d MMM y"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="end_date">
+                                    <th
+                                        mat-header-cell
+                                        mat-sort-header
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        End Date
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                                        >
+                                            {{
+                                                (transaction.end_date
+                                                | date : " d MMM y")
+                                                    ? (transaction.end_date
+                                                      | date : " d MMM y")
+                                                    : "--"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="total_budget">
+                                    <th
+                                        mat-header-cell
+                                        mat-sort-header
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Total Budget
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span
+                                            class="badge bg-primary/10 text-primary_l amounts"
+                                        >
+                                            {{ transaction.project_budget }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="time_line">
+                                    <th
+                                        mat-header-cell
+                                        mat-sort-header
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                    >
+                                        Time Line
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                        class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                    >
+                                        <span class="text-xs+">
+                                            {{
+                                                transaction.time_line
+                                                    ? transaction.time_line
+                                                    : "--"
+                                            }}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumns"
+                                ></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumns
+                                    "
+                                ></tr>
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td
+                                        class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                        align="center"
+                                        [attr.colspan]="displayedColumns.length"
+                                    >
+                                        No data Found.
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- <pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls> -->
+                    </div>
+                </div>
+            </div>
+            <div
+                class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 w-full min-w-0"
+            ></div>
+        </div>
+    </div>
+</div>

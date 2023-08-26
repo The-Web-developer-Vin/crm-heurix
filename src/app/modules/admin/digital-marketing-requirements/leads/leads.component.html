@@ -1,0 +1,410 @@
+<ng-container *ngIf="!successMsgShow">
+    <div class="flex flex-col flex-auto min-w-0 requirements">
+        <!-- Header -->
+        <div
+            class="flex flex-wrap width_set max-w-screen-xl mx-auto p-6 md:p-8"
+        >
+            <div class="w-full max-w-screen-xl mx-auto">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+                >
+                    <div
+                        class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                    >
+                        <div class="flex items-center justify-between">
+                            <div
+                                class="flex items-center text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                            >
+                                <span class="img_tp_sec mr-4">
+                                    <img
+                                        src="../../../../../assets/images/employees/leads.png"
+                                        alt=""
+                                    />
+                                </span>
+                                Leads Requirements
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col col-span-2">
+                    <div class="bg-card mb-5 shadow rounded-lg py-1">
+                        <form
+                            [formGroup]="leadsForm"
+                            class="flex flex-col create-form px-5 py-5"
+                        >
+                            <div class="">
+                                <div
+                                    class="mb-3 text-md font-bold client_bg text-white px-3 py-2"
+                                >
+                                    Client Information :
+                                </div>
+                                <div
+                                    class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Client Name *
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'clientName'
+                                                        "
+                                                    />
+                                                    <mat-error
+                                                        *ngIf="
+                                                            leadsForm
+                                                                .get(
+                                                                    'clientName'
+                                                                )
+                                                                .hasError(
+                                                                    'required'
+                                                                )
+                                                        "
+                                                    >
+                                                        Client Name is required
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Phone Number
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'phoneNumber'
+                                                        "
+                                                        (keypress)="
+                                                            numberOnly($event)
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Country
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <mat-select
+                                                        [formControlName]="
+                                                            'country'
+                                                        "
+                                                        placeholder="Country"
+                                                    >
+                                                        <mat-option
+                                                            *ngFor="
+                                                                let option of getallcoutries
+                                                            "
+                                                            [value]="option._id"
+                                                        >
+                                                            {{ option.name }}
+                                                        </mat-option>
+                                                    </mat-select></mat-form-field
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Email Id
+                                            </div>
+                                            <div class="md:col-span-3">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'mail'
+                                                        "
+                                                    />
+                                                    <mat-error
+                                                        *ngIf="
+                                                            leadsForm
+                                                                .get('mail')
+                                                                .hasError(
+                                                                    'email'
+                                                                )
+                                                        "
+                                                    >
+                                                        Please enter a valid
+                                                        email address
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Address
+                                            </div>
+                                            <div class="md:col-span-3">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'address'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="mb-3 text-md font-bold wesite_bg text-white mt-2 px-3 py-2"
+                            >
+                                Leads Details :
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div
+                                    class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"
+                                >
+                                    <div class="label_ex mt-label">
+                                        <span class="mr-3">1.</span>Project Name
+                                    </div>
+                                    <div>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                id="name"
+                                                matInput
+                                                [formControlName]="
+                                                    'projectName'
+                                                "
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div
+                                    class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"
+                                >
+                                    <div class="label_ex mt-label">
+                                        <span class="mr-3">2.</span>Project URL
+                                    </div>
+                                    <div>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <input
+                                                id="name"
+                                                matInput
+                                                [formControlName]="'projectUrl'"
+                                            />
+
+                                            <mat-error
+                                                *ngIf="
+                                                    leadsForm
+                                                        .get('projectUrl')
+                                                        .hasError('pattern')
+                                                "
+                                            >
+                                                Please enter a valid Project URL
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div
+                                    class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"
+                                >
+                                    <div class="label_ex mt-label">
+                                        <span class="mr-3">3.</span>Lead Through
+                                    </div>
+                                    <div>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense w-full"
+                                        >
+                                            <mat-select
+                                                [formControlName]="
+                                                    'leadThrough'
+                                                "
+                                            >
+                                                <mat-option
+                                                    *ngFor="
+                                                        let option of getallpaids
+                                                    "
+                                                    [value]="option._id"
+                                                >
+                                                    {{ option.name }}
+                                                </mat-option>
+                                            </mat-select></mat-form-field
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-1"
+                                >
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"
+                                    >
+                                        <div class="label_ex mt-label">
+                                            <span class="mr-3">4.</span>Status
+                                        </div>
+                                        <div>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <mat-select
+                                                    placeholder="Status"
+                                                    (selectionChange)="
+                                                        getStatus($event.value)
+                                                    "
+                                                    [(ngModel)]="selectedStatus"
+                                                    [ngModelOptions]="{
+                                                        standalone: true
+                                                    }"
+                                                >
+                                                    <mat-option
+                                                        *ngFor="
+                                                            let e of statusList
+                                                        "
+                                                        value="{{ e.value }}"
+                                                        >{{
+                                                            e.name
+                                                        }}</mat-option
+                                                    >
+                                                    <!-- <mat-option value="Lead"
+                                                    >Lead</mat-option
+                                                >
+                                                <mat-option value="Opportunity "
+                                                    >Opportunity
+                                                </mat-option>
+                                                <mat-option value="Close"
+                                                    >Close
+                                                </mat-option> -->
+                                                </mat-select></mat-form-field
+                                            >
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showProspectNote">
+                                        <mat-form-field class="w-full">
+                                            <!-- <mat-label>Note</mat-label> -->
+                                            <textarea
+                                                matInput
+                                                placeholder="Note"
+                                                [formControlName]="
+                                                    'prospectNote'
+                                                "
+                                            ></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="showLeadNote">
+                                        <mat-form-field class="w-full">
+                                            <!-- <mat-label>Note</mat-label> -->
+                                            <textarea
+                                                matInput
+                                                placeholder="Note"
+                                                [formControlName]="'leadNote'"
+                                            ></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="showOppurNote">
+                                        <mat-form-field class="w-full">
+                                            <!-- <mat-label>Note</mat-label> -->
+                                            <textarea
+                                                matInput
+                                                placeholder="Note"
+                                                [formControlName]="
+                                                    'opportunityNote'
+                                                "
+                                            ></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="showCloseNote">
+                                        <mat-form-field class="w-full">
+                                            <!-- <mat-label>Note</mat-label> -->
+                                            <textarea
+                                                matInput
+                                                placeholder="Note"
+                                                [formControlName]="'closeNote'"
+                                            ></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gt-md:flex-row mt-3">
+                                <button
+                                    type="submit"
+                                    class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn text-white"
+                                    mat-flat-button
+                                    (click)="save()"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></ng-container
+>
+<ng-container *ngIf="successMsgShow">
+    <div class="flex flex-col flex-auto min-w-0 requirements">
+        <div
+            class="flex flex-wrap width_success max-w-screen-xl mx-auto p-6 md:p-8"
+        >
+            <div class="w-full max-w-screen-xl mx-auto">
+                <div class="flex flex-col col-span-2 mt-12">
+                    <div class="bg-card mb-5 shadow rounded-lg py-1 sce_sec">
+                        <div
+                            class="flex flex-col items-center justify-center px-5 py-16"
+                        >
+                            <img
+                                src="../../../../../assets/images/employees/check-ex.webp"
+                                alt="check"
+                                class="w-20 mb-3"
+                            />
+                            <div class="text-lg">
+                                Successfully Created Leads.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

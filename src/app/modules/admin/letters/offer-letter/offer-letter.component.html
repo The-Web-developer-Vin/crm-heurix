@@ -1,0 +1,235 @@
+<div class="flex flex-col flex-auto w-full p-6">
+    <div class="w-full max-w-screen-md mx-auto brd_cls shadow">
+        <div>
+            <div class="flex justify-end p-6 noprint">
+                <button
+                    (click)="printPage()"
+                    class="mr-3"
+                    mat-raised-button
+                    matTooltip="Print"
+                    aria-label="Button that displays a tooltip when focused or hovered over"
+                >
+                    <mat-icon
+                        svgIcon="local_printshop"
+                        class="text-primary_l icon-size-6"
+                    ></mat-icon>
+                </button>
+                <button
+                    (click)="downloadAsPDF()"
+                    mat-raised-button
+                    matTooltip="Download as PDF"
+                    aria-label="Button that displays a tooltip when focused or hovered over"
+                >
+                    <mat-icon
+                        svgIcon="sim_card_download"
+                        class="text-primary_l icon-size-6"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <div
+                class="inset-0 min-w-0 text-center overflow-auto print:overflow-visible pdf bg-white"
+                cdkScrollable
+            >
+                <div class="text-left print:p-0">
+                    <div class="pdf_table" id="section-to-print">
+                        <div
+                            class="flex justify-between border-b p-5 px-10 items-center"
+                        >
+                            <div>
+                                <img
+                                    src="../../../../../assets/images/logo/logo2.png"
+                                    style="width: 180px"
+                                />
+                            </div>
+                            <div class="font-semibold flex align-flex-start">
+                                <mat-icon
+                                    svgIcon="heroicons_outline:location-marker"
+                                    class="text-primary mt-2 mr-3"
+                                ></mat-icon>
+
+                                H.No : 6-259, Thimmapuram,<br />
+                                Behind Saibaba Temple, Kakinada-533005.
+                            </div>
+                            <div class="w-34 font-semibold flex items-center">
+                                <mat-icon
+                                    svgIcon="heroicons_outline:phone"
+                                    class="mt-2 mr-3 text-primary"
+                                ></mat-icon>
+                                (+91) 9032722888
+                            </div>
+                        </div>
+                        <div class="pt-6 pb-6 px-10 relative">
+                            <div
+                                class="text-center pt-8 font-bold text-3xl mb-6 uppercase"
+                            >
+                                Offer Letter
+                            </div>
+                            <div class="mt-10 middle_cnt">
+                                <div class="font-medium">
+                                    Dear
+                                    <span class="font-bold capitalize"
+                                        >{{ employeeData?.name }}
+                                        <ng-container
+                                            *ngIf="employeeData?.lastName"
+                                            >{{
+                                                employeeData?.lastName
+                                            }}</ng-container
+                                        >,</span
+                                    >
+                                </div>
+                                <div class="flex flex-col items-start mt-3">
+                                    <div class="font-medium mb-3">
+                                        Congratulations,
+                                    </div>
+                                    <div class="mb-5">
+                                        We are proposing to make an offer of
+                                        employment in
+                                        <span class="font-bold capitalize"
+                                            >Vinutnaa IT Services India Private
+                                            Limited Company. </span
+                                        >Your post is designated as
+                                        <span class="font-bold capitalize"
+                                            >“{{ employeeData?.role }}”</span
+                                        >
+                                        in our company. Your date of appointment
+                                        is effective from the date of joining
+                                        which is going to be on
+                                        <span class="font-bold">
+                                            {{
+                                                employeeData?.date_of_join
+                                                    | date : "MMM d,  yyyy"
+                                            }}.
+                                            <!-- 1st jun 23 -->
+                                        </span>
+                                    </div>
+                                    <div class="font-medium mb-3">
+                                        The Terms and Conditions are:
+                                    </div>
+
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">1.</span> You will be
+                                        posted at our Kakinada Branch Office
+                                        situated at Kakinada, D.No: 6-259,
+                                        Thimmapuram, Behind Sai Baba Temple,
+                                        Kakinada 533005.
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">2.</span>
+                                        <span
+                                            >You will be on
+                                            <span class="font-bold"
+                                                >Probation for a period of 2
+                                                months</span
+                                            >
+                                            effective from the date of joining
+                                            our company and after satisfaction
+                                            or completion of the Probation
+                                            period you will be confirmed in the
+                                            services of our company.</span
+                                        >
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">3.</span> The normal
+                                        working hours will be 9:00 AM to 6:00 PM
+                                        and on Saturday 9:00 AM to 1:00 PM
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">4.</span> Your Salary
+                                        will be credited on the first day of
+                                        every month. Increments will be decided
+                                        based on your performance.
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">5.</span> If you are
+                                        found to be late on attendence by more
+                                        than 30 minutes 3(three) times in a
+                                        month, a day's salary will be deducted
+                                        from your monthly salary.
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">6.</span>
+                                        <span
+                                            >If you wish to leave your service,
+                                            you will have to give us a
+                                            <span class="font-bold"
+                                                >three-month notice,
+                                            </span>
+                                            failing to do so your one-month
+                                            salary will be with-held as
+                                            compensation for leaving without
+                                            approptiate notice so also liable to
+                                            pay damages as contemplated in the
+                                            service bond agreement.</span
+                                        >
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">7.</span> You shall
+                                        produce References of Two responsible
+                                        persons not related to you.
+                                    </div>
+                                    <div class="mb-3 flex pl-10">
+                                        <span class="pr-2">8.</span
+                                        ><span>
+                                            You shall produce the following
+                                            documents prior or on joining our
+                                            organization
+                                            <ol class="">
+                                                <li>
+                                                    a) Proof of qualification
+                                                </li>
+                                                <li>b) Proof of recidence</li>
+                                                <li>
+                                                    c) If you have any work
+                                                    experience please provide us
+                                                    the appointment letter and
+                                                    relieving letter of your
+                                                    previous company.
+                                                </li>
+                                                <li>
+                                                    d) Four recent pass port
+                                                    size photographs.
+                                                </li>
+                                            </ol></span
+                                        >
+                                    </div>
+                                    <div class="mb-15 mt-3">
+                                        Hope that your association with
+                                        <span class="font-bold capitalize"
+                                            >Vinutnaa IT Services India Private
+                                            Limited Company</span
+                                        >
+                                        will be a long term and fruitful one.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer middle_cnt">
+                            <div class="p-10">
+                                <div class="font-medium mb-4">
+                                    <span class="">Best Wishes,</span>
+                                </div>
+
+                                <div class="font-bold capitalize">
+                                    <p class="mb-2">Manager -HR,</p>
+                                    <div class="text-left">
+                                        <span class="font-bold uppercase"
+                                            >Vinutnaa IT Services PVT.,
+                                            Ltd.</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="btm-strip vin-primary px-10 pt-4 pb-4 overflow-hidden font-semibold text-white flex justify-between items-center"
+                            >
+                                <div class="m-0 p-0">hr@vinutnaa.com</div>
+                                <div class="m-0 p-0">www.vinutnaa.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

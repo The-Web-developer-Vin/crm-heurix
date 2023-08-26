@@ -1,0 +1,765 @@
+<div class="" *ngIf="!view">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-lg font-semibold text-white">
+                    {{ editdata ? "Edit" : "Add" }} Payment
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form p-5"
+            >
+                <ng-container>
+                    <div
+                        class="top_fields grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 mb-3"
+                    >
+                        <div class="col mb-3">
+                            <div class="text-md flex">
+                                <span class=""> Client Name :</span>
+                                <span
+                                    class="ml-2 flex capitalize cursor-pointer font-medium text-slate-700 dark:text-navy-10"
+                                >
+                                    {{ checkedList.Data[0][0]?.client_name }}
+                                    <ng-container
+                                        *ngIf="checkedList?.Data[0].length >= 2"
+                                    >
+                                        ({{
+                                            checkedList?.Data[0].length
+                                        }})</ng-container
+                                    ></span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gt-md:flex-row">
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full"
+                        >
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                [formControlName]="'paymentDate'"
+                                placeholder="Paid Date"
+                                [value]="getTomorrow()"
+                                (click)="picker.open()"
+                                (dateInput)="addDate('payment', $event)"
+                                (dateChange)="addDate('payment', $event)"
+                            />
+
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full ml-3"
+                        >
+                            <input
+                                matInput
+                                [matDatepicker]="picker2"
+                                [formControlName]="'receivedDate'"
+                                placeholder="Received Date"
+                                [value]="getTomorrow()"
+                                (click)="picker2.open()"
+                                (dateInput)="addDate('receive', $event)"
+                                (dateChange)="addDate('receive', $event)"
+                            />
+
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker2"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="fuse-mat-dense ml-3 w-full"
+                        >
+                            <mat-select
+                                [formControlName]="'paidThrough'"
+                                placeholder="Paid Through"
+                                (selectionChange)="getPaymentMethod($event, i)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of getallpaids"
+                                    [value]="option._id"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full add_payment_table">
+                        <div class="w-full">
+                            <table
+                                class="mat-elevation-z8 w-full border mb-5"
+                                [ngClass]="
+                                    array2.length != 0 ? 'mr-1 table_1' : ''
+                                "
+                                mat-table
+                                formArrayName="items"
+                                [dataSource]="dataSourceAddPayment"
+                                [trackBy]="trackByFn"
+                                #clientsTable
+                            >
+                                <ng-container matColumnDef="pName">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Project Name
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span
+                                            class="cursor-pointer"
+                                            matTooltip="{{
+                                                element?.project_name
+                                            }}"
+                                            aria-label="Button that displays a tooltip when focused or hovered over"
+                                            >{{
+                                                element?.project_name
+                                                    | slice : 0 : 10
+                                            }}</span
+                                        >
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="budget">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Budget
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span class="">{{
+                                            element?.project_budget
+                                                | currency
+                                                    : currencyName
+                                                    : "symbol"
+                                                    : "1.0"
+                                        }}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="hourlyRate">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Hourly Rate
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span class="">{{
+                                            (element?.project?.project_budget
+                                            | currency
+                                                : currencyName
+                                                : "symbol"
+                                                : "1.0")
+                                                ? (element?.project
+                                                      ?.project_budget
+                                                  | currency
+                                                      : currencyName
+                                                      : "symbol"
+                                                      : "1.0")
+                                                : 0
+                                        }}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="hrsTracked">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Hours Tracked
+                                    </th>
+                                    <td
+                                        [formGroupName]="i"
+                                        mat-cell
+                                        *matCellDef="let element; let i = index"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense"
+                                        >
+                                            <input
+                                                id="amount"
+                                                matInput
+                                                oninput="this.value = this.value.replace(/[^0-9-.]/g, '');"
+                                                [formControlName]="'hoursTrack'"
+                                                placeholder="Enter Hours"
+                                                (keyup)="
+                                                    hoursTracked($event, i, 2)
+                                                "
+                                                maxlength="5"
+                                            />
+                                        </mat-form-field>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="due">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Due
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span class="">
+                                            {{
+                                                element?.due
+                                                    | currency
+                                                        : currencyName
+                                                        : "symbol"
+                                                        : "1.0"
+                                            }}</span
+                                        >
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="amount">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Amount
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        [formGroupName]="i"
+                                        *matCellDef="let element; let i = index"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <div
+                                            class="flex justify-center items-center"
+                                        >
+                                            <mat-form-field
+                                                class="flex-auto w-full fuse-mat-dense amonut-field ml-1"
+                                            >
+                                                <input
+                                                    matInput
+                                                    [formControlName]="
+                                                        'totalPaid'
+                                                    "
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    (keyup)="
+                                                        amountPaid($event, i, 2)
+                                                    "
+                                                    maxlength="9"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                </ng-container>
+                                <!-- <ng-container matColumnDef="inr">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        INR
+                                    </th>
+                                    <td
+                                        [formGroupName]="i"
+                                        mat-cell
+                                        *matCellDef="let element; let i = index"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <div
+                                            class="flex items-center justify-center"
+                                        >
+                                            ₹
+                                            <mat-form-field
+                                                class="flex-auto w-full fuse-mat-dense inr-field ml-1"
+                                            >
+                                                <input
+                                                    id="amount"
+                                                    matInput
+                                                    [formControlName]="
+                                                        'inrAmount'
+                                                    "
+                                                    placeholder="Enter INR Amount"
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    (keyup)="
+                                                        amountINR($event, i, 2)
+                                                    "
+                                                    maxlength="9"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                </ng-container> -->
+
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumnsPayment"
+                                ></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumnsPayment;
+                                        let i = index
+                                    "
+                                ></tr>
+                            </table>
+                            <table
+                                *ngIf="array2.length != 0"
+                                class="mat-elevation-z8 w-full border ml-1 table_2"
+                                formArrayName="items"
+                                mat-table
+                                [dataSource]="dataSourceAddPayment2"
+                                [trackBy]="trackByFn"
+                                #clientsTable
+                            >
+                                <ng-container matColumnDef="pName">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Project Name
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span
+                                            class="cursor-pointer"
+                                            matTooltip="{{
+                                                element?.project_name
+                                            }}"
+                                            aria-label="Button that displays a tooltip when focused or hovered over"
+                                            >{{
+                                                element?.project_name
+                                                    | slice : 0 : 10
+                                            }}</span
+                                        >
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="budget">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Budget
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span class="">{{
+                                            element?.project_budget
+                                        }}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="hourlyRate">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Hourly Rate
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span class="">{{
+                                            element?.project?.project_budget
+                                                ? element?.project
+                                                      ?.project_budget
+                                                : 0
+                                        }}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="hrsTracked">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Hours Tracked
+                                    </th>
+                                    <td
+                                        [formGroupName]="i + array2.length"
+                                        mat-cell
+                                        *matCellDef="let element; let i = index"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense"
+                                        >
+                                            <input
+                                                id="amount"
+                                                matInput
+                                                oninput="this.value = this.value.replace(/[^0-9-.]/g, '');"
+                                                [formControlName]="'hoursTrack'"
+                                                placeholder="Enter Hours"
+                                                (keyup)="
+                                                    hoursTracked($event, i)
+                                                "
+                                                maxlength="5"
+                                            />
+                                        </mat-form-field>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="due">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Due
+                                    </th>
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let element"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <span class="">
+                                            {{ element?.due }}</span
+                                        >
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="amount">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        Amount
+                                    </th>
+
+                                    <td
+                                        [formGroupName]="
+                                            i +
+                                            (array2.length < 9
+                                                ? array2.length + 1
+                                                : array2.length)
+                                        "
+                                        mat-cell
+                                        *matCellDef="let element; let i = index"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <div
+                                            class="flex items-center justify-center"
+                                        >
+                                            $
+                                            <mat-form-field
+                                                class="flex-auto w-full fuse-mat-dense amonut-field ml-1"
+                                            >
+                                                <input
+                                                    id="amount"
+                                                    matInput
+                                                    [formControlName]="
+                                                        'totalPaid'
+                                                    "
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    (keyup)="
+                                                        amountPaid($event, i)
+                                                    "
+                                                    maxlength="9"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="inr">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        class="whitespace-nowrap bg-light-primary px-3 py-2 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                                    >
+                                        INR
+                                    </th>
+                                    <td
+                                        [formGroupName]="
+                                            i +
+                                            (array2.length < 9
+                                                ? array2.length + 1
+                                                : array2.length)
+                                        "
+                                        mat-cell
+                                        *matCellDef="let element; let i = index"
+                                        class="whitespace-nowrap px-3 py-1 sm:px-3"
+                                    >
+                                        <div
+                                            class="flex items-center justify-center"
+                                        >
+                                            ₹
+                                            <mat-form-field
+                                                class="flex-auto w-full fuse-mat-dense inr-field ml-1"
+                                            >
+                                                <input
+                                                    id="amount"
+                                                    matInput
+                                                    [formControlName]="
+                                                        'inrAmount'
+                                                    "
+                                                    placeholder="Enter INR Amount"
+                                                    (keypress)="
+                                                        numberOnly($event)
+                                                    "
+                                                    (keyup)="
+                                                        amountINR($event, i)
+                                                    "
+                                                    maxlength="9"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumnsPayment2"
+                                ></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumnsPayment2;
+                                        let i = index
+                                    "
+                                ></tr>
+                            </table>
+                        </div>
+                        <div class="flex justify-start w-full">
+                            <button
+                                type="submit"
+                                class="w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                mat-flat-button
+                                (click)="save()"
+                            >
+                                Pay
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- view -->
+<div class="view_payment" *ngIf="view">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">View Payment</div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+            <!-- class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 mb-3" -->
+            <div class="milestones px-5 pt-6">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 mb-3"
+                >
+                    <div class="col col-span-2">
+                        <div class="text-md font-semibold">Project Name :</div>
+                        <div>
+                            <span
+                                class="flex capitalize cursor-pointer font-medium text-slate-700 dark:text-navy-1"
+                                >{{
+                                    viewData.Data.project_name | slice : 0 : 20
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-semibold">Total Budget :</div>
+                        <div>
+                            <span
+                                class="mr-6 inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-warning/10 text-warning dark:bg-warning/15"
+                            >
+                                ${{ viewData.Data.totalProjectBudget }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-semibold">Total Paid :</div>
+                        <div>
+                            <span
+                                class="mr-6 inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 badge bg-success/10 text-success-l dark:bg-success/15"
+                            >
+                                ${{ viewData.Data.totalPaid }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-semibold">Due Amount :</div>
+                        <div>
+                            <span
+                                class="mr-6 inline-flex items-center h-6 px-2 rounded-full text-sm font-semibold leading-6 tracking-wide badge bg-error/10 text-error dark:bg-error/15"
+                            >
+                                ${{ viewData.Data.totalDue }}</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="px-5 pt-2 pb-5">
+        <div class="">
+            <table
+                mat-table
+                [dataSource]="dataSource"
+                class="mat-elevation-z8 w-full border is-hoverable"
+            >
+                <ng-container matColumnDef="paid_date">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Paid Date
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span class="text-xs+">
+                            {{ element.paidDate | date : "dd MMM, y" }}</span
+                        >
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="received_date">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Received Date
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <span class="text-xs+">
+                            {{
+                                (element.receivedDate | date : "dd MMM, y")
+                                    ? (element.receivedDate
+                                      | date : "dd MMM, y")
+                                    : "-"
+                            }}</span
+                        >
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="amount_paid">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        Paid Amount
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <!-- mr-6 text-xs inline-flex items-center font-bold px-2.5 py-0.5 rounded-full tracking-wide bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50 -->
+                        <span class="text-xs+"> ${{ element.amountPaid }}</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="inr">
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        class="whitespace-nowrap bg-light-primary px-3 py-3 font-semibold capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-3"
+                    >
+                        INR
+                    </th>
+                    <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="whitespace-nowrap px-3 py-3 sm:px-3"
+                    >
+                        <!-- mr-6 text-xs inline-flex items-center font-bold px-2.5 py-0.5 rounded-full tracking-wide bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50 -->
+                        <span class="text-xs+">
+                            {{
+                                element.inrAmount ? element.inrAmount : "-"
+                            }}</span
+                        >
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td
+                        class="mat-cell whitespace-nowrap px-3 py-3 sm:px-3"
+                        align="center"
+                        [attr.colspan]="displayedColumns.length"
+                    >
+                        There is No Payments.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

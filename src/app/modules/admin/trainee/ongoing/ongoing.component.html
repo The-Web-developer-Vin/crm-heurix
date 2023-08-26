@@ -1,0 +1,340 @@
+<div class="search p-4 flex items-center justify-between">
+    <div class="flex items-center relative">
+        <mat-form-field
+            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+            [floatLabel]="'always'"
+        >
+            <input
+                matInput
+                #search
+                placeholder="Search"
+                [(ngModel)]="searchName"
+                (keyup.enter)="doFilter(searchName)"
+            />
+        </mat-form-field>
+        <mat-icon
+            matPrefix
+            class="icon-size-5 cursor-pointer absolute right-4"
+            [svgIcon]="'heroicons_solid:search'"
+            (click)="doFilter(searchName)"
+        ></mat-icon>
+    </div>
+</div>
+<div class="overflow-x-auto w-full">
+    <table
+        class="w-full bg-transparent is-hoverable"
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        [trackBy]="trackByFn"
+        #traineesTable
+    >
+        <!-- position -->
+        <ng-container matColumnDef="position">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary pl-4 pr-2 py-3 font-medium text-xs+ capitalize"
+            >
+                S.No
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction; let i = index"
+                class="whitespace-nowrap pl-4 pr-2 py-3"
+            >
+                <span class="text-xs+ flex capitalize cursor-pointer">
+                    {{ i + 1 }}
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+            >
+                Profile
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-0 sm:px-5"
+            >
+                <span class="employee-image"
+                    ><img src="{{ baseUrl + transaction.image }}"
+                /></span>
+            </td>
+        </ng-container>
+        <!-- name -->
+        <ng-container matColumnDef="name">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                (click)="sorting($event, 'name')"
+            >
+                Name
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span
+                    (click)="singleTrainee(transaction._id)"
+                    class="flex capitalize cursor-pointer text-xs+"
+                    matTooltip="{{ transaction.name | titlecase }}"
+                    aria-label="Button that displays a tooltip when focused or hovered over"
+                >
+                    {{ transaction.name | slice : 0 : 10 | titlecase }}
+                    <!-- {{ transaction.surname | titlecase }} -->
+                </span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="DOJ">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                (click)="sorting($event, 'joiningDate')"
+            >
+                Doj
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span
+                    class="whitespace-nowrap capitalize text-xs+ text-success-l"
+                >
+                    {{ transaction.joiningDate | date : "dd MMM, y" }}
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- stream -->
+        <ng-container matColumnDef="course">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                (click)="sorting($event, 'course')"
+            >
+                Course
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+ whitespace-nowrap flex">
+                    {{ transaction.course.name }}
+                </span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="fee">
+            <th
+                mat-header-cell
+                mat-sort-header
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                *matHeaderCellDef
+                (click)="sorting($event, 'fee')"
+            >
+                Fee
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="badge bg-light-primary text-primary_l amounts">
+                    {{ transaction?.amountAfterDiscount }}
+                </span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="paid">
+            <th
+                mat-header-cell
+                mat-sort-header
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                *matHeaderCellDef
+                (click)="sorting($event, 'paidAmt')"
+            >
+                Paid
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span
+                    class="amounts badge bg-success/10 text-success-l dark:bg-success/15"
+                >
+                    {{ transaction.paidAmt ? transaction.paidAmt : 0 }}
+                </span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="due">
+            <th
+                mat-header-cell
+                mat-sort-header
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                *matHeaderCellDef
+                (click)="sorting($event, 'due')"
+            >
+                Due
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span
+                    class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                >
+                    {{ transaction?.due ? transaction?.due : 0 }}
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+            <th
+                mat-header-cell
+                mat-sort-header
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                *matHeaderCellDef
+                (click)="sorting($event, 'mobileNumber')"
+            >
+                Phone Number
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+">
+                    {{ transaction.mobileNumber }}
+                </span>
+            </td>
+        </ng-container>
+        <!-- reference -->
+        <ng-container matColumnDef="reference">
+            <th
+                mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+                (click)="sorting($event, 'referenceName')"
+            >
+                Reference
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="text-xs+ whitespace-nowrap capitalize flex">
+                    {{
+                        (transaction.referenceName | titlecase)
+                            ? (transaction.referenceName | titlecase)
+                            : "--"
+                    }}
+                </span>
+            </td>
+        </ng-container>
+        <!-- actions -->
+        <ng-container matColumnDef="actions">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-slate-800 dark:text-navy-100 whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize lg:px-5"
+            >
+                Actions
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let transaction"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <div class="flex items-center">
+                    <span
+                        *ngIf="
+                            transaction?.amountAfterDiscount != 0 ||
+                            transaction?.due != 0
+                        "
+                        (click)="addPayment(transaction)"
+                        class="flex items-center cursor-pointer"
+                    >
+                        <mat-icon
+                            svgIcon="payments"
+                            class="icon-size-5 mr-3 text-amber-500"
+                        ></mat-icon>
+                    </span>
+                    <span
+                        class="flex items-center cursor-pointer"
+                        (click)="editTrainee(transaction)"
+                    >
+                        <mat-icon
+                            svgIcon="edit"
+                            class="icon-size-5 text-green-600 mr-2"
+                        ></mat-icon>
+                    </span>
+                    <span
+                        class="flex items-center cursor-pointer"
+                        (click)="editStatus(transaction)"
+                        ><mat-icon
+                            svgIcon="feather:check-circle"
+                            class="icon-size-5 text-primary_l"
+                        ></mat-icon
+                    ></span>
+
+                    <span *ngIf="transaction.status == 'completed'">
+                        <button
+                            mat-button
+                            [matMenuTriggerFor]="theMenu"
+                            class="flex items-center"
+                        >
+                            <mat-icon
+                                class="icon-size-5 mr-3"
+                                svgIcon="heroicons_outline:dots-vertical"
+                            ></mat-icon>
+                        </button>
+                        <mat-menu #theMenu="matMenu">
+                            <button
+                                mat-menu-item
+                                (click)="generateCertificate(transaction._id)"
+                            >
+                                Generate Certificate
+                            </button>
+                        </mat-menu>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td
+                class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                align="center"
+                [attr.colspan]="displayedColumns.length"
+            >
+                No data Found.
+            </td>
+        </tr>
+    </table>
+</div>
+<mat-paginator
+    [length]="pageLength"
+    [pageSize]="pageSize"
+    [pageIndex]="pageNumber - 1"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="getAllTrainees()"
+>
+</mat-paginator>

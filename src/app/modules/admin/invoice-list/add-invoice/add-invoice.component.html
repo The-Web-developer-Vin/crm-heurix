@@ -1,0 +1,211 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out relative">
+        <div class="flex-auto p-4">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-end absolute right-0"
+            >
+                <!-- <div
+                    class="text-2xl font-semibold tracking-tight leading-6 truncate"
+                >
+                    Create Invoice
+                </div> -->
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="invoiceForm" class="flex flex-col create-form">
+                <div class="font-semibold text-lg mb-3">Invoice Details</div>
+                <div class="flex flex-row gt-md:flex-row mb-2">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label class="text-dark"
+                            >Invoice Description</mat-label
+                        >
+                        <textarea
+                            matInput
+                            [rows]="2"
+                            [formControlName]="'invoiceDescription'"
+                            matTextareaAutosize
+                        ></textarea>
+
+                        <mat-error
+                            *ngIf="
+                                invoiceForm
+                                    .get('invoiceDescription')
+                                    .hasError('required')
+                            "
+                        >
+                            Invoice Description is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="font-semibold text-lg mb-3">Billing Details</div>
+
+                <div class="mb-3">
+                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                    </ngx-editor-menu>
+                    <ngx-editor
+                        [editor]="editor"
+                        formControlName="address"
+                        class="h-70"
+                    >
+                    </ngx-editor>
+                    <!-- <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                            <mat-label class="text-dark">Address</mat-label>
+                            <textarea
+                                matInput
+                                [rows]="2"
+                                [formControlName]="'address'"
+                                matTextareaAutosize
+                            ></textarea>
+
+                            <mat-error
+                                *ngIf="
+                                    invoiceForm
+                                        .get('address')
+                                        .hasError('required')
+                                "
+                            >
+                                Address is required
+                            </mat-error>
+                        </mat-form-field> -->
+                </div>
+
+                <div class="flex flex-row gt-md:flex-row mb-2">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label class="text-dark">GST</mat-label>
+                        <input id="GST" matInput [formControlName]="'GST'" />
+                        <mat-error
+                            *ngIf="invoiceForm.get('GST').hasError('required')"
+                        >
+                            GST is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- form array -->
+                <div class="font-semibold text-lg mb-3">Payment Details</div>
+                <div
+                    class="items-center mb-2"
+                    formArrayName="details"
+                    *ngFor="
+                        let item of invoiceForm.get('details')['controls'];
+                        let i = index
+                    "
+                >
+                    <div [formGroupName]="i">
+                        <div class="flex flex-row gt-md:flex-row mb-2">
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense w-full"
+                            >
+                                <mat-label class="text-dark"
+                                    >Service Description</mat-label
+                                >
+                                <textarea
+                                    matInput
+                                    [rows]="2"
+                                    [formControlName]="'description'"
+                                    matTextareaAutosize
+                                ></textarea>
+
+                                <mat-error
+                                    *ngIf="!item.controls.description.required"
+                                >
+                                    Service Description is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-row gt-md:flex-row">
+                            <mat-form-field class="flex-auto fuse-mat-dense">
+                                <mat-label class="text-dark"
+                                    >Unit Price</mat-label
+                                >
+                                <input
+                                    id="price"
+                                    matInput
+                                    [formControlName]="'unitPrice'"
+                                    (keypress)="numberOnly($event)"
+                                    (keyup)="total($event, i)"
+                                />
+                                <mat-error
+                                    *ngIf="!item.controls.unitPrice.required"
+                                >
+                                    Unit Price is required
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense ml-5"
+                            >
+                                <mat-label class="text-dark">Tax</mat-label>
+                                <input
+                                    id="tax"
+                                    matInput
+                                    [formControlName]="'tax'"
+                                    (keypress)="numberOnly($event)"
+                                    (keyup)="total($event, i)"
+                                />
+                                <mat-error *ngIf="!item.controls.tax.required">
+                                    Tax is required
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense ml-5"
+                            >
+                                <mat-label class="text-dark"
+                                    >Total Amount</mat-label
+                                >
+                                <input
+                                    id="amount"
+                                    matInput
+                                    readonly
+                                    [formControlName]="'total'"
+                                    (keypress)="numberOnly($event)"
+                                />
+                                <mat-error
+                                    *ngIf="!item.controls.total.required"
+                                >
+                                    Amount is required
+                                </mat-error>
+                            </mat-form-field>
+                            <div class="flex items-center btns-arry">
+                                <span
+                                    (click)="addItem()"
+                                    class="mr-1 ml-5 bg-light rounded-full w-8 h-8 flex items-center justify-center pl-1 pr-1.5"
+                                    mat-flat-button
+                                    ><mat-icon
+                                        svgIcon="add_circle"
+                                        class="icon-size-6"
+                                    ></mat-icon>
+                                </span>
+                                <span
+                                    (click)="removeItem(i)"
+                                    class="bg-light rounded-full w-8 h-8 flex items-center justify-center pl-1 pr-1.5"
+                                    mat-flat-button
+                                    ><mat-icon
+                                        svgIcon="do_disturb_on"
+                                        class="icon-size-6"
+                                    ></mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gt-md:flex-row mt-3">
+                    <button
+                        type="submit"
+                        class="max-w-50 mat-focus-indicator fuse-mat-button-rounded mat-flat-button mat-button-base vin-primary"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Generate Invoice
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

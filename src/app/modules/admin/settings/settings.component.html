@@ -1,0 +1,1165 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- tabs -->
+            <div class="bg-card mb-5 shadow rounded py-1 tabs-setting pt-4">
+                <mat-tab-group
+                    class="sm:px-2"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="selectedTabChange($event)"
+                >
+                    <!-- Country -->
+                    <mat-tab label="Country">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Country
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div
+                                class="add-country flex justify-between items-start"
+                            >
+                                <form
+                                    [formGroup]="createForm"
+                                    class="flex flex-col create-form"
+                                    (ngSubmit)="addCountry()"
+                                >
+                                    <div
+                                        class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-6"
+                                    >
+                                        <div class="col">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <input
+                                                    id="amount"
+                                                    matInput
+                                                    [formControlName]="'name'"
+                                                    placeholder="Country Name"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <input
+                                                    id="currency"
+                                                    matInput
+                                                    [formControlName]="
+                                                        'currency'
+                                                    "
+                                                    placeholder="Currency Name"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <!-- [disabled]="!createForm.valid" -->
+                                            <button
+                                                type="submit"
+                                                class="w-full mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                            >
+                                                {{ modify ? "Update" : "Add" }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="searchCountry"
+                                            (keyup.enter)="
+                                                doFilter(searchCountry)
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="doFilter(searchCountry)"
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSourceCountry"
+                                    [trackBy]="trackByFn"
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- countryName -->
+                                    <ng-container matColumnDef="name">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Country Name
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ transaction.name }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- currency -->
+                                    <ng-container matColumnDef="currency">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="
+                                                sorting($event, 'currency')
+                                            "
+                                        >
+                                            Currency
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ transaction.currency }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let element;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex">
+                                                <span
+                                                    (click)="
+                                                        editCountry(element)
+                                                    "
+                                                    class="flex items-center cursor-pointer"
+                                                >
+                                                    <mat-icon
+                                                        svgIcon="edit"
+                                                        class="icon-size-5 mr-3 text-green-600"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                                <span
+                                                    class="flex items-center"
+                                                    (click)="
+                                                        deleteCountry(
+                                                            element._id
+                                                        )
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 text-red cursor-pointer"
+                                                        [svgIcon]="'delete'"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="countryColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: countryColumns
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                            align="center"
+                                            [attr.colspan]="
+                                                countryColumns.length
+                                            "
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <mat-paginator
+                                #paginatorCountry
+                                [length]="pageLengthCountry"
+                                [pageIndex]="pageNumber - 1"
+                                [pageSize]="pageSizeCountry"
+                                [pageSizeOptions]="[5, 10, 25, 100]"
+                                (page)="getCountryDetails()"
+                            >
+                            </mat-paginator>
+                        </ng-template>
+                    </mat-tab>
+                    <!-- Hired In -->
+                    <mat-tab label="Hired In">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Hired In
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div class="add-hired flex justify-between">
+                                <form
+                                    [formGroup]="createHiredForm"
+                                    class="flex flex-col create-form"
+                                    (ngSubmit)="addHired()"
+                                >
+                                    <div
+                                        class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-6"
+                                    >
+                                        <div class="col">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <!-- <mat-label class="text-dark">Client Name</mat-label> -->
+                                                <input
+                                                    matInput
+                                                    [formControlName]="'name'"
+                                                    placeholder="Hired"
+                                                />
+                                                <mat-error
+                                                    *ngIf="
+                                                        createHiredForm
+                                                            .get('name')
+                                                            .hasError(
+                                                                'required'
+                                                            )
+                                                    "
+                                                >
+                                                    Hired In is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <button
+                                                type="submit"
+                                                class="w-full mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                                mat-flat-button
+                                            >
+                                                {{
+                                                    modifyhired
+                                                        ? "Update"
+                                                        : "Add"
+                                                }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="hiredSearch"
+                                            (keyup.enter)="
+                                                doFilterHired(hiredSearch)
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="doFilterHired(hiredSearch)"
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSourceHiredIn"
+                                    [trackBy]="trackByFn"
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="text-xs+">
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- countryName -->
+                                    <ng-container matColumnDef="name">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Hired In
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="text-xs+ capitalize">
+                                                {{ transaction.name }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let element"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex">
+                                                <span
+                                                    (click)="editHired(element)"
+                                                    class="flex items-center cursor-pointer"
+                                                >
+                                                    <mat-icon
+                                                        svgIcon="edit"
+                                                        class="icon-size-5 mr-3 text-green-600"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                                <span
+                                                    class="flex items-center cursor-pointer"
+                                                    (click)="
+                                                        deleteHired(element._id)
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 text-red"
+                                                        [svgIcon]="'delete'"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="hiredInColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: hiredInColumns
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                            align="center"
+                                            [attr.colspan]="
+                                                hiredInColumns.length
+                                            "
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                                <mat-paginator
+                                    #paginatorhired
+                                    [length]="pageLengthHired"
+                                    [pageSize]="pageSizeHired"
+                                    [pageIndex]="pageNumber - 1"
+                                    [pageSizeOptions]="[5, 10, 25, 100]"
+                                    (page)="gethiredIn()"
+                                >
+                                </mat-paginator>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+
+                    <!-- Paid Through -->
+                    <mat-tab label="Paid Through">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Paid Through
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div class="add-paid flex justify-between">
+                                <form
+                                    [formGroup]="createPaidForm"
+                                    class="flex flex-col create-form"
+                                    (ngSubmit)="addPay()"
+                                >
+                                    <div
+                                        class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-6"
+                                    >
+                                        <div class="col">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <!-- <mat-label class="text-dark">Client Name</mat-label> -->
+                                                <input
+                                                    matInput
+                                                    [formControlName]="'name'"
+                                                    placeholder="Payment"
+                                                />
+                                                <mat-error
+                                                    *ngIf="
+                                                        createPaidForm
+                                                            .get('name')
+                                                            .hasError(
+                                                                'required'
+                                                            )
+                                                    "
+                                                >
+                                                    Payment Type is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <button
+                                                type="submit"
+                                                class="w-full mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                                mat-flat-button
+                                            >
+                                                <!-- {{ modify ? "Update" : "Add" }} -->
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="paidthroghSearch"
+                                            (keyup.enter)="
+                                                doFilterPaid(paidthroghSearch)
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="doFilterPaid(paidthroghSearch)"
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSourcePaid"
+                                    [trackBy]="trackByFn"
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="text-xs+">
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- countryName -->
+                                    <ng-container matColumnDef="name">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Payment Type
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ transaction.name }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let element"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex">
+                                                <!-- <span (click)="editPay()" class="flex items-center">
+                                                    <mat-icon svgIcon="edit" class="icon-size-5 mr-3 text-green-600">
+                                                    </mat-icon>
+                                                </span> -->
+                                                <span
+                                                    class="flex items-center"
+                                                    (click)="
+                                                        deletePay(element._id)
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 text-red cursor-pointer"
+                                                        [svgIcon]="'delete'"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="paidColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: paidColumns
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                            align="center"
+                                            [attr.colspan]="paidColumns.length"
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                                <mat-paginator
+                                    #paginatorPaid
+                                    [length]="pageLengthPaid"
+                                    [pageSize]="pageSizePaid"
+                                    [pageIndex]="pageNumber - 1"
+                                    [pageSizeOptions]="[5, 10, 25, 100]"
+                                    (page)="gethiredIn()"
+                                >
+                                </mat-paginator>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+
+                    <!-- Technologies -->
+                    <mat-tab label="Technologies">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Technologies
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div
+                                class="add-country flex justify-between items-start"
+                            >
+                                <form
+                                    [formGroup]="createTechnologyForm"
+                                    class="flex flex-col create-form"
+                                    (ngSubmit)="addTechnology()"
+                                >
+                                    <div
+                                        class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-6"
+                                    >
+                                        <div class="col">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    [formControlName]="'name'"
+                                                    placeholder="Technology"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <mat-select
+                                                    placeholder="Category"
+                                                    [formControlName]="
+                                                        'category'
+                                                    "
+                                                >
+                                                    <mat-option
+                                                        value="UI/UX Design"
+                                                    >
+                                                        UI/UX Design
+                                                    </mat-option>
+                                                    <mat-option value="backend">
+                                                        Backend
+                                                    </mat-option>
+                                                    <mat-option value="cms">
+                                                        CMS
+                                                    </mat-option>
+                                                    <mat-option
+                                                        value="Digital Marketing"
+                                                    >
+                                                        Digital Marketing
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <mat-select
+                                                    placeholder="Department"
+                                                    [formControlName]="
+                                                        'department'
+                                                    "
+                                                >
+                                                    <mat-option value="dev">
+                                                        Dev
+                                                    </mat-option>
+                                                    <mat-option value="digital">
+                                                        Digital
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col ml-4">
+                                            <button
+                                                type="submit"
+                                                class="w-full mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                            >
+                                                {{
+                                                    modifyTechnology
+                                                        ? "Update"
+                                                        : "Add"
+                                                }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="technologySearch"
+                                            (keyup.enter)="
+                                                doFilterTechnology(
+                                                    technologySearch
+                                                )
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="
+                                            doFilterTechnology(technologySearch)
+                                        "
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSourceTechnology"
+                                    [trackBy]="trackByFn"
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="text-xs+">
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Technology -->
+                                    <ng-container matColumnDef="name">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Technology
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ transaction.name }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Category -->
+                                    <ng-container matColumnDef="category">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="
+                                                sorting($event, 'category')
+                                            "
+                                        >
+                                            Category
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ transaction.category }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let element;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex">
+                                                <span
+                                                    (click)="
+                                                        editTechnology(element)
+                                                    "
+                                                    class="flex items-center"
+                                                >
+                                                    <mat-icon
+                                                        svgIcon="edit"
+                                                        class="icon-size-5 mr-3 text-green-600 cursor-pointer"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                                <span
+                                                    class="flex items-center"
+                                                    (click)="
+                                                        deleteTechnology(
+                                                            element._id
+                                                        )
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 text-red cursor-pointer"
+                                                        [svgIcon]="'delete'"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="technologyColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: technologyColumns
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                            align="center"
+                                            [attr.colspan]="
+                                                technologyColumns.length
+                                            "
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                                <mat-paginator
+                                    #paginatorTechno
+                                    [length]="pageLengthTechno"
+                                    [pageSize]="pageSizeTechno"
+                                    [pageIndex]="pageNumber - 1"
+                                    [pageSizeOptions]="[5, 10, 25, 100]"
+                                    (page)="getTechnologyList()"
+                                >
+                                </mat-paginator>
+                            </div> </ng-template
+                    ></mat-tab>
+
+                    <!-- Stopped Reasons -->
+                    <mat-tab label="Project Stopped Reasons">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Project Stopped Reasons
+                            </button>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div
+                                class="add-country flex justify-between items-start"
+                            >
+                                <form
+                                    [formGroup]="createReasonForm"
+                                    class="flex flex-col create-form"
+                                    (ngSubmit)="addReason()"
+                                >
+                                    <div
+                                        class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-6"
+                                    >
+                                        <div class="col col-span-3">
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    [formControlName]="'name'"
+                                                    placeholder="Reason"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col ml-4 col-span-2">
+                                            <button
+                                                type="submit"
+                                                class="w-full mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                                            >
+                                                {{
+                                                    modifyReason
+                                                        ? "Update"
+                                                        : "Add"
+                                                }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="flex items-center relative">
+                                    <mat-form-field
+                                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                                        [floatLabel]="'always'"
+                                    >
+                                        <input
+                                            matInput
+                                            #search
+                                            placeholder="Search"
+                                            [(ngModel)]="reasonSearch"
+                                            (keyup.enter)="
+                                                doFilterReason(reasonSearch)
+                                            "
+                                        />
+                                    </mat-form-field>
+                                    <mat-icon
+                                        matPrefix
+                                        class="icon-size-5 cursor-pointer absolute right-4"
+                                        [svgIcon]="'heroicons_solid:search'"
+                                        (click)="doFilterReason(reasonSearch)"
+                                    ></mat-icon>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table
+                                    class="w-full bg-transparent is-hoverable"
+                                    mat-table
+                                    matSort
+                                    [dataSource]="dataSourceReason"
+                                    [trackBy]="trackByFn"
+                                >
+                                    <!-- position -->
+                                    <ng-container matColumnDef="position">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            S.No
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let transaction;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span class="text-xs+">
+                                                {{ i + 1 }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <!-- technology -->
+                                    <ng-container matColumnDef="reason">
+                                        <th
+                                            mat-header-cell
+                                            mat-sort-header
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            (click)="sorting($event, 'name')"
+                                        >
+                                            Reason
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="let transaction"
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <span
+                                                class="text-xs+ flex capitalize"
+                                            >
+                                                {{ transaction.name }}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <th
+                                            mat-header-cell
+                                            *matHeaderCellDef
+                                            class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                        >
+                                            Actions
+                                        </th>
+                                        <td
+                                            mat-cell
+                                            *matCellDef="
+                                                let element;
+                                                let i = index
+                                            "
+                                            class="whitespace-nowrap px-4 py-3 sm:px-5"
+                                        >
+                                            <div class="flex">
+                                                <span
+                                                    (click)="
+                                                        editReason(element)
+                                                    "
+                                                    class="flex items-center"
+                                                >
+                                                    <mat-icon
+                                                        svgIcon="edit"
+                                                        class="icon-size-5 mr-3 text-green-600 cursor-pointer"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                                <span
+                                                    class="flex items-center"
+                                                    (click)="
+                                                        deleteReason(
+                                                            element._id
+                                                        )
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="icon-size-5 text-red cursor-pointer"
+                                                        [svgIcon]="'delete'"
+                                                    >
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr
+                                        mat-header-row
+                                        *matHeaderRowDef="reasonColumns"
+                                    ></tr>
+                                    <tr
+                                        mat-row
+                                        *matRowDef="
+                                            let row;
+                                            columns: reasonColumns
+                                        "
+                                    ></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td
+                                            class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                            align="center"
+                                            [attr.colspan]="
+                                                reasonColumns.length
+                                            "
+                                        >
+                                            No data Found.
+                                        </td>
+                                    </tr>
+                                </table>
+                                <mat-paginator
+                                    #paginatorReason
+                                    [length]="pageLengthReason"
+                                    [pageSize]="pageSizeReason"
+                                    [pageIndex]="pageNumber - 1"
+                                    [pageSizeOptions]="[5, 10, 25, 100]"
+                                    (page)="getAllStoppedReasons()"
+                                >
+                                </mat-paginator>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

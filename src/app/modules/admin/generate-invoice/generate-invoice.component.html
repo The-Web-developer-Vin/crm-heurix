@@ -1,0 +1,213 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="bg-card mb-5 rounded p-8">
+                <div class="flex justify-between mb-8">
+                    <div>
+                        <!-- Logo -->
+                        <div class="w-30 mb-3">
+                            <img src="assets/images/logo/logo.webp" />
+                        </div>
+                        <div class="text-md">
+                            6-259, Behind Sai Baba Temple,<br />
+                            Thimmapuram Kakinada,<br />
+                            Andhra Pradesh 533005
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xl text-navy font-semibold">
+                            Invoice
+                        </div>
+                        <div>{{ data?.invoiceId }}</div>
+                        <div>
+                            Date: {{ data?.createdAt | date : "MM-dd-yyyy" }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <div class="text-xl text-navy font-semibold">Bill To:</div>
+                    <div class="text-md" [innerHtml]="data.address"></div>
+                </div>
+                <div class="mb-5">
+                    <div class="text-md">
+                        <span class="font-semibold">
+                            Invoice Description :</span
+                        >
+                        {{ data?.invoiceDescription }}
+                    </div>
+                </div>
+                <!-- table -->
+                <div class="mb-5">
+                    <table
+                        class="w-full bg-transparent border"
+                        mat-table
+                        matSort
+                        [dataSource]="dataSource"
+                        [trackBy]="trackByFn"
+                        #clientsTable
+                    >
+                        <!-- description -->
+                        <ng-container matColumnDef="description">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize"
+                            >
+                                Service Description
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap max-w-80"
+                            >
+                                <span
+                                    class="py-2 flex capitalize cursor-pointer whitespace-normal"
+                                >
+                                    {{ transaction.description }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- unitPrice -->
+                        <ng-container matColumnDef="unitPrice">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap capitalize text-center"
+                            >
+                                Unit Price
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap text-center"
+                            >
+                                <span class="capitalize text-center">
+                                    {{ transaction.unitPrice }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- tax -->
+                        <ng-container matColumnDef="tax">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap capitalize text-center"
+                            >
+                                Tax
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap text-center"
+                            >
+                                <span class="capitalize text-center">
+                                    {{ transaction.tax }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- totalAmount -->
+                        <ng-container matColumnDef="totalAmount">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize text-right"
+                            >
+                                Total Amount
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap text-right"
+                            >
+                                <span class="capitalize text-right">
+                                    {{ transaction.total }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <tr
+                            mat-header-row
+                            class="h-8"
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            class="h-8"
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                    </table>
+                    <div
+                        class="mb-4 flex justify-between items-center px-3 py-2 border border-top-0"
+                    >
+                        <div class="text-md font-semibold">
+                            {{ convertNumberToWords(data) }}Rupees Only
+                        </div>
+                        <div class="text-lg text-right font-bold">
+                            Total : {{ data.totalAmount }}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-md font-semibold">
+                            Make all payments payable to [Vinutnaa It Services
+                            India Pvt.Ltd]
+                        </div>
+                    </div>
+                </div>
+                <!-- payment details -->
+                <div class="mb-12">
+                    <div class="text-xl text-navy font-semibold mb-1">
+                        Our Bank Details:
+                    </div>
+                    <div class="font-medium text-md">
+                        Company Name : Vinutnaa IT Services India Pvt. Ltd.
+                    </div>
+                    <div class="font-medium text-md">Bank Name : HDFC BANK</div>
+                    <div class="font-medium text-md">
+                        Account No. : 50200007832605
+                    </div>
+                    <div class="font-medium text-md">
+                        Bank City, State : Kakinada, Andhra Pradesh
+                    </div>
+                    <div class="font-medium text-md">Bank Country : India</div>
+                    <div class="font-medium text-md">
+                        Bank Routing No/SWIFT Code : HDFCINBB
+                    </div>
+                    <div class="font-medium text-md">
+                        IFSC CODE : HDFC0002388
+                    </div>
+                </div>
+                <!-- sucess msg -->
+                <div>
+                    <div class="text-lg font-semibold text-center uppercase">
+                        THANK YOU FOR YOUR BUSINESS!
+                    </div>
+                </div>
+            </div>
+            <div class="text-right" id="none">
+                <button
+                    (click)="print()"
+                    type="submit"
+                    class="mr-3 px-8 py-2 max-w-50 mat-focus-indicator fuse-mat-button-rounded mat-flat-button mat-button-base vin-primary"
+                    mat-flat-button
+                >
+                    Print
+                </button>
+                <button
+                    *ngIf=""
+                    type="submit"
+                    class="max-w-50 mat-focus-indicator fuse-mat-button-rounded mat-flat-button mat-button-base bg-white"
+                    mat-flat-button
+                    [routerLink]="['/invoice']"
+                >
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

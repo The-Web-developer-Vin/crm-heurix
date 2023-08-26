@@ -1,0 +1,227 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">
+                    {{ modify ? "Modify" : "Add" }} Bidding
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-5"
+            >
+                <!-- Name , email -->
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense"
+                    >
+                        <mat-label>Job Title</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'jobTitle'"
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm.get('jobTitle').hasError('required')
+                            "
+                        >
+                            Job Title is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="ml-5 w-full fuse-mat-dense"
+                    >
+                        <mat-label>Bid Url</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'bidUrl'"
+                        />
+                        <mat-error
+                            *ngIf="
+                                createForm.get('bidUrl').hasError('required')
+                            "
+                        >
+                            Bid Url is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- date of joining , role -->
+
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                    >
+                        <mat-label>Account</mat-label>
+
+                        <mat-select
+                            [formControlName]="'account'"
+                            placeholder="select"
+                        >
+                            <mat-option
+                                *ngFor="let option of accounts"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="
+                                createForm.get('account').hasError('required')
+                            "
+                        >
+                            Designation is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-5"
+                    >
+                        <mat-label> Technology </mat-label>
+
+                        <mat-select
+                            [formControlName]="'technology'"
+                            placeholder="select"
+                        >
+                            <mat-option
+                                *ngFor="let option of getTechnologylist"
+                                [value]="option._id"
+                            >
+                                {{ option.name }}
+                            </mat-option>
+                        </mat-select>
+
+                        <mat-error
+                            *ngIf="
+                                createForm
+                                    .get('technology')
+                                    .hasError('required')
+                            "
+                        >
+                            Technology is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row gt-md:flex-row">
+                    <ng-container *ngIf="modify">
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full"
+                        >
+                            <mat-label>Reason</mat-label>
+                            <input
+                                id="reason"
+                                matInput
+                                [formControlName]="'reason'"
+                            />
+                            <mat-error
+                                *ngIf="
+                                    createForm
+                                        .get('reason')
+                                        .hasError('required')
+                                "
+                            >
+                                Reason is required
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full ml-5"
+                        >
+                            <mat-label>Response</mat-label>
+                            <mat-select [formControlName]="'response'">
+                                <mat-option value="true" id="1">
+                                    Yes
+                                </mat-option>
+                                <mat-option value="false" id="2">
+                                    No
+                                </mat-option>
+                            </mat-select>
+                            <mat-error
+                                *ngIf="
+                                    createForm
+                                        .get('response')
+                                        .hasError('required')
+                                "
+                            >
+                                Employee Id is required
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="flex-auto fuse-mat-dense w-full ml-5"
+                        >
+                            <mat-label>Converted</mat-label>
+                            <mat-select [formControlName]="'converted'">
+                                <mat-option value="true"> Yes </mat-option>
+                                <mat-option value="false"> No </mat-option>
+                            </mat-select>
+                            <mat-error
+                                *ngIf="
+                                    createForm
+                                        .get('converted')
+                                        .hasError('required')
+                                "
+                            >
+                                Converted is required
+                            </mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+                <div class="flex flex-row gt-md:flex-row" *ngIf="modify">
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full"
+                    >
+                        <mat-label>Follow Up</mat-label>
+                        <mat-select [formControlName]="'followUp'">
+                            <mat-option value="true" id="1"> Yes </mat-option>
+                            <mat-option value="false" id="2"> No </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-full fuse-mat-dense ml-5"
+                    >
+                        <mat-label>Client Name</mat-label>
+                        <input
+                            id="name"
+                            matInput
+                            [formControlName]="'clientName'"
+                        />
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-md:flex-row">
+                    <button
+                        type="submit"
+                        class="max-w-40 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        {{ modify ? "Update" : "Add" }} Bidding
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+.cmn-blk {
+    border: 1px solid #e2e8f0;
+}
+.tool_tip {
+    position: absolute;
+    top: 38px;
+    z-index: 999;
+    width: 50%;
+    right: 20px;
+    height: 300px;
+    overflow: scroll;
+    table {
+        th,
+        td {
+            border-bottom: 1px solid #e2e8f0;
+        }
+    }
+    &.two_count {
+        bottom: -60px;
+    }
+    &.three_count {
+        bottom: -78px;
+    }
+    &.four_count {
+        bottom: -100px;
+    }
+    &.five_count {
+        bottom: -120px;
+    }
+    &.six_count {
+        bottom: -145px;
+    }
+    .outer {
+        //padding: 10px 15px;
+        background: #fff !important;
+        //  color: #fff;
+        border-radius: 5px;
+        width: 100%;
+        //4f46e5;
+        // .top_design {
+        //     width: 10px;
+        //     height: 10px;
+        //     background-color: #fff;
+        //     position: absolute;
+        //     top: -4px;
+        //     right: 30px;
+        //     transform: rotate(45deg);
+        // }
+    }
+}
+.count {
+    &:hover {
+        .tool_tip {
+            display: block !important;
+        }
+    }
+}

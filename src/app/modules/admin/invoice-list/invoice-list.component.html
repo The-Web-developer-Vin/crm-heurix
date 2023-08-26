@@ -1,0 +1,199 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-2 bg-card shadow rounded overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                        >
+                            All Invoices
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <button
+                                class="px-3 py-1 mat-focus-indicator fuse-mat-button-rounded mat-flat-button mat-button-base vin-primary"
+                                mat-flat-button
+                                (click)="add()"
+                            >
+                                <mat-icon
+                                    svgIcon="add"
+                                    class="icon-size-5 text-white"
+                                ></mat-icon>
+                                <span class="ml-1">Add Invoice</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+
+            <div class="bg-card mb-5 shadow rounded py-1">
+                <!-- <div class="search p-4">
+                    <mat-form-field
+                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                        [floatLabel]="'always'"
+                    >
+                        <mat-icon
+                            matPrefix
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:search'"
+                        ></mat-icon>
+                        <input matInput #search placeholder="Search" />
+                    </mat-form-field>
+                </div> -->
+                <div class="overflow-x-auto w-full">
+                    <table
+                        class="w-full bg-transparent"
+                        mat-table
+                        matSort
+                        [dataSource]="dataSource"
+                        [trackBy]="trackByFn"
+                        #clientsTable
+                    >
+                        <!-- id -->
+                        <ng-container matColumnDef="id">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize"
+                            >
+                                Invoice Id
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap"
+                            >
+                                <span
+                                    class="pr-6 flex capitalize cursor-pointer"
+                                >
+                                    {{ transaction.invoiceId }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="idin">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize"
+                            >
+                                Id
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap"
+                            >
+                                <span
+                                    class="pr-6 flex capitalize cursor-pointer"
+                                >
+                                    {{ transaction._id }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- invoiceDescription -->
+                        <ng-container matColumnDef="invoiceDescription">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize"
+                            >
+                                Invoice Description
+                            </th>
+                            <td mat-cell *matCellDef="let transaction" class="">
+                                <span class="flex pr-6 capitalize">
+                                    {{ transaction.invoiceDescription }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- address -->
+                        <ng-container matColumnDef="address">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize"
+                            >
+                                Address
+                            </th>
+                            <td mat-cell *matCellDef="let transaction" class="">
+                                <span
+                                    class="flex pr-6 capitalize"
+                                    [innerHtml]="transaction.address"
+                                >
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- GST -->
+                        <ng-container matColumnDef="GST">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="pr-6 whitespace-nowrap capitalize"
+                            >
+                                GST
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap"
+                            >
+                                <span class="pr-6 whitespace-nowrap capitalize">
+                                    {{ transaction.GST }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- actions -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Actions</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="flex">
+                                    <button
+                                        class="vin-text-primary rounded py-0.5 px-3 text-sm font-semibold bg-sky-200"
+                                        [routerLink]="['/invoice/print']"
+                                        [queryParams]="{ id: element._id }"
+                                    >
+                                        Genenrate
+                                    </button>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                    </table>
+                </div>
+                <mat-paginator
+                    [length]="pageLength"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageNumber - 1"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    (page)="getData()"
+                >
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

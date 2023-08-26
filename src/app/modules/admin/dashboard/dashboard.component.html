@@ -1,0 +1,250 @@
+<div class="flex flex-col flex-auto min-w-0 dashboard">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- project-details -->
+            <!-- tabs Admin-->
+            <ng-container *ngIf="role == 'Admin'">
+                <div class="tabs-dashboard relative">
+                    <div
+                        class="search px-4 pb-4 flex items-center justify-between"
+                    >
+                        <mat-form-field
+                            class="w-full fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                [(ngModel)]="currencyName"
+                                (selectionChange)="
+                                    selectedCurrency($event.value)
+                                "
+                            >
+                                <mat-option
+                                    *ngFor="let data of getallcoutries"
+                                    value="{{ data._id._id }}"
+                                    >{{ data._id.name }} -
+                                    {{ data._id.currency }}</mat-option
+                                >
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <mat-tab-group
+                        class="sm:px-2"
+                        [animationDuration]="'0'"
+                        (selectedTabChange)="tabClick($event)"
+                    >
+                        <ng-container *ngFor="let data of adminTabs">
+                            <mat-tab label="{{ data?.name }}">
+                                <ng-template mat-tab-label>
+                                    <button
+                                        class="capitalize btn h-8 rounded-full text-xs+ font-medium"
+                                    >
+                                        {{ data.label }}
+                                    </button>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div
+                                        class="mt-6 grid sm:grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0"
+                                    >
+                                        <div
+                                            class="bg-card shadow rounded-2xl p-5 flex flex-col"
+                                        >
+                                            <apx-chart
+                                                [series]="
+                                                    pieChartOptions.series
+                                                "
+                                                [chart]="pieChartOptions.chart"
+                                                [labels]="
+                                                    pieChartOptions.labels
+                                                "
+                                                [responsive]="
+                                                    pieChartOptions.responsive
+                                                "
+                                                [title]="pieChartOptions.title"
+                                                [legend]="
+                                                    pieChartOptions.legend
+                                                "
+                                            ></apx-chart>
+                                        </div>
+                                        <div
+                                            class="bg-card shadow rounded-2xl p-5 flex flex-col"
+                                        >
+                                            <apx-chart
+                                                [series]="chartOptions.series"
+                                                [chart]="chartOptions.chart"
+                                                [xaxis]="chartOptions.xaxis"
+                                                [stroke]="chartOptions.stroke"
+                                                [tooltip]="chartOptions.tooltip"
+                                                [dataLabels]="
+                                                    chartOptions.dataLabels
+                                                "
+                                                [legend]="chartOptions.legend"
+                                                [markers]="chartOptions.markers"
+                                                [grid]="chartOptions.grid"
+                                                [yaxis]="chartOptions.yaxis"
+                                                [title]="chartOptions.title"
+                                                [fill]="chartOptions.fill"
+                                            ></apx-chart>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group></div
+            ></ng-container>
+            <!-- Managers-->
+            <!-- <ng-container *ngIf="role != 'Admin'">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0"
+                >
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 shadow bg-card cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">
+                                Total Budget
+                            </div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-amber-500"
+                            >
+                                {{
+                                    dashboardDetails?.total_budget
+                                        ? dashboardDetails?.total_budget
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">
+                                Total Paid
+                            </div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-green-500"
+                            >
+                                {{
+                                    dashboardDetails?.total_paid
+                                        ? dashboardDetails?.total_paid
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">Due</div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-red-500"
+                            >
+                                {{
+                                    dashboardDetails?.due
+                                        ? dashboardDetails?.due
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">
+                                Total Staff
+                            </div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-accent-500"
+                            >
+                                {{
+                                    dashboardDetails?.total_staff
+                                        ? dashboardDetails?.total_staff
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0 mt-6"
+                >
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">
+                                No of Projects
+                            </div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none vin-text-primary"
+                            >
+                                {{
+                                    dashboardDetails?.total_projects
+                                        ? dashboardDetails?.total_projects
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">
+                                In Progress
+                            </div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-amber-500"
+                            >
+                                {{
+                                    dashboardDetails?.pending_projects
+                                        ? dashboardDetails?.pending_projects
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">
+                                Completed Projects
+                            </div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-green-500"
+                            >
+                                {{
+                                    dashboardDetails?.completed_projects
+                                        ? dashboardDetails?.completed_projects
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col flex-auto px-6 py-8 bg-card shadow cmn-blk rounded-2xl overflow-hidden"
+                    >
+                        <div class="flex flex-col items-center">
+                            <div class="text-md font-medium mb-1">Stopped</div>
+                            <div
+                                class="text-5xl font-bold tracking-tight leading-none text-red-500"
+                            >
+                                {{
+                                    dashboardDetails?.stopped_projects
+                                        ? dashboardDetails?.stopped_projects
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container> -->
+            <!-- stream graph -->
+        </div>
+    </div>
+</div>

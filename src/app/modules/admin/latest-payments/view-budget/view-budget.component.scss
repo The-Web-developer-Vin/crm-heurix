@@ -1,0 +1,14 @@
+table {
+    box-shadow: none !important;
+}
+
+::ng-deep .views ::ng-deep .mat-dialog-container {
+    margin: 0px;
+    padding: 0px;
+    tr {
+        height: 42px !important;
+    }
+    th {
+        background-color: #f1f5f9;
+    }
+}

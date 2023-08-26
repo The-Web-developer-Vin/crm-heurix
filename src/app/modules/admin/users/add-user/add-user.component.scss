@@ -1,0 +1,91 @@
+.add-width {
+    width: 100%;
+}
+
+.bg-light {
+    background-color: #ddd !important;
+}
+::ng-deep body.light .mat-snack-bar-container,
+body .light .mat-snack-bar-container {
+    background: rgb(34 197 94);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container .mat-button {
+    color: #fff;
+}
+
+::ng-deep body.light .mat-snack-bar-container.alert-red {
+    background: rgb(239 68 68);
+    color: #fff !important;
+}
+
+.img-w50 {
+    width: 50px;
+}
+// .imageupload{
+
+//     position: relative;
+// #uploadFile,
+#uploadImage {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 9;
+    opacity: 0;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+}
+.namecompany {
+    grid-column-gap: 20px;
+}
+.desimage {
+    grid-column-gap: 20px;
+}
+::ng-deep
+    .cer_check
+    .mat-checkbox
+    .mat-checkbox-layout
+    .mat-checkbox-inner-container {
+    margin: 0px 5px 0px 0px !important;
+}
+
+.user_editor {
+    margin-bottom: 11px;
+    .addr_label {
+        font-weight: 500;
+        --tw-text-opacity: 1 !important;
+        color: rgba(
+            var(--fuse-text-default-rgb),
+            var(--tw-text-opacity)
+        ) !important;
+    }
+    .NgxEditor__Wrapper {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        height: 60px;
+        overflow-y: scroll;
+        padding: 0 10px;
+        border-radius: 6px;
+        border-width: 1px;
+        --tw-border-opacity: 1 !important;
+        border-color: rgb(203 213 225 / var(--tw-border-opacity)) !important;
+        --tw-bg-opacity: 1 !important;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+        --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+        --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color) !important;
+        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+            var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+        &.error_show {
+            -tw-border-opacity: 1 !important;
+            border-color: rgba(
+                var(--fuse-warn-rgb),
+                var(--tw-border-opacity)
+            ) !important;
+        }
+    }
+}
+.details {
+    background-color: #ecf2ff !important;
+    padding: 7px 12px;
+}

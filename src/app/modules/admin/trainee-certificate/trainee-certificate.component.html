@@ -1,0 +1,118 @@
+<div class="flex flex-col flex-auto w-full p-6">
+    <div class="w-full max-w-screen-md mx-auto brd_cls shadow">
+        <div>
+            <div class="flex justify-end p-6 noprint">
+                <button
+                    (click)="printPage()"
+                    class="px-5 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                    mat-flat-button
+                >
+                    <mat-icon
+                        svgIcon="local_printshop"
+                        class="text-white icon-size-5 mr-1"
+                    ></mat-icon>
+                    Print
+                </button>
+            </div>
+            <div
+                class="inset-0 min-w-0 text-center p-8 overflow-auto print:overflow-visible pdf bg-white"
+                id="section-to-print"
+                cdkScrollable
+            >
+                <div class="text-left print:p-5 outer_border p-5">
+                    <div class="pdf_table pt-15 pb-15">
+                        <div class="p-11 relative middle_cnt mt-11 text-center">
+                            <div class="">
+                                <img
+                                    src="../../../../../assets/images/logo/logo-change.png"
+                                    style="width: 230px; margin: 0px auto"
+                                    class="mb-15"
+                                />
+                            </div>
+                            <div
+                                class="text-center font-bold text-5xl mb-4 mt-5 capitalize"
+                            >
+                                {{ details?.name | titlecase }}
+                                {{ details?.surname | titlecase }}
+                            </div>
+                            <div class="">
+                                <div class="">
+                                    <div class="mb-8 text">
+                                        has successfully completed
+                                        <ng-container
+                                            *ngIf="details.gender == 'male'"
+                                            >his</ng-container
+                                        ><ng-container
+                                            *ngIf="details.gender == 'female'"
+                                            >her</ng-container
+                                        >
+                                        Training in
+                                        <span class="font-bold">
+                                            “{{ details?.course?.name }}”</span
+                                        ><br />
+                                        with Vinutnaa IT Services India Pvt.Ltd.
+                                        During the period of
+                                        <ng-container
+                                            *ngIf="details.gender == 'male'"
+                                            >his</ng-container
+                                        ><ng-container
+                                            *ngIf="details.gender == 'female'"
+                                            >her</ng-container
+                                        >
+                                        Training<br />
+                                        programme for
+                                        {{ details?.course?.months }} months ({{
+                                            details?.joiningDate
+                                                | date : "MMMM dd, yyyy"
+                                        }}
+                                        to
+                                        {{
+                                            details?.completedDate
+                                                | date : "MMMM dd, yyyy"
+                                        }}), we found
+                                        <ng-container
+                                            *ngIf="details.gender == 'male'"
+                                            >his</ng-container
+                                        ><ng-container
+                                            *ngIf="details.gender == 'female'"
+                                            >her</ng-container
+                                        ><br />
+                                        punctual and sincere.
+                                    </div>
+                                    <div class="mb-8">
+                                        We wish
+                                        <ng-container
+                                            *ngIf="details.gender == 'male'"
+                                            >his</ng-container
+                                        ><ng-container
+                                            *ngIf="details.gender == 'female'"
+                                            >her</ng-container
+                                        >
+                                        all the best in
+                                        <ng-container
+                                            *ngIf="details.gender == 'male'"
+                                            >his</ng-container
+                                        ><ng-container
+                                            *ngIf="details.gender == 'female'"
+                                            >her</ng-container
+                                        >
+                                        future endeavors.
+                                    </div>
+                                    <div class="mb-11 pb-11">
+                                        This certificate was awarded by:
+                                    </div>
+                                    <div
+                                        class="flex flex-col mt-15 pt-3 mb-11 w-full justify-center"
+                                    >
+                                        <div class="line mb-2"></div>
+                                        <div>HR-Manager</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

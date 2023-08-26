@@ -1,0 +1,996 @@
+<ng-container *ngIf="!successMsgShow">
+    <div class="flex flex-col flex-auto min-w-0 requirements">
+        <!-- Header -->
+        <div
+            class="flex flex-wrap width_set max-w-screen-xl mx-auto p-6 md:p-8"
+        >
+            <div class="w-full max-w-screen-xl mx-auto">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+                >
+                    <div
+                        class="flex flex-col flex-auto px-4 py-4 bg-light-primary rounded-lg overflow-hidden mb-5"
+                    >
+                        <div class="flex items-center justify-between">
+                            <div
+                                class="flex items-center text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                            >
+                                <span class="img_tp_sec mr-4">
+                                    <img
+                                        src="../../../../../assets/images/employees/smo.png"
+                                        alt=""
+                                    />
+                                </span>
+
+                                SMO Requirements
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col col-span-2">
+                    <div class="bg-card mb-5 shadow rounded-lg py-1">
+                        <form
+                            [formGroup]="smoForm"
+                            class="flex flex-col create-form px-5 py-5"
+                        >
+                            <div class="">
+                                <div
+                                    class="mb-3 text-md font-bold client_bg text-white px-3 py-2"
+                                >
+                                    Client Information :
+                                </div>
+                                <div
+                                    class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Client Name *
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'clientName'
+                                                        "
+                                                    />
+                                                    <mat-error
+                                                        *ngIf="
+                                                            smoForm
+                                                                .get(
+                                                                    'clientName'
+                                                                )
+                                                                .hasError(
+                                                                    'required'
+                                                                )
+                                                        "
+                                                    >
+                                                        Client Name is required
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Phone Number
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'phoneNumber'
+                                                        "
+                                                        (keypress)="
+                                                            numberOnly($event)
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Email Id
+                                            </div>
+                                            <div class="md:col-span-3">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'mail'
+                                                        "
+                                                    />
+                                                    <mat-error
+                                                        *ngIf="
+                                                            smoForm
+                                                                .get('mail')
+                                                                .hasError(
+                                                                    'email'
+                                                                )
+                                                        "
+                                                    >
+                                                        Please enter a valid
+                                                        email address
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                        >
+                                            <div class="label_ex mt-label">
+                                                Address
+                                            </div>
+                                            <div class="md:col-span-3">
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        id="name"
+                                                        matInput
+                                                        [formControlName]="
+                                                            'address'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="mb-3 text-md font-bold wesite_bg text-white mt-2 px-3 py-2"
+                            >
+                                Website Details :
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex mt-label">
+                                    <span class="mr-3">1.</span>What is your
+                                    website URL? *
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            id="name"
+                                            matInput
+                                            [formControlName]="'websiteUrl'"
+                                        />
+                                        <mat-error
+                                            *ngIf="
+                                                smoForm
+                                                    .get('websiteUrl')
+                                                    .hasError('required')
+                                            "
+                                        >
+                                            Website URL is required
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="
+                                                smoForm
+                                                    .get('websiteUrl')
+                                                    .hasError('pattern')
+                                            "
+                                        >
+                                            Please enter a valid Website URL
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-3"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">2.</span> Please provide
+                                    access and logins for social media accounts
+                                    (Facebook / Instagram / Twitter / Linkedin /
+                                    Pinterest)
+                                </div>
+                                <div class="mb-2 flex flex-col">
+                                    <div
+                                        class="pl-6 items-baseline mb-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap1"
+                                    >
+                                        <mat-checkbox
+                                            class="example-margin mt_check"
+                                            (change)="
+                                                checkFacebook(
+                                                    $event.checked,
+                                                    'Facebook'
+                                                )
+                                            "
+                                            [formControlName]="'existfacebook'"
+                                            ><span class=""
+                                                >Facebook</span
+                                            ></mat-checkbox
+                                        >
+                                        <div
+                                            class="flex flex-row gt-md:flex-row col-span-2"
+                                            *ngIf="fbShow"
+                                        >
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full facebook"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Facebook URL"
+                                                    [formControlName]="
+                                                        'facebookUrl'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="User Name"
+                                                    [formControlName]="
+                                                        'facebookUserName'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Password"
+                                                    [formControlName]="
+                                                        'facebookPassword'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="pl-6 items-baseline mb-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-1"
+                                    >
+                                        <mat-checkbox
+                                            class="example-margin mt_check"
+                                            (change)="
+                                                checkInsta(
+                                                    $event.checked,
+                                                    'Instagram'
+                                                )
+                                            "
+                                            [formControlName]="'existinstagram'"
+                                            ><span class=""
+                                                >Instagram</span
+                                            ></mat-checkbox
+                                        >
+                                        <div
+                                            class="flex flex-row gt-md:flex-row col-span-2"
+                                            *ngIf="instaShow"
+                                        >
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full facebook"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Instagram URL"
+                                                    [formControlName]="
+                                                        'instagramUrl'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="User Name"
+                                                    [formControlName]="
+                                                        'instagramUserName'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Password"
+                                                    [formControlName]="
+                                                        'instagramPassword'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="pl-6 items-baseline mb-1 gap-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                                    >
+                                        <mat-checkbox
+                                            class="example-margin mt_check"
+                                            (change)="
+                                                checkTwitter(
+                                                    $event.checked,
+                                                    'Twitter'
+                                                )
+                                            "
+                                            [formControlName]="'existtwitter'"
+                                            ><span class=""
+                                                >Twitter</span
+                                            ></mat-checkbox
+                                        >
+                                        <div
+                                            class="flex flex-row gt-md:flex-row col-span-2"
+                                            *ngIf="twitterShow"
+                                        >
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full facebook"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Twitter URL"
+                                                    [formControlName]="
+                                                        'twitterUrl'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="User Name"
+                                                    [formControlName]="
+                                                        'twitterUserName'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Password"
+                                                    [formControlName]="
+                                                        'twitterPassword'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="pl-6 items-baseline mb-1 gap-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                                    >
+                                        <mat-checkbox
+                                            class="example-margin mt_check"
+                                            (change)="
+                                                checkLinked(
+                                                    $event.checked,
+                                                    'Linkedin'
+                                                )
+                                            "
+                                            [formControlName]="'existlinkedin'"
+                                            ><span class=""
+                                                >Linkedin</span
+                                            ></mat-checkbox
+                                        >
+                                        <div
+                                            class="flex flex-row gt-md:flex-row col-span-2"
+                                            *ngIf="linkedShow"
+                                        >
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full facebook"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Linkedin URL"
+                                                    [formControlName]="
+                                                        'linkedInUrl'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="User Name"
+                                                    [formControlName]="
+                                                        'linkedInUserName'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Password"
+                                                    [formControlName]="
+                                                        'linkedInPassword'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="pl-6 items-baseline grid gap-1 grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                                    >
+                                        <mat-checkbox
+                                            class="example-margin mt_check"
+                                            (change)="
+                                                checkPin(
+                                                    $event.checked,
+                                                    'Pinterest'
+                                                )
+                                            "
+                                            [formControlName]="'existpinterest'"
+                                            ><span class=""
+                                                >Pinterest</span
+                                            ></mat-checkbox
+                                        >
+                                        <div
+                                            class="flex flex-row gt-md:flex-row col-span-2"
+                                            *ngIf="pinShow"
+                                        >
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full facebook"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Pinterest URL"
+                                                    [formControlName]="
+                                                        'pinterestUrl'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="User Name"
+                                                    [formControlName]="
+                                                        'pinterestUserName'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                class="flex-auto fuse-mat-dense w-full ml-4 instagram"
+                                            >
+                                                <input
+                                                    id="name"
+                                                    matInput
+                                                    placeholder="Password"
+                                                    [formControlName]="
+                                                        'pinterestPassword'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">3.</span>Please mention
+                                    your targeted customers (Age, Gender and
+                                    segments like youth, college students etc)
+                                    (*Boosting purpose)
+                                </div>
+                                <div
+                                    class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-3"
+                                >
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            [formControlName]="'targetedGender'"
+                                            placeholder="Gender"
+                                        />
+                                    </mat-form-field>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            [formControlName]="'targetedAge'"
+                                            placeholder="Age"
+                                        />
+                                    </mat-form-field>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'targetedSegments'
+                                            "
+                                            placeholder="Segments"
+                                        />
+                                    </mat-form-field>
+                                    <!-- <mat-form-field
+                                    class="flex-auto fuse-mat-dense"
+                                >
+                                    <mat-select
+                                        multiple
+                                        placeholder="Gender"
+                                        [formControlName]="'targetedGender'"
+                                        (selectionChange)="
+                                            getGender($event.value)
+                                        "
+                                    >
+                                        <mat-option value="Male">
+                                            Male
+                                        </mat-option>
+                                        <mat-option value="Female">
+                                            Female
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="flex-auto fuse-mat-dense"
+                                >
+                                    <mat-select
+                                        multiple
+                                        placeholder="Age"
+                                        [formControlName]="'targetedAge'"
+                                        (selectionChange)="getAge($event.value)"
+                                    >
+                                        <mat-option value="0 - 15">
+                                            0 - 15
+                                        </mat-option>
+                                        <mat-option value="16 - 25">
+                                            16 - 25
+                                        </mat-option>
+                                        <mat-option value="26 - 30">
+                                            26 - 30
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="flex-auto fuse-mat-dense"
+                                >
+                                    <mat-select
+                                        multiple
+                                        placeholder="Segments"
+                                        [formControlName]="'targetedSegments'"
+                                        (selectionChange)="
+                                            getSegments($event.value)
+                                        "
+                                    >
+                                        <mat-option value="Youth">
+                                            Youth
+                                        </mat-option>
+                                        <mat-option value="Childern">
+                                            Childern
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex mt-label">
+                                    <span class="mr-3">4.</span>Please provide
+                                    additional information
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            id="name"
+                                            matInput
+                                            [formControlName]="'additionalInfo'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">5.</span
+                                    ><span
+                                        >Please mention your offers/discounts if
+                                        any <i>(Ex:- 25% off)</i></span
+                                    >
+                                </div>
+                                <div>
+                                    <form [formGroup]="offerForm">
+                                        <div
+                                            formArrayName="offerDetails"
+                                            class="
+                                        "
+                                        >
+                                            <div
+                                                class=""
+                                                *ngFor="
+                                                    let page of offerForm.get(
+                                                        'offerDetails'
+                                                    )['controls'];
+                                                    let i = index
+                                                "
+                                            >
+                                                <div [formGroupName]="i">
+                                                    <div class="flex">
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-100"
+                                                        >
+                                                            <input
+                                                                id="project_url"
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'offers'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+
+                                                        <div
+                                                            class="flex items-start ml-4 mt-2"
+                                                        >
+                                                            <span
+                                                                (click)="
+                                                                    addOffer()
+                                                                "
+                                                                class="flex items-center cursor-pointer"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-2 text-primary_l"
+                                                                    svgIcon="heroicons_outline:plus-circle"
+                                                                ></mat-icon>
+                                                            </span>
+                                                            <span
+                                                                class="flex items-center cursor-pointer"
+                                                                (click)="
+                                                                    deleteOffer(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-5 text-red ml-2"
+                                                                    [svgIcon]="
+                                                                        'delete'
+                                                                    "
+                                                                ></mat-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">6.</span
+                                    ><span
+                                        >Please list out your competitors</span
+                                    >
+                                </div>
+                                <div>
+                                    <form [formGroup]="competitorsForm">
+                                        <div
+                                            formArrayName="competitorsDetails"
+                                            class=""
+                                        >
+                                            <div
+                                                class=""
+                                                *ngFor="
+                                                    let refer of competitorsForm.get(
+                                                        'competitorsDetails'
+                                                    )['controls'];
+                                                    let i = index
+                                                "
+                                            >
+                                                <div [formGroupName]="i">
+                                                    <div
+                                                        class="flex flex-row gt-md:flex-row"
+                                                    >
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-full"
+                                                        >
+                                                            <input
+                                                                id="project_url"
+                                                                matInput
+                                                                placeholder=""
+                                                                [formControlName]="
+                                                                    'competitors'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+
+                                                        <div
+                                                            class="flex items-start ml-4 mt-2"
+                                                        >
+                                                            <span
+                                                                (click)="
+                                                                    addcompetitors()
+                                                                "
+                                                                class="flex items-center cursor-pointer"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-2 text-primary_l"
+                                                                    svgIcon="heroicons_outline:plus-circle"
+                                                                ></mat-icon>
+                                                            </span>
+                                                            <span
+                                                                class="flex items-center cursor-pointer"
+                                                                (click)="
+                                                                    deletecompetitors(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-5 text-red ml-2"
+                                                                    [svgIcon]="
+                                                                        'delete'
+                                                                    "
+                                                                ></mat-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">7.</span
+                                    ><span>Project Goals/Objective</span>
+                                </div>
+                                <div>
+                                    <form [formGroup]="goalsForm">
+                                        <div
+                                            formArrayName="goalsDetails"
+                                            class=""
+                                        >
+                                            <div
+                                                class=""
+                                                *ngFor="
+                                                    let refer of goalsForm.get(
+                                                        'goalsDetails'
+                                                    )['controls'];
+                                                    let i = index
+                                                "
+                                            >
+                                                <div [formGroupName]="i">
+                                                    <div
+                                                        class="flex flex-row gt-md:flex-row"
+                                                    >
+                                                        <mat-form-field
+                                                            class="flex-auto fuse-mat-dense w-full"
+                                                        >
+                                                            <input
+                                                                id="project_url"
+                                                                matInput
+                                                                placeholder="Goals/Objective"
+                                                                [formControlName]="
+                                                                    'projectGoals'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+
+                                                        <div
+                                                            class="flex items-start ml-4 mt-2"
+                                                        >
+                                                            <span
+                                                                (click)="
+                                                                    addgoals()
+                                                                "
+                                                                class="flex items-center cursor-pointer"
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-2 text-primary_l"
+                                                                    svgIcon="heroicons_outline:plus-circle"
+                                                                ></mat-icon>
+                                                            </span>
+                                                            <span
+                                                                class="flex items-center cursor-pointer"
+                                                                (click)="
+                                                                    deletegoals(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                <mat-icon
+                                                                    class="icon-size-5 text-red ml-2"
+                                                                    [svgIcon]="
+                                                                        'delete'
+                                                                    "
+                                                                ></mat-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex mt-label">
+                                    <span class="mr-3">8.</span
+                                    ><span
+                                        >Project duration
+                                        <i>(Ex:- 30 days)</i></span
+                                    >
+                                </div>
+                                <div>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            id="name"
+                                            matInput
+                                            [formControlName]="
+                                                'projectDuration'
+                                            "
+                                        />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-3">9.</span
+                                    ><span
+                                        >Create new Social Media account
+                                        (Facebook / Instagram / Twitter /
+                                        Linkedin / Pinterest)</span
+                                    >
+                                </div>
+                                <div
+                                    class="mb-2 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-3"
+                                >
+                                    <mat-checkbox
+                                        class="example-margin"
+                                        (change)="
+                                            checkNew($event.checked, 'Facebook')
+                                        "
+                                        [formControlName]="'facebook'"
+                                        ><span class=""
+                                            >Facebook
+                                        </span></mat-checkbox
+                                    >
+
+                                    <mat-checkbox
+                                        class="example-margin"
+                                        (change)="
+                                            checkNew(
+                                                $event.checked,
+                                                'Instagram'
+                                            )
+                                        "
+                                        [formControlName]="'instagram'"
+                                        ><span class=""
+                                            >Instagram
+                                        </span></mat-checkbox
+                                    >
+                                    <mat-checkbox
+                                        class="example-margin"
+                                        (change)="
+                                            checkNew($event.checked, 'Twitter')
+                                        "
+                                        [formControlName]="'twitter'"
+                                        ><span class=""
+                                            >Twitter
+                                        </span></mat-checkbox
+                                    >
+                                    <mat-checkbox
+                                        class="example-margin"
+                                        (change)="
+                                            checkNew($event.checked, 'Linkedin')
+                                        "
+                                        [formControlName]="'linkedin'"
+                                        ><span class=""
+                                            >Linkedin
+                                        </span></mat-checkbox
+                                    >
+                                    <mat-checkbox
+                                        class="example-margin"
+                                        (change)="
+                                            checkNew(
+                                                $event.checked,
+                                                'Pinterest'
+                                            )
+                                        "
+                                        [formControlName]="'pinterest'"
+                                        ><span class=""
+                                            >Pinterest
+                                        </span></mat-checkbox
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gt-md:flex-row mt-3">
+                                <button
+                                    type="submit"
+                                    class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn text-white"
+                                    mat-flat-button
+                                    (click)="save()"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></ng-container
+>
+<ng-container *ngIf="successMsgShow">
+    <div class="flex flex-col flex-auto min-w-0 requirements">
+        <div
+            class="flex flex-wrap width_success max-w-screen-xl mx-auto p-6 md:p-8"
+        >
+            <div class="w-full max-w-screen-xl mx-auto">
+                <div class="flex flex-col col-span-2 mt-12">
+                    <div class="bg-card mb-5 shadow rounded-lg py-1 sce_sec">
+                        <div
+                            class="flex flex-col items-center justify-center px-5 py-16"
+                        >
+                            <img
+                                src="../../../../../assets/images/employees/check-ex.webp"
+                                alt="check"
+                                class="w-20 mb-3"
+                            />
+                            <div class="text-lg">
+                                Successfully Created SMO Requirement.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

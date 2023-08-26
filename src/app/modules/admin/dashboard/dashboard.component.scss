@@ -1,0 +1,21 @@
+.tabs-dashboard ::ng-deep {
+    .mat-tab-group .mat-tab-body-content {
+        padding-left: 1px !important;
+        padding-right: 1px !important;
+    }
+    .mat-tab-label-container {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .mat-tab-labels {
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+}
+.dashboard {
+    .search {
+        position: absolute;
+        right: 0px;
+        top: 0px !important;
+        z-index: 9999;
+    }
+}

@@ -1,0 +1,39 @@
+table {
+    th {
+        // background-color: #06b2ff !important;
+        background-color: #0d2440;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact;
+    }
+}
+@page {
+    size: auto;
+    margin: 0mm;
+}
+@media print {
+    #none {
+        visibility: hidden;
+    }
+    #section-to-print,
+    #section-to-print * {
+        visibility: visible;
+    }
+    #section-to-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+.border-top-0 {
+    border-top: 0px !important;
+}
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+    padding-left: 15px !important;
+}
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 15px !important;
+}

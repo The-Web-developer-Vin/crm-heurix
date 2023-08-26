@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACb,QAAQ,EAAE,KAAK;EACf,GAAG,EAAE,CAAC;EACN,OAAO,EAAE,GAAG;EACZ,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,GAAG;CACd",
+    "sources": [
+        "loading-bar.component.scss"
+    ],
+    "names": [],
+    "file": "loading-bar.component.css"
+}

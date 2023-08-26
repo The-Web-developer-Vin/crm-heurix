@@ -1,0 +1,488 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                        >
+                            Work Report
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <button
+                                *ngIf="role != 'Admin'"
+                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                                mat-flat-button
+                                (click)="addDailyupdate()"
+                            >
+                                <mat-icon
+                                    svgIcon="add"
+                                    class="icon-size-5 text-white"
+                                ></mat-icon>
+                                <span class="ml-1">Add Work Report</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-card mb-5 shadow rounded py-1">
+                <div class="search p-4 flex items-center justify-between">
+                    <div class="flex items-center relative">
+                        <mat-form-field
+                            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                            [floatLabel]="'always'"
+                        >
+                            <input
+                                matInput
+                                #search
+                                placeholder="Search"
+                                [(ngModel)]="searchName"
+                                (keyup.enter)="doFilter(searchName)"
+                            />
+                        </mat-form-field>
+                        <mat-icon
+                            matPrefix
+                            class="icon-size-5 cursor-pointer absolute right-4"
+                            [svgIcon]="'heroicons_solid:search'"
+                            (click)="doFilter(searchName)"
+                        ></mat-icon>
+                    </div>
+
+                    <div class="flex">
+                        <button
+                            *ngIf="role != 'Admin'"
+                            class="all_btn rounded-full border w-30"
+                            [ngClass]="
+                                defaultAll ? 'mat-button-toggle-checked' : ''
+                            "
+                            (click)="getAll()"
+                        >
+                            <span class="">All</span>
+                        </button>
+                        <mat-form-field
+                            *ngIf="role == 'Admin'"
+                            appearance="fill"
+                            class="w-full fuse-mat-dense fuse-mat-rounded w-30"
+                        >
+                            <mat-select
+                                [(ngModel)]="categoryName"
+                                (selectionChange)="getCategory($event.value)"
+                            >
+                                <mat-option value="dev" (click)="getDev()">
+                                    Dev
+                                </mat-option>
+                                <mat-option value="digital">
+                                    Digital
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <mat-form-field
+                            *ngIf="role == 'Admin'"
+                            appearance="fill"
+                            class="fuse-mat-dense fuse-mat-rounded ml-3"
+                        >
+                            <mat-select
+                                [(ngModel)]="person"
+                                placeholder="Select"
+                                (selectionChange)="selectManager($event.value)"
+                            >
+                                <mat-option
+                                    *ngFor="let option of employee"
+                                    [value]="option._id"
+                                >
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-select></mat-form-field
+                        >
+                        <mat-form-field
+                            appearance="fill"
+                            class="ml-3 fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense"
+                        >
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                (click)="picker.open()"
+                                [(ngModel)]="reportDate"
+                                (dateChange)="selectedDate($event)"
+                                placeholder="dd-mm-yyyy"
+                            />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <button
+                            class="ml-3"
+                            (click)="exportTable()"
+                            mat-raised-button
+                            matTooltip="Download as Excel"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                        >
+                            <mat-icon
+                                svgIcon="sim_card_download"
+                                class="vin-text-primary icon-size-6"
+                            ></mat-icon>
+                        </button>
+                        <button
+                            *ngIf="clearShow"
+                            class="mt-1 flex flex-0 items-center justify-center w-8 h-8 ml-3 rounded-full text-warn-600 bg-warn-100 dark:text-warn-50 dark:bg-warn-600 ng-star-inserted"
+                            (click)="clear()"
+                            matTooltip="Clear"
+                            aria-label="Button that displays a tooltip when focused or hovered over"
+                        >
+                            <mat-icon
+                                svgIcon="mat_outline:clear"
+                                class="text-red icon-size-2"
+                            ></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto w-full">
+                    <table
+                        class="w-full bg-transparent is-hoverable"
+                        mat-table
+                        id="ReportTable"
+                        matSort
+                        [dataSource]="dataSource"
+                        [trackBy]="trackByFn"
+                        #clientsTable
+                    >
+                        <!-- position -->
+                        <ng-container matColumnDef="position">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                            >
+                                S.No
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="text-xs+">
+                                    {{ i + 1 }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!--account name -->
+                        <ng-container matColumnDef="accountName">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'accountName')"
+                            >
+                                Account Name
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5capitalize"
+                            >
+                                <span
+                                    class="text-xs+"
+                                    *ngIf="
+                                        transaction.type == 'clientCall' ||
+                                        transaction.type == 'clientChat'
+                                    "
+                                >
+                                    {{ transaction.accountName | titlecase }}
+                                </span>
+                                <span *ngIf="transaction.type == 'Other'">
+                                    --
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- email -->
+                        <ng-container matColumnDef="clientName">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'client')"
+                            >
+                                Client Name
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="text-xs+">
+                                    {{ transaction.client?.name | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Created Date -->
+                        <ng-container matColumnDef="createdAt">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'createdAt')"
+                            >
+                                Created Date
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="text-xs+">
+                                    {{
+                                        transaction.createdAt
+                                            | date : " d MMM y"
+                                    }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- time -->
+                        <ng-container matColumnDef="time">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'startTimes')"
+                            >
+                                Time
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="text-xs+">
+                                    {{ transaction.startTimes[0].hours }}.{{
+                                        transaction.startTimes[0].minutes
+                                    }}{{
+                                        transaction.startTimes[0].meridian
+                                    }}
+                                    to {{ transaction.endTime[0].endHours }}.{{
+                                        transaction.endTime[0].endMinutes
+                                    }}{{
+                                        transaction.endTime[0].endMeridian
+                                    }}</span
+                                >
+                            </td>
+                        </ng-container>
+
+                        <!-- type -->
+                        <ng-container matColumnDef="type">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'type')"
+                            >
+                                Type
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="text-xs+">
+                                    {{ transaction.type | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- jobRoll -->
+                        <ng-container matColumnDef="JobRoll">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'jobRoll')"
+                            >
+                                Job Roll
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    *ngIf="transaction.type == 'Other'"
+                                    class="text-xs+"
+                                >
+                                    {{ transaction.jobRoll | titlecase }}
+                                </span>
+                                <span *ngIf="transaction.type != 'Other'">
+                                    --
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- crm -->
+                        <ng-container matColumnDef="crm">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'crm')"
+                            >
+                                CRM
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="text-xs+">
+                                    {{ transaction.crm?.name | titlecase }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- status -->
+                        <ng-container matColumnDef="status">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                (click)="sorting($event, 'status')"
+                            >
+                                Status
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <div
+                                    class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-warning"
+                                    *ngIf="
+                                        transaction.status != 'Inprogress' &&
+                                        transaction?.status != 'Stopped'
+                                    "
+                                >
+                                    <div
+                                        class="h-2 w-2 rounded-full bg-current"
+                                    ></div>
+                                    <span>
+                                        {{ transaction.status | titlecase }}
+                                    </span>
+                                </div>
+                                <div
+                                    class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-error"
+                                    *ngIf="transaction?.status == 'Stopped'"
+                                    matTooltip="{{
+                                        transaction?.stoppedReason?.name
+                                    }}"
+                                    aria-label="Button that displays a tooltip when focused or hovered over"
+                                >
+                                    <div
+                                        class="h-2 w-2 rounded-full bg-current"
+                                    ></div>
+                                    <span>
+                                        {{ transaction.status | titlecase }}
+                                    </span>
+                                </div>
+
+                                <div
+                                    class="whitespace-nowrap capitalize badge space-x-2.5 text-xs+ text-success-l"
+                                    *ngIf="transaction.status == 'Inprogress'"
+                                >
+                                    <div
+                                        class="h-2 w-2 rounded-full bg-current"
+                                    ></div>
+                                    <span> Working </span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- actions -->
+                        <ng-container matColumnDef="actions">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="whitespace-nowrap bg-light-primary px-4 py-3 font-medium text-xs+ capitalize text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Actions
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let transaction"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <div class="flex">
+                                    <span
+                                        (click)="editDailyUpdate(transaction)"
+                                        class="flex items-center cursor-pointer"
+                                    >
+                                        <mat-icon
+                                            svgIcon="edit"
+                                            class="icon-size-5 mr-3 text-green-600"
+                                        ></mat-icon>
+                                    </span>
+                                    <span
+                                        class="flex items-center"
+                                        (click)="deleteDailyUpdate(transaction)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5 text-red cursor-pointer"
+                                            [svgIcon]="'delete'"
+                                        ></mat-icon>
+                                    </span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="mat-cell whitespace-nowrap px-4 py-3 sm:px-5 text-xs+"
+                                align="center"
+                                [attr.colspan]="displayedColumns.length"
+                            >
+                                No data Found.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <mat-paginator
+                    [length]="pageLength"
+                    [pageSize]="pageSize"
+                    [pageIndex]="pageNumber - 1"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    (page)="getclientcall()"
+                >
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- tabs -->

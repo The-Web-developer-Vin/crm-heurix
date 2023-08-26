@@ -1,0 +1,139 @@
+<div class="flex flex-col flex-auto w-full p-6 pt-8">
+    <div class="w-full max-w-screen-md mx-auto brd_cls shadow">
+        <div>
+            <div class="flex justify-end p-6 noprint">
+                <button
+                    (click)="printPage()"
+                    class="px-5 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                    mat-flat-button
+                >
+                    <mat-icon
+                        svgIcon="local_printshop"
+                        class="text-white icon-size-5 mr-1"
+                    ></mat-icon>
+                    Print
+                </button>
+            </div>
+            <div
+                class="inset-0 min-w-0 text-center overflow-auto print:overflow-visible pdf bg-white"
+                cdkScrollable
+            >
+                <div class="text-left print:p-0">
+                    <div class="pdf_table" id="section-to-print">
+                        <div
+                            class="flex border-b justify-center pb-6 pt-5 px-10 items-center"
+                        >
+                            <div class="text-center">
+                                <img
+                                    src="../../../../../assets/images/logo/logo-change.png"
+                                    style="width: 190px; margin: 0px auto"
+                                    class="mb-2"
+                                />
+                                <div class="addr">
+                                    6-259, Behind Saibaba Temple, Thimmapuram,
+                                    Kakinada - 533005.
+                                </div>
+                                <div class="addr">
+                                    Ph : (+91) 6303522592, Email :
+                                    training@vinutnaa.com Web :
+                                    training.vinutnaa.com
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-11 relative middle_cnt mt-0">
+                            <div
+                                class="text-center font-bold text-3xl mb-10 uppercase"
+                            >
+                                RECEIPT
+                            </div>
+                            <div class="mt-11 pt-5">
+                                <div class="flex justify-between top_det">
+                                    <div>
+                                        No :
+                                        <span class="font-bold">{{
+                                            personalDetails?.traineeId
+                                        }}</span>
+                                    </div>
+                                    <div>
+                                        Date:
+                                        <span class="font-bold">{{
+                                            details?.paidDate
+                                                | date : "dd MMM, y"
+                                        }}</span>
+                                    </div>
+                                </div>
+                                <!-- {{ AmountValue | amountToWords }} -->
+                                <div class="flex flex-col items-start mt-11">
+                                    <div class="mb-5 text">
+                                        Received with thanks from
+                                        <span class="font-bold capitalize">{{
+                                            personalDetails?.name | titlecase
+                                        }}</span>
+                                        <ng-container
+                                            *ngIf="
+                                                personalDetails?.gender ==
+                                                'male'
+                                            "
+                                        >
+                                            S/o
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="
+                                                personalDetails?.gender ==
+                                                'female'
+                                            "
+                                        >
+                                            D/o
+                                        </ng-container>
+                                        <span class="font-bold capitalize">
+                                            {{
+                                                personalDetails?.surname
+                                                    | titlecase
+                                            }}
+                                            {{
+                                                personalDetails?.fatherName
+                                                    | titlecase
+                                            }}</span
+                                        >
+                                        for an amount of Rs.<span
+                                            class="font-bold"
+                                            >{{ details?.amountPaid }}</span
+                                        >
+                                        (in words
+                                        <span class="font-bold capitalize"
+                                            >{{
+                                                details?.amountPaid
+                                                    | amountToWords
+                                            }}
+                                            Rupees Only</span
+                                        >) Towards
+                                        <span class="font-bold">{{
+                                            personalDetails?.course?.name
+                                        }}</span>
+                                        Training program with a duration of
+                                        <span class="font-bold"
+                                            >{{
+                                                personalDetails?.course?.months
+                                            }}
+                                            Months</span
+                                        >
+                                        duly agreed by the candidate who intend
+                                        to join the course which is not
+                                        refundable.
+                                    </div>
+                                    <div
+                                        class="top_det flex justify-between mt-11 mb-11 w-full"
+                                    >
+                                        <div>Signature of Student / Parent</div>
+                                        <div>Receiver Signature</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

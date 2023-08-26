@@ -1,0 +1,1140 @@
+<div class="flex flex-col flex-auto min-w-0 requirements">
+    <!-- Header -->
+    <div class="flex flex-wrap width_set max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="flex flex-col col-span-2">
+                <div class="flex items-center justify-end mb-5 mt-3">
+                    <button
+                        class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn text-white"
+                        mat-flat-button
+                        (click)="downloadAsPDF()"
+                    >
+                        <mat-icon
+                            svgIcon="mat_solid:picture_as_pdf"
+                            class="icon-size-5 mr-2 text-white"
+                        ></mat-icon>
+                        Download
+                    </button>
+                </div>
+                <div class="bg-card mb-5 shadow rounded-lg py-1">
+                    <div class="flex flex-col create-form">
+                        <div class="px-5 pt-5">
+                            <div
+                                class="mb-3 text-md font-bold client_bg text-white px-3 py-2"
+                            >
+                                Client Information :
+                            </div>
+                            <div
+                                class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5 mb-2"
+                                    >
+                                        <div class="label_ex">Client Name</div>
+                                        <div class="">
+                                            <p
+                                                class="font-medium mb-0 capitalize flex"
+                                            >
+                                                <span class="mr-2">:</span>
+                                                {{ details?.clientName }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                    >
+                                        <div class="label_ex">Phone Number</div>
+                                        <div class="">
+                                            <p class="font-medium mb-0">
+                                                <span class="mr-2">:</span>
+                                                {{
+                                                    details?.phoneNumber
+                                                        ? details?.phoneNumber
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-2"
+                                    >
+                                        <div class="label_ex">Email Id</div>
+                                        <div class="md:col-span-3">
+                                            <p
+                                                class="font-medium mb-0 word-wrap flex"
+                                            >
+                                                <span class="mr-2">:</span>
+                                                {{
+                                                    details?.mail
+                                                        ? details?.mail
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5"
+                                    >
+                                        <div class="label_ex">Address</div>
+                                        <div class="md:col-span-3">
+                                            <p class="font-medium mb-0 flex">
+                                                <span class="mr-2">:</span>
+                                                {{
+                                                    details?.address
+                                                        ? details?.address
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="requirementDetails" class="px-5 pt-5">
+                            <div class="frst_page">
+                                <div
+                                    class="mb-2 text-md font-bold wesite_bg text-white px-3 pt-0 pb-3"
+                                >
+                                    Website Details :
+                                </div>
+
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">1.</span
+                                        ><span
+                                            >Please provide the logo or we will
+                                            create a one</span
+                                        >
+                                    </div>
+                                    <div class="mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <div
+                                            class="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"
+                                        >
+                                            <div class="w-full">
+                                                <p class="label_ex mb-0">
+                                                    Logo Text
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    {{
+                                                        details?.logoText
+                                                            ? details?.logoText
+                                                            : "--"
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div class="w-full">
+                                                <p class="label_ex mb-0">
+                                                    Logo
+                                                </p>
+                                                <p class="font-medium mb-0">
+                                                    <a
+                                                        href="{{
+                                                            baseUrl +
+                                                                details?.logoImage
+                                                        }}"
+                                                        target="_blank"
+                                                    >
+                                                        {{
+                                                            details?.logoImage
+                                                                ? details?.logoImage
+                                                                : "--"
+                                                        }}</a
+                                                    >
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex">
+                                        <span class="mr-3">2.</span>What is your
+                                        Company Tagline?
+                                    </div>
+                                    <div
+                                        class="font-medium mb-1 word-wrap flex capitalize"
+                                    >
+                                        <span class="mr-2">:</span>
+
+                                        {{
+                                            details?.companyTagLine
+                                                ? details?.companyTagLine
+                                                : "--"
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex">
+                                        <span class="mr-3">3.</span>What does
+                                        your company do?
+                                    </div>
+                                    <div
+                                        class="font-medium mb-1 word-wrap flex"
+                                    >
+                                        <span class="mr-2">:</span>
+
+                                        {{
+                                            details?.companyDo
+                                                ? details?.companyDo
+                                                : "--"
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">4.</span
+                                        ><span
+                                            >Who is your target audience?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <p class="mb-0">
+                                            {{
+                                                details?.targetAudience
+                                                    ? details?.targetAudience
+                                                    : "--"
+                                            }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">5.</span
+                                        ><span
+                                            >What is the URL of your existing
+                                            website (if any)?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <a
+                                            href="{{ details?.existingUrl }}"
+                                            target="_blank"
+                                            class="word-wrap"
+                                        >
+                                            {{
+                                                details?.existingUrl
+                                                    ? details?.existingUrl
+                                                    : "--"
+                                            }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">6.</span
+                                        ><span
+                                            >What do you like and dislike about
+                                            your existing website?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <div>
+                                            <p
+                                                class="mb-0 capitalize"
+                                                *ngFor="
+                                                    let e of details?.likesDislikes
+                                                "
+                                            >
+                                                {{ e.existingLike }}
+                                            </p>
+                                        </div>
+                                        <p
+                                            class="mb-0"
+                                            *ngIf="
+                                                details?.likesDislikes.length ==
+                                                0
+                                            "
+                                        >
+                                            --
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">7.</span
+                                        ><span
+                                            >Does your company have a brand book
+                                            covering things like colors and
+                                            fonts?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 mt-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <div class="w-full">
+                                            <div
+                                                class="cmn_table"
+                                                *ngIf="
+                                                    details?.brandBook.length !=
+                                                    0
+                                                "
+                                            >
+                                                <div
+                                                    class="trs grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2"
+                                                >
+                                                    <p
+                                                        class="label_ex mb-0 font-semibold"
+                                                    >
+                                                        Colour
+                                                    </p>
+                                                    <p
+                                                        class="label_ex mb-0 font-semibold"
+                                                    >
+                                                        Font
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="trs grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-2"
+                                                    *ngFor="
+                                                        let data of details?.brandBook
+                                                    "
+                                                >
+                                                    <div class="w-full">
+                                                        <p
+                                                            class="font-medium mb-0"
+                                                        >
+                                                            {{
+                                                                data.color
+                                                                    ? data.color
+                                                                    : "--"
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <p
+                                                            class="font-medium mb-0"
+                                                        >
+                                                            {{
+                                                                data?.font
+                                                                    ? data?.font
+                                                                    : "--"
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ng-container
+                                                *ngIf="
+                                                    details?.brandBook.length ==
+                                                    0
+                                                "
+                                            >
+                                                <p
+                                                    class="label_ex mb-0 font-semibold"
+                                                >
+                                                    --
+                                                </p>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">8.</span
+                                        ><span
+                                            >Do you want to improve an existing
+                                            website, or create a website from
+                                            scratch?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+
+                                        {{
+                                            details?.websiteImprove
+                                                ? details?.websiteImprove
+                                                : "--"
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-3">9.</span
+                                        ><span
+                                            >Do you want your website to be
+                                            optimized for SEO? Do you have a
+                                            list of keywords you’d like to
+                                            target?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <div>
+                                            <p
+                                                class="mb-0 capitalize"
+                                                *ngFor="
+                                                    let e of details?.keywordsList
+                                                "
+                                            >
+                                                {{ e.keywordsList }}
+                                            </p>
+                                        </div>
+                                        <p
+                                            class="mb-0"
+                                            *ngIf="
+                                                details?.keywordsList.length ==
+                                                0
+                                            "
+                                        >
+                                            --
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-2">10.</span
+                                        ><span
+                                            >What is the URL of 2-3 reference
+                                            websites that you like? What do you
+                                            like about these websites?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex mt-1">
+                                        <span class="mr-2">:</span>
+                                        <div class="w-full">
+                                            <div
+                                                class="cmn_table w-full"
+                                                *ngIf="
+                                                    details?.referenceWebsite
+                                                        .length != 0
+                                                "
+                                            >
+                                                <div
+                                                    class="trs grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4"
+                                                >
+                                                    <p
+                                                        class="label_ex mb-0 font-semibold"
+                                                    >
+                                                        URL
+                                                    </p>
+                                                    <p
+                                                        class="label_ex mb-0 font-semibold"
+                                                    >
+                                                        Like
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="trs grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4"
+                                                    *ngFor="
+                                                        let data of details?.referenceWebsite
+                                                    "
+                                                >
+                                                    <div class="w-full">
+                                                        <p
+                                                            class="font-medium mb-0 word-wrap"
+                                                        >
+                                                            {{
+                                                                data.url
+                                                                    ? data.url
+                                                                    : "--"
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <p
+                                                            class="font-medium mb-0"
+                                                        >
+                                                            {{
+                                                                data?.liked
+                                                                    ? data?.liked
+                                                                    : "--"
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ng-container
+                                                *ngIf="
+                                                    details?.referenceWebsite
+                                                        .length == 0
+                                                "
+                                            >
+                                                <p
+                                                    class="label_ex mb-0 font-semibold"
+                                                >
+                                                    --
+                                                </p>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-2">11.</span
+                                        ><span>
+                                            Do you know what platform you want
+                                            to use for your site?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+
+                                        {{
+                                            details?.platform
+                                                ? details?.platform
+                                                : "--"
+                                        }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-2">12.</span
+                                        ><span>
+                                            What pages do you need on your
+                                            website?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <div
+                                            class="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-2"
+                                        >
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.pages
+                                                        ?.home
+                                                "
+                                                class="mb-0"
+                                            >
+                                                Home
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.pages
+                                                        ?.aboutus
+                                                "
+                                                class="mb-0"
+                                            >
+                                                About Us
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.pages
+                                                        ?.imageGallery
+                                                "
+                                                class="mb-0"
+                                            >
+                                                Image Gallery
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.pages
+                                                        ?.videoGallery
+                                                "
+                                                class="mb-0"
+                                            >
+                                                Video Gallery
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.pages
+                                                        ?.testimonials
+                                                "
+                                                class="mb-0"
+                                            >
+                                                Testimonials
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.pages
+                                                        ?.contactus
+                                                "
+                                                class="mb-0"
+                                            >
+                                                Contact Us
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.pagesNeed?.services
+                                                        .length != 0
+                                                "
+                                                class="mb-0"
+                                            >
+                                                Services
+                                                <ul>
+                                                    <li
+                                                        class="pl-3 capitalize"
+                                                        *ngFor="
+                                                            let e of details
+                                                                ?.pagesNeed
+                                                                ?.services
+                                                        "
+                                                    >
+                                                        {{ e.service }}
+                                                        <div
+                                                            class="pl-3 capitalize"
+                                                            *ngFor="
+                                                                let d of e?.subService
+                                                            "
+                                                        >
+                                                            {{ d.subService }}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scnd_page">
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-2">13.</span
+                                        ><span>
+                                            What features do you need on your
+                                            Home Page?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+
+                                        <div
+                                            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3 w-full"
+                                        >
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.headerBanner == true
+                                                "
+                                            >
+                                                Header Banner
+                                                <div
+                                                    class="pl-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-1"
+                                                >
+                                                    <div
+                                                        *ngFor="
+                                                            let e of details
+                                                                .homePageNeed
+                                                                .header
+                                                        "
+                                                        class="capitalize"
+                                                    >
+                                                        {{ e }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.testimonials == true
+                                                "
+                                            >
+                                                Testimonials
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.socialMediaIcons ==
+                                                    true
+                                                "
+                                            >
+                                                Social Media Icons
+                                                <div
+                                                    class="pl-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-1"
+                                                >
+                                                    <div
+                                                        *ngFor="
+                                                            let e of details
+                                                                .homePageNeed
+                                                                .socialMedia
+                                                        "
+                                                        class="capitalize"
+                                                    >
+                                                        {{ e }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.welcomeText == true
+                                                "
+                                            >
+                                                Company Welcome Text
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.blog == true
+                                                "
+                                            >
+                                                Blog
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.actionButtons == true
+                                                "
+                                            >
+                                                Call-to-Action buttons
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage?.products ==
+                                                    true
+                                                "
+                                            >
+                                                Products/Services
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage?.footer ==
+                                                    true
+                                                "
+                                            >
+                                                Footer
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage?.signIn_Up ==
+                                                    true
+                                                "
+                                            >
+                                                Customer Sign in/Sign up
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.imageGallery == true
+                                                "
+                                            >
+                                                Image Gallery
+                                            </div>
+                                            <div
+                                                *ngIf="
+                                                    details?.homePageNeed
+                                                        ?.homePage
+                                                        ?.pricingTables == true
+                                                "
+                                            >
+                                                Pricing tables
+                                            </div>
+
+                                            <div
+                                                *ngFor="
+                                                    let e of details
+                                                        ?.homePageNeed?.other
+                                                "
+                                            >
+                                                {{ e.feature }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-2">14.</span
+                                        ><span>
+                                            Do you have the content ready for
+                                            your site?</span
+                                        >
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+
+                                        <div
+                                            *ngIf="
+                                                details?.contentReady == 'Yes'
+                                            "
+                                        >
+                                            <p class="mb-0">Yes</p>
+                                            <div
+                                                class="cursor-pointer"
+                                                (click)="
+                                                    viewContent(
+                                                        details?.contentFile
+                                                    )
+                                                "
+                                            >
+                                                {{ details?.contentFile }}
+                                            </div>
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.contentReady != 'Yes'
+                                            "
+                                        >
+                                            No
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                                >
+                                    <div class="label_ex flex">
+                                        <span class="mr-2">15.</span
+                                        ><span>Attach any other Documents</span>
+                                    </div>
+                                    <div class="font-medium mb-1 flex">
+                                        <span class="mr-2">:</span>
+                                        <div class="">
+                                            <p
+                                                (click)="viewContent(e)"
+                                                class="mb-0 cursor-pointer"
+                                                *ngFor="
+                                                    let e of details?.otherDoc
+                                                "
+                                            >
+                                                {{ e }}
+                                            </p>
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.otherDoc?.length == 0
+                                            "
+                                        >
+                                            --
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-5">
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">16.</span
+                                    ><span>
+                                        What is your budget for the
+                                        website?</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+
+                                    {{
+                                        details?.budget ? details?.budget : "--"
+                                    }}
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">17.</span
+                                    ><span> Do you have Hosting?</span>
+                                </div>
+                                <div class="mb-1 flex w-full">
+                                    <span class="mr-2">:</span>
+                                    <div
+                                        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-3 w-full"
+                                    >
+                                        <div
+                                            *ngIf="
+                                                details?.hostUrl ||
+                                                details?.hostPassword ||
+                                                details?.hostUserName
+                                            "
+                                            class="font-medium"
+                                        >
+                                            Yes
+                                        </div>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.hostUrl ||
+                                                details?.hostPassword ||
+                                                details?.hostUserName
+                                            "
+                                        >
+                                            <div class="">
+                                                <p class="label_ex mb-0">
+                                                    Host Url
+                                                </p>
+                                                <p
+                                                    class="font-medium word-wrap mb-0"
+                                                >
+                                                    <a
+                                                        href="{{
+                                                            details?.hostUrl
+                                                        }}"
+                                                        target="_blank"
+                                                    >
+                                                        {{
+                                                            details?.hostUrl
+                                                                ? details?.hostUrl
+                                                                : "--"
+                                                        }}</a
+                                                    >
+                                                </p>
+                                            </div>
+                                            <div
+                                                class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"
+                                            >
+                                                <div>
+                                                    <p class="label_ex mb-0">
+                                                        User Name
+                                                    </p>
+                                                    <p class="font-medium mb-0">
+                                                        {{
+                                                            details?.hostUserName
+                                                                ? details?.hostUserName
+                                                                : "--"
+                                                        }}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="label_ex mb-0">
+                                                        Password
+                                                    </p>
+                                                    <p class="font-medium mb-0">
+                                                        {{
+                                                            details?.hostPassword
+                                                                ? details?.hostPassword
+                                                                : "--"
+                                                        }}
+                                                    </p>
+                                                </div>
+                                            </div></ng-container
+                                        >
+                                        <div
+                                            *ngIf="
+                                                !details?.hostUrl &&
+                                                !details?.hostPassword &&
+                                                !details?.hostUserName
+                                            "
+                                            class="font-medium"
+                                        >
+                                            No
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">18.</span
+                                    ><span> Do you have Domain?</span>
+                                </div>
+                                <div class="mb-1 flex w-full">
+                                    <span class="mr-2">:</span>
+                                    <div
+                                        *ngIf="
+                                            !details?.domainUserName &&
+                                            !details?.domainPassword
+                                        "
+                                    >
+                                        No
+                                    </div>
+
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3 w-full"
+                                        *ngIf="
+                                            details?.domainUserName ||
+                                            details?.domainPassword
+                                        "
+                                    >
+                                        <div>
+                                            <p class="label_ex mb-0">
+                                                User Name
+                                            </p>
+                                            <p class="font-medium mb-0">
+                                                {{
+                                                    details?.domainUserName
+                                                        ? details?.domainUserName
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="label_ex mb-0">
+                                                Password
+                                            </p>
+                                            <p class="font-medium mb-0">
+                                                {{
+                                                    details?.domainPassword
+                                                        ? details?.domainPassword
+                                                        : "--"
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">19.</span
+                                    ><span>
+                                        When would you like to launch your new
+                                        site?</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+
+                                    {{
+                                        details?.launchingDate
+                                            | date : "dd-MM-yyyy"
+                                    }}
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">20.</span
+                                    ><span>
+                                        Do You Need any Additional
+                                        Services?</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-2 w-full"
+                                    >
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.logoDesign == true
+                                            "
+                                        >
+                                            Logo Design
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.brochureDesign == true
+                                            "
+                                        >
+                                            Brochure Design
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.visitingCard == true
+                                            "
+                                        >
+                                            Visiting Card
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.staffId == true
+                                            "
+                                        >
+                                            Staff ID Card
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.seo == true
+                                            "
+                                        >
+                                            SEO
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.smo == true
+                                            "
+                                        >
+                                            SMO
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                details?.addServices?.services
+                                                    ?.adwords == true
+                                            "
+                                        >
+                                            Adwords
+                                        </div>
+                                        <ng-container
+                                            *ngIf="
+                                                details?.addServices
+                                                    ?.additionalDetails
+                                                    ?.length != 0
+                                            "
+                                        >
+                                            <div
+                                                class="capitalize"
+                                                *ngFor="
+                                                    let e of details
+                                                        ?.addServices
+                                                        ?.additionalDetails
+                                                "
+                                            >
+                                                {{ e.service }}
+                                            </div></ng-container
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex flex">
+                                    <span class="mr-2">21.</span
+                                    ><span>
+                                        Do you need E-Commerce Website?</span
+                                    >
+                                </div>
+                                <div class="font-medium mb-1 flex">
+                                    <span class="mr-2">:</span>
+                                    <div
+                                        *ngIf="details?.needECommerce == 'Yes'"
+                                    >
+                                        Yes
+                                    </div>
+                                    <div *ngIf="details?.needECommerce == 'No'">
+                                        No
+                                    </div>
+                                    <div *ngIf="!details?.needECommerce">
+                                        --
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
