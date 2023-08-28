@@ -159,6 +159,10 @@ table.is-zebra > tbody > tr:nth-child(2n) > td {
     height: 100vh;
     .mat-drawer-inner-container {
         overflow-y: scroll !important;
+        scrollbar-width: none !important;
+        &::-webkit-scrollbar {
+            display: none !important;
+        }
     }
 
     .mat-list-item {
@@ -287,7 +291,7 @@ table.is-zebra > tbody > tr:nth-child(2n) > td {
     transition-duration: 0.5s;
 }
 .main-section-menu-Open {
-    padding-left: 190px !important;
+    padding-left: 195px !important;
 }
 .main-section-menu-Close {
     padding-left: 80px !important;
@@ -618,31 +622,7 @@ body.light .mat-checkbox-checked.mat-accent .mat-checkbox-background {
         margin-bottom: 5px;
     }
 }
-// ::-webkit-scrollbar {
-//     width: 2px !important;
-// }
 
-// /* Handle */
-// ::-webkit-scrollbar-thumb {
-//     background: #e5eaef;
-//     border-radius: 10px;
-//     width: 2px !important;
-// }
-
-body::-webkit-scrollbar {
-    width: 2px;
-    display: none;
-}
-
-body::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-    width: 2px !important;
-}
 .mt-label {
     margin-top: 9px;
 }
