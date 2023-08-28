@@ -19,11 +19,8 @@
                     </button>
                 </div>
                 <div class="bg-card mb-5 shadow rounded-lg py-1">
-                    <div
-                        class="flex flex-col create-form px-5 py-5"
-                        id="requirementDetails"
-                    >
-                        <div class="">
+                    <div class="flex flex-col create-form">
+                        <div class="px-5 pt-5">
                             <div
                                 class="mb-3 text-md font-bold client_bg text-white px-3 py-2"
                             >
@@ -113,242 +110,251 @@
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="mb-3 text-md font-bold wesite_bg text-white mt-3 px-3 py-2"
-                        >
-                            Leads Details :
-                        </div>
-
-                        <div
-                            class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
-                        >
-                            <div class="label_ex">
-                                <span class="mr-3">1.</span>Project Name
-                            </div>
-                            <div class="font-medium mb-1 word-wrap flex">
-                                <span class="mr-2">:</span>
-
-                                {{ details?.projectName }}
-                            </div>
-                        </div>
-                        <div
-                            class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
-                        >
-                            <div class="label_ex">
-                                <span class="mr-3">2.</span>Project Url
-                            </div>
-                            <div class="font-medium mb-1 word-wrap flex">
-                                <span class="mr-2">:</span>
-
-                                <a
-                                    href="{{ details?.projectUrl }}"
-                                    target="_blank"
-                                >
-                                    {{
-                                        details?.projectUrl
-                                            ? details?.projectUrl
-                                            : "--"
-                                    }}</a
-                                >
-                            </div>
-                        </div>
-                        <div
-                            class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
-                        >
-                            <div class="label_ex">
-                                <span class="mr-3">3.</span>Lead Through
-                            </div>
-                            <div class="font-medium mb-1 word-wrap flex">
-                                <span class="mr-2">:</span>
-
-                                {{
-                                    details?.leadThrough?.name
-                                        ? details?.leadThrough.name
-                                        : "--"
-                                }}
-                            </div>
-                        </div>
-                        <div
-                            class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
-                        >
-                            <div class="label_ex">
-                                <span class="mr-3">4.</span>Status
-                            </div>
-                            <div class="font-medium mb-1 word-wrap flex">
-                                <span class="mr-2">:</span>
-                                <span
-                                    *ngIf="
-                                        details?.prospect == true &&
-                                        !details?.lead == true
-                                    "
-                                    class="badge bg-primary/10 text-primary_l amounts"
-                                >
-                                    Prospect
-                                </span>
-
-                                <span
-                                    *ngIf="
-                                        details?.prospect == true &&
-                                        details?.lead == true &&
-                                        !details?.opportunity == true
-                                    "
-                                    class="badge text-violet amounts"
-                                >
-                                    Lead
-                                </span>
-                                <span
-                                    *ngIf="
-                                        details?.prospect == true &&
-                                        details?.lead == true &&
-                                        details?.opportunity == true &&
-                                        !details?.close == true
-                                    "
-                                    class="badge bg-warning/10 text-warning dark:bg-warning/15 amounts"
-                                >
-                                    Opportunity
-                                </span>
-                                <span
-                                    *ngIf="
-                                        details?.prospect == true &&
-                                        details?.lead == true &&
-                                        details?.opportunity == true &&
-                                        details?.close == true
-                                    "
-                                    class="badge bg-success/10 text-success-l dark:bg-success/15 amounts"
-                                >
-                                    Close
-                                </span>
-                                <span
-                                    *ngIf="
-                                        details?.opportunity != true &&
-                                        details?.lead != true &&
-                                        details?.close != true &&
-                                        details?.prospect != true
-                                    "
-                                    >--</span
-                                >
-                                <!-- {{ details?.status ? details?.status : "--" }} -->
-                            </div>
-                        </div>
-                        <div
-                            class="status_nte relative pt-14 pb-10 px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8"
-                        >
+                        <div id="requirementDetails" class="px-5 pt-5">
                             <div
-                                *ngIf="details?.prospect == true"
-                                class="prs_step_1 border rounded-xl bg-card shadow cmn_grd"
+                                class="mb-2 text-md font-bold wesite_bg text-white px-3 pt-0 pb-3"
                             >
-                                <div
-                                    class="header_sec p-3 flex justify-between items-center"
-                                >
-                                    <div
-                                        class="title text-lg mb-0 font-bold text-white"
+                                Leads Details :
+                            </div>
+
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">1.</span>Project Name
+                                </div>
+                                <div class="font-medium mb-1 word-wrap flex">
+                                    <span class="mr-2">:</span>
+
+                                    {{ details?.projectName }}
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">2.</span>Project Url
+                                </div>
+                                <div class="font-medium mb-1 word-wrap flex">
+                                    <span class="mr-2">:</span>
+
+                                    <a
+                                        href="{{ details?.projectUrl }}"
+                                        target="_blank"
+                                    >
+                                        {{
+                                            details?.projectUrl
+                                                ? details?.projectUrl
+                                                : "--"
+                                        }}</a
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 cmn_brd grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">3.</span>Lead Through
+                                </div>
+                                <div class="font-medium mb-1 word-wrap flex">
+                                    <span class="mr-2">:</span>
+
+                                    {{
+                                        details?.leadThrough?.name
+                                            ? details?.leadThrough.name
+                                            : "--"
+                                    }}
+                                </div>
+                            </div>
+                            <div
+                                class="px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5"
+                            >
+                                <div class="label_ex">
+                                    <span class="mr-3">4.</span>Status
+                                </div>
+                                <div class="font-medium mb-1 word-wrap flex">
+                                    <span class="mr-2">:</span>
+                                    <span
+                                        *ngIf="
+                                            details?.prospect == true &&
+                                            !details?.lead == true
+                                        "
+                                        class="mt-2 bg-primary/10 text-primary_l cmn_status_l"
                                     >
                                         Prospect
-                                    </div>
+                                    </span>
 
-                                    <div class="img_sec">
-                                        <img
-                                            src="../../../../../assets/images/employees/prospect-white.png"
-                                            alt="prospect"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="cnt_sec p-4 text-center">
-                                    <span class="text-center">{{
-                                        details?.prospectNote
-                                            ? details?.prospectNote
-                                            : "--"
-                                    }}</span>
-                                </div>
-                            </div>
-                            <div
-                                *ngIf="details?.lead == true"
-                                class="prs_step_2 border rounded-xl bg-card shadow cmn_grd"
-                            >
-                                <div
-                                    class="header_sec p-3 flex justify-between items-center"
-                                >
-                                    <div
-                                        class="title mb-0 font-bold text-white text-lg"
+                                    <span
+                                        *ngIf="
+                                            details?.prospect == true &&
+                                            details?.lead == true &&
+                                            !details?.opportunity == true
+                                        "
+                                        class="mt-2 text-violet cmn_status_l"
                                     >
                                         Lead
-                                    </div>
-
-                                    <div class="img_sec">
-                                        <img
-                                            src="../../../../../assets/images/employees/lead-white.png"
-                                            alt="lead"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="cnt_sec p-4 text-center">
-                                    <span class="text-center">{{
-                                        details?.leadNote
-                                            ? details?.leadNote
-                                            : "--"
-                                    }}</span>
-                                </div>
-                            </div>
-                            <div
-                                *ngIf="details?.opportunity == true"
-                                class="prs_step_3 border rounded-xl bg-card shadow cmn_grd"
-                            >
-                                <div
-                                    class="header_sec p-3 flex justify-between items-center"
-                                >
-                                    <div
-                                        class="title mb-0 font-bold text-white text-lg"
+                                    </span>
+                                    <span
+                                        *ngIf="
+                                            details?.prospect == true &&
+                                            details?.lead == true &&
+                                            details?.opportunity == true &&
+                                            !details?.close == true
+                                        "
+                                        class="mt-2 bg-warning/10 text-warning dark:bg-warning/15 cmn_status_l"
                                     >
                                         Opportunity
-                                    </div>
-
-                                    <div class="img_sec">
-                                        <img
-                                            src="../../../../../assets/images/employees/opportunity-white.png"
-                                            alt="opportunity"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="cnt_sec p-4 text-center">
-                                    <span class="text-center">{{
-                                        details?.opportunityNote
-                                            ? details?.opportunityNote
-                                            : "--"
-                                    }}</span>
+                                    </span>
+                                    <span
+                                        *ngIf="
+                                            details?.prospect == true &&
+                                            details?.lead == true &&
+                                            details?.opportunity == true &&
+                                            details?.close == true
+                                        "
+                                        class="mt-2 bg-success/10 text-success-l dark:bg-success/15 cmn_status_l"
+                                    >
+                                        Close
+                                    </span>
+                                    <span
+                                        *ngIf="
+                                            details?.opportunity != true &&
+                                            details?.lead != true &&
+                                            details?.close != true &&
+                                            details?.prospect != true
+                                        "
+                                        >--</span
+                                    >
+                                    <!-- {{ details?.status ? details?.status : "--" }} -->
                                 </div>
                             </div>
                             <div
-                                *ngIf="details?.close == true"
-                                class="prs_step_4 border rounded-xl bg-card shadow cmn_grd"
+                                class="status_nte relative pt-14 pb-10 px-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8"
                             >
                                 <div
-                                    class="header_sec p-3 flex justify-between items-center"
+                                    *ngIf="details?.prospect == true"
+                                    class="prs_step_1 border rounded-xl bg-card cmn_grd"
                                 >
                                     <div
-                                        class="title mb-0 font-bold text-white text-lg"
+                                        class="header_sec p-3 flex justify-between items-center"
                                     >
-                                        Close
-                                    </div>
+                                        <div
+                                            class="title text-lg mb-0 font-bold text-white"
+                                        >
+                                            Prospect
+                                        </div>
 
-                                    <div class="img_sec">
-                                        <img
-                                            src="../../../../../assets/images/employees/close-1.png"
-                                            alt="close"
-                                        />
+                                        <div class="img_sec">
+                                            <img
+                                                src="../../../../../assets/images/employees/prospect-white.png"
+                                                alt="prospect"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="cnt_sec pt-2 px-3 pb-4 text-center"
+                                    >
+                                        <span class="text-center">{{
+                                            details?.prospectNote
+                                                ? details?.prospectNote
+                                                : "--"
+                                        }}</span>
                                     </div>
                                 </div>
-                                <div class="cnt_sec p-4 text-center">
-                                    <span class="text-center">{{
-                                        details?.closeNote
-                                            ? details?.closeNote
-                                            : "--"
-                                    }}</span>
+                                <div
+                                    *ngIf="details?.lead == true"
+                                    class="prs_step_2 border rounded-xl bg-card cmn_grd"
+                                >
+                                    <div
+                                        class="header_sec p-3 flex justify-between items-center"
+                                    >
+                                        <div
+                                            class="title mb-0 font-bold text-white text-lg"
+                                        >
+                                            Lead
+                                        </div>
+
+                                        <div class="img_sec">
+                                            <img
+                                                src="../../../../../assets/images/employees/lead-white.png"
+                                                alt="lead"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="cnt_sec pt-2 px-3 pb-4 text-center"
+                                    >
+                                        <span class="text-center">{{
+                                            details?.leadNote
+                                                ? details?.leadNote
+                                                : "--"
+                                        }}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    *ngIf="details?.opportunity == true"
+                                    class="prs_step_3 border rounded-xl bg-card cmn_grd"
+                                >
+                                    <div
+                                        class="header_sec p-3 flex justify-between items-center"
+                                    >
+                                        <div
+                                            class="title mb-0 font-bold text-white text-lg"
+                                        >
+                                            Opportunity
+                                        </div>
+
+                                        <div class="img_sec">
+                                            <img
+                                                src="../../../../../assets/images/employees/opportunity-white.png"
+                                                alt="opportunity"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="cnt_sec pt-2 px-3 pb-4 text-center"
+                                    >
+                                        <span class="text-center">{{
+                                            details?.opportunityNote
+                                                ? details?.opportunityNote
+                                                : "--"
+                                        }}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    *ngIf="details?.close == true"
+                                    class="prs_step_4 border rounded-xl bg-card cmn_grd"
+                                >
+                                    <div
+                                        class="header_sec p-3 flex justify-between items-center"
+                                    >
+                                        <div
+                                            class="title mb-0 font-bold text-white text-lg"
+                                        >
+                                            Close
+                                        </div>
+
+                                        <div class="img_sec">
+                                            <img
+                                                src="../../../../../assets/images/employees/close-1.png"
+                                                alt="close"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="cnt_sec pt-2 px-3 pb-4q text-center"
+                                    >
+                                        <span class="text-center">{{
+                                            details?.closeNote
+                                                ? details?.closeNote
+                                                : "--"
+                                        }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- status note Design -->
-                        <!-- <div
+                            <!-- status note Design -->
+                            <!-- <div
                             class="status_nte py-12 relative px-3 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-0"
                         >
                             <div class="step_1 relative mb-5 text-center">
@@ -464,6 +470,7 @@
                                 </div>
                             </div>
                         </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

@@ -38,6 +38,7 @@ export class LeadsComponent implements OnInit {
         },
     ];
     successMsgShow: boolean = false;
+    loginUser: any;
     constructor(
         private snackBar: MatSnackBar,
         private adminService: AdminService,
@@ -47,6 +48,9 @@ export class LeadsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        let adminData: any = JSON.parse(localStorage.getItem('adminData'));
+        this.loginUser = adminData?.name;
+        console.log('login', this.loginUser);
         this.route.queryParams.subscribe((res: any) => {
             if (res.id) {
                 this.leadsId = res.id;
@@ -80,8 +84,8 @@ export class LeadsComponent implements OnInit {
         this.adminService.getByLeads(this.leadsId).subscribe((res: any) => {
             this.leadsForm.patchValue(res.data.leads);
             this.leadsForm.patchValue({
-                country: res.data.leads.country._id,
-                leadThrough: res.data.leads.leadThrough._id,
+                country: res.data.leads.country?._id,
+                leadThrough: res.data.leads.leadThrough?._id,
             });
             this.prospectstatus = res.data.leads.prospect;
             if (
@@ -214,7 +218,18 @@ export class LeadsComponent implements OnInit {
         if (this.modify) {
             obj = {
                 leadsId: this.leadsId,
-                ...this.leadsForm.value,
+                clientName: this.leadsForm.value.clientName,
+                mail: this.leadsForm.value.mail,
+                phoneNumber: this.leadsForm.value.phoneNumber,
+                address: this.leadsForm.value.address,
+                projectUrl: this.leadsForm.value.projectUrl,
+                country: this.leadsForm.value.country,
+                leadThrough: this.leadsForm.value.leadThrough,
+                projectName: this.leadsForm.value.projectName,
+                prospectNote: this.leadsForm.value.prospectNote,
+                leadNote: this.leadsForm.value.leadNote,
+                opportunityNote: this.leadsForm.value.opportunityNote,
+                closeNote: this.leadsForm.value.closeNote,
                 prospect: this.prospectstatus,
                 lead: this.leadstatus,
                 opportunity: this.opportunitystatus,
@@ -222,24 +237,56 @@ export class LeadsComponent implements OnInit {
             };
         } else {
             obj = {
-                ...this.leadsForm.value,
+                clientName: this.leadsForm.value.clientName,
+                mail: this.leadsForm.value.mail,
+                phoneNumber: this.leadsForm.value.phoneNumber,
+                address: this.leadsForm.value.address,
+                projectUrl: this.leadsForm.value.projectUrl,
+                country: this.leadsForm.value.country
+                    ? this.leadsForm.value.country
+                    : null,
+                leadThrough: this.leadsForm.value.leadThrough
+                    ? this.leadsForm.value.leadThrough
+                    : null,
+                projectName: this.leadsForm.value.projectName,
+                prospectNote: this.leadsForm.value.prospectNote,
+                leadNote: this.leadsForm.value.leadNote,
+                opportunityNote: this.leadsForm.value.opportunityNote,
+                closeNote: this.leadsForm.value.closeNote,
                 prospect: this.prospectstatus,
                 lead: this.leadstatus,
                 opportunity: this.opportunitystatus,
                 close: this.closestatus,
+                createdBy: this.loginUser,
             };
         }
-        console.log('obj', obj);
+
         this.adminService.createLeads(obj).subscribe(
             (res: any) => {
-                this.snackBar.open(res.message, 'Close', {
-                    duration: 3000,
-                });
-                this.successMsgShow = true;
-                setTimeout(() => {
+                if (this.modify) {
+                    this.snackBar.open(res.message, 'Close', {
+                        duration: 3000,
+                    });
                     this.router.navigateByUrl('/leads');
-                }, 10000);
-                //this.leadsForm.reset();
+                } else {
+                    this.successMsgShow = true;
+                    this.leadsForm.reset();
+                    this.selectedStatus = '';
+                    this.showProspectNote = false;
+                    this.showLeadNote = false;
+                    this.showOppurNote = false;
+                    this.showCloseNote = false;
+                    setTimeout(() => {
+                        if (
+                            this.loginUser != undefined ||
+                            this.loginUser != null
+                        ) {
+                            this.router.navigateByUrl('/leads');
+                        } else {
+                            this.successMsgShow = false;
+                        }
+                    }, 8000);
+                }
             },
             (err: any) => {
                 this.snackBar.open(err.error.message, 'Close', {

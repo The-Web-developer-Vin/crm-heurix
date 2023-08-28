@@ -1,5 +1,6 @@
 <!-- Loading bar -->
 <!-- <fuse-loading-bar></fuse-loading-bar> -->
+
 <div class="loader">
     <ngx-spinner
         bdColor="rgba(0, 0, 0, 0.85)"
@@ -14,19 +15,20 @@
     class="example-container mat-typography bg-white"
     autosize
 >
-    <mat-drawer
-        #drawer
-        mode="side"
-        disableClose="true"
-        opened="true"
-        class="print:hidden flex-col items-center border-r border-slate-150 bg-white dark:border-navy-700 dark:bg-navy-800"
-        [ngClass]="
-            isShow
-                ? 'isOpen navigation-open-Menu'
-                : 'normal navigation-close-Menu'
-        "
-    >
-        <!-- <button
+    <ng-container *ngIf="role != null">
+        <mat-drawer
+            #drawer
+            mode="side"
+            disableClose="true"
+            opened="true"
+            class="print:hidden flex-col items-center border-r border-slate-150 bg-white dark:border-navy-700 dark:bg-navy-800"
+            [ngClass]="
+                isShow
+                    ? 'isOpen navigation-open-Menu'
+                    : 'normal navigation-close-Menu'
+            "
+        >
+            <!-- <button
             mat-mini-fab
             (click)="isExpanded = !isExpanded"
             color="warn"
@@ -34,69 +36,76 @@
         >
             <mat-icon aria-label="Menu">menu</mat-icon>
         </button> -->
-        <div class="relative h-11 w-11" style="margin: 10px">
-            <img
-                *ngIf="!employeeImage"
-                class="w-full h-full rounded-full"
-                src="assets/images/logo/fevicon.png"
-                alt="User avatar"
-            />
-            <img
-                *ngIf="employeeImage"
-                class="w-full h-full rounded-full"
-                style="object-fit: cover"
-                src="{{ baseUrl + employeeImage }}"
-                alt="User avatar"
-            />
-        </div>
+            <div class="relative h-11 w-11" style="margin: 10px">
+                <img
+                    *ngIf="!employeeImage"
+                    class="w-full h-full rounded-full"
+                    src="assets/icons/fevicon.webp"
+                    alt="User avatar"
+                />
+                <img
+                    *ngIf="employeeImage"
+                    class="w-full h-full rounded-full"
+                    style="object-fit: cover"
+                    src="{{ baseUrl + employeeImage }}"
+                    alt="User avatar"
+                />
+            </div>
 
-        <mat-nav-list class="list-nav">
-            <mat-list-item
-                *ngFor="let data of navigation.compact"
-                [ngClass]="data.children ? 'show' : ''"
-            >
-                <a
-                    [routerLink]="data.link"
-                    [routerLinkActive]="['active']"
-                    class="flex items-center justify-start transition-colors"
+            <mat-nav-list class="list-nav">
+                <mat-list-item
+                    *ngFor="let data of navigation.compact"
+                    [ngClass]="data.children ? 'show' : ''"
                 >
-                    <!-- <mat-icon mat-list-icon></mat-icon> -->
-                    <div class="outer_div">
-                        <span
-                            (click)="showSide()"
-                            class="material-symbols-outlined icon_sec"
-                            matTooltip="{{ data.title }}"
-                            matTooltipPosition="right"
-                            aria-label="Button that displays a tooltip when focused or hovered over"
-                        >
-                            {{ data.icon }}
-                        </span>
-                        <!-- <span class="tool absolute font-medium">{{
+                    <a
+                        [routerLink]="data.link"
+                        [routerLinkActive]="['active']"
+                        class="flex items-center justify-start transition-colors"
+                    >
+                        <!-- <mat-icon mat-list-icon></mat-icon> -->
+                        <div class="outer_div">
+                            <span
+                                (click)="showSide()"
+                                class="material-symbols-outlined icon_sec"
+                                matTooltip="{{ data.title }}"
+                                matTooltipPosition="right"
+                                aria-label="Button that displays a tooltip when focused or hovered over"
+                            >
+                                {{ data.icon }}
+                            </span>
+                            <!-- <span class="tool absolute font-medium">{{
                             data.title
                         }}</span> -->
-                    </div>
-                    <h4 mat-line class="mb-0 font-medium" (click)="showSide()">
-                        {{ data.title }}
-                    </h4></a
-                >
-                <!-- sub menu -->
-                <div *ngIf="data.children" class="sub_menu">
-                    <div *ngFor="let e of data.children" (click)="hideMenu()">
-                        <span
-                            [routerLink]="e.link"
-                            [routerLinkActive]="['active']"
-                            class="flex items-center justify-start transition-colors"
+                        </div>
+                        <h4
+                            mat-line
+                            class="mb-0 font-medium"
+                            (click)="showSide()"
                         >
-                            <h4 mat-line class="mb-0 font-medium">
-                                {{ e.title }}
-                            </h4></span
+                            {{ data.title }}
+                        </h4></a
+                    >
+                    <!-- sub menu -->
+                    <div *ngIf="data.children" class="sub_menu">
+                        <div
+                            *ngFor="let e of data.children"
+                            (click)="hideMenu()"
                         >
+                            <span
+                                [routerLink]="e.link"
+                                [routerLinkActive]="['active']"
+                                class="flex items-center justify-start transition-colors"
+                            >
+                                <h4 mat-line class="mb-0 font-medium">
+                                    {{ e.title }}
+                                </h4></span
+                            >
+                        </div>
                     </div>
-                </div>
-            </mat-list-item>
-        </mat-nav-list>
-    </mat-drawer>
-
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-drawer>
+    </ng-container>
     <div
         class="example-sidenav-content"
         [ngClass]="
@@ -106,33 +115,24 @@
         <!-- Wrapper -->
         <div class="flex flex-col flex-auto w-full min-w-0 bg-white">
             <!-- Header -->
-            <div
-                class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden"
-            >
-                <!-- Navigation toggle button -->
-                <button mat-icon-button (click)="showSide()">
-                    <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
-                </button>
-                <!-- Components -->
+            <ng-container *ngIf="role != null">
                 <div
-                    class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2"
+                    class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden"
                 >
-                    <notifications></notifications>
-                    <!-- <languages></languages>
-                <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-                <search [appearance]="'bar'"></search>
-                <shortcuts></shortcuts>
-                <messages></messages>
-                <button
-                    class="lg:hidden"
-                    mat-icon-button
-                    (click)="quickChat.toggle()"
-                >
-                    <mat-icon [svgIcon]="'heroicons_outline:chat-alt-2'"></mat-icon>
-                </button> -->
+                    <!-- Navigation toggle button -->
+                    <button mat-icon-button (click)="showSide()">
+                        <mat-icon
+                            [svgIcon]="'heroicons_outline:menu'"
+                        ></mat-icon>
+                    </button>
+                    <!-- Components -->
+                    <div
+                        class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2"
+                    >
+                        <notifications></notifications>
+                    </div>
                 </div>
-            </div>
-
+            </ng-container>
             <!-- Content -->
             <div class="flex flex-col flex-auto">
                 <!-- *ngIf="true" hack is required here for router-outlet to work correctly.

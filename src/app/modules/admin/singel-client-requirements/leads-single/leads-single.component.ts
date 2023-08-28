@@ -62,18 +62,18 @@ export class LeadsSingleComponent implements OnInit {
             heightLeft -= pageHeight;
             while (heightLeft >= 0) {
                 position = heightLeft - imgHeight;
-                pdf.addPage();
-                pdf.addImage(
-                    contentDataURL,
-                    'PNG',
-                    0,
-                    position,
-                    imgWidth,
-                    imgHeight
-                );
+                // pdf.addPage();
+                // pdf.addImage(
+                //     contentDataURL,
+                //     'PNG',
+                //     0,
+                //     position,
+                //     imgWidth,
+                //     imgHeight
+                // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('Details.pdf');
+            pdf.save('Leads.pdf');
         });
     }
 }

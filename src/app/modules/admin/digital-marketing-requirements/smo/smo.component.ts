@@ -109,7 +109,7 @@ export class SmoComponent implements OnInit {
 
     ngOnInit(): void {
         let adminData: any = JSON.parse(localStorage.getItem('adminData'));
-        this.loginUser = adminData.name;
+        this.loginUser = adminData?.name;
         this.route.queryParams.subscribe((res: any) => {
             if (res.id) {
                 this.smoId = res.id;
@@ -422,15 +422,43 @@ export class SmoComponent implements OnInit {
 
         this.adminService.createSmo(obj).subscribe(
             (res: any) => {
-                this.snackBar.open(res.message, 'Close', {
-                    duration: 3000,
-                });
-
-                // this.smoForm.reset();
-                this.successMsgShow = true;
-                setTimeout(() => {
+                if (this.modify) {
+                    this.snackBar.open(res.message, 'Close', {
+                        duration: 3000,
+                    });
                     this.router.navigateByUrl('/smo');
-                }, 10000);
+                } else {
+                    this.successMsgShow = true;
+                    this.smoForm.reset();
+                    this.competitorsForm.reset();
+                    this.goalsForm.reset();
+                    this.offerForm.reset();
+                    this.competitorsForm.value.competitorsDetails.forEach(
+                        (element, index) => {
+                            this.deletecompetitors(index);
+                        }
+                    );
+                    this.goalsForm.value.goalsDetails.forEach(
+                        (element, index) => {
+                            this.deletecompetitors(index);
+                        }
+                    );
+                    this.offerForm.value.offerDetails.forEach(
+                        (element, index) => {
+                            this.deleteOffer(index);
+                        }
+                    );
+                    setTimeout(() => {
+                        if (
+                            this.loginUser != undefined ||
+                            this.loginUser != null
+                        ) {
+                            this.router.navigateByUrl('/smo');
+                        } else {
+                            this.successMsgShow = false;
+                        }
+                    }, 8000);
+                }
             },
             (err: any) => {
                 this.snackBar.open(err.error.message, 'Close', {

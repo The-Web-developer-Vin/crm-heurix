@@ -68,16 +68,16 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.baseUrl = environment.imageUrl;
-        this.role = this.authService.userRole;
+        this.role = this.authService?.userRole;
 
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navigation) => {
                 this.navigation = navigation;
-                if (this.role.role === 'Admin') {
+                if (this.role?.role === 'Admin') {
                     this.navigation.compact = defaultNavigation;
-                } else if (this.role.role === 'Sales') {
+                } else if (this.role?.role === 'Sales') {
                     this.navigation.compact = salesNavigation;
                 } else {
                     this.navigation.compact = userNavigation;
@@ -134,9 +134,9 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     loginUserDetails() {
         let userDetails = JSON.parse(localStorage.getItem('adminData'));
 
-        this.userName = userDetails.name;
-        this.userEmail = userDetails.email;
-        this.employeeImage = userDetails.image;
+        this.userName = userDetails?.name;
+        this.userEmail = userDetails?.email;
+        this.employeeImage = userDetails?.image;
     }
     showSide() {
         this.isShow = !this.isShow;

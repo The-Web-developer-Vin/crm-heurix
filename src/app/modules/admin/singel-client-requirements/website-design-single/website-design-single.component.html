@@ -134,17 +134,24 @@
                                                 </p>
                                                 <p class="font-medium mb-0">
                                                     <a
-                                                        href="{{
-                                                            baseUrl +
+                                                        *ngIf="
+                                                            details?.logoImage
+                                                        "
+                                                        (click)="
+                                                            viewContent(
                                                                 details?.logoImage
-                                                        }}"
-                                                        target="_blank"
+                                                            )
+                                                        "
                                                     >
                                                         {{
                                                             details?.logoImage
-                                                                ? details?.logoImage
-                                                                : "--"
                                                         }}</a
+                                                    >
+                                                    <span
+                                                        *ngIf="
+                                                            !details?.logoImage
+                                                        "
+                                                        >--</span
                                                     >
                                                 </p>
                                             </div>
@@ -783,6 +790,7 @@
                                         >
                                             <p class="mb-0">Yes</p>
                                             <div
+                                                *ngIf="details?.contentFile"
                                                 class="cursor-pointer"
                                                 (click)="
                                                     viewContent(
@@ -792,6 +800,9 @@
                                             >
                                                 {{ details?.contentFile }}
                                             </div>
+                                            <span *ngIf="!details?.contentFile"
+                                                >--</span
+                                            >
                                         </div>
                                         <div
                                             *ngIf="
@@ -811,7 +822,12 @@
                                     </div>
                                     <div class="font-medium mb-1 flex">
                                         <span class="mr-2">:</span>
-                                        <div class="">
+                                        <div
+                                            class=""
+                                            *ngIf="
+                                                details?.otherDoc?.length != 0
+                                            "
+                                        >
                                             <p
                                                 (click)="viewContent(e)"
                                                 class="mb-0 cursor-pointer"

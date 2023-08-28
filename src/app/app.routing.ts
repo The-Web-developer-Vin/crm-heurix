@@ -119,8 +119,7 @@ export const appRoutes: Route[] = [
 
     {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,
@@ -130,6 +129,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'dashboard',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/dashboard/dashboard.module').then(
                         (m) => m.DashboardModule
@@ -137,6 +138,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'clients',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/clients/clients.module').then(
                         (m) => m.ClientsModule
@@ -144,6 +147,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'clients/single',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/single-client/single-client.module'
@@ -151,6 +156,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'projects',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/projects/projects.module').then(
                         (m) => m.ProjectsModule
@@ -158,6 +165,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'projects/single',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/single-project/single-project.module'
@@ -166,6 +175,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'payments',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/latest-payments/latest-payments.module'
@@ -174,6 +185,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'settings',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/settings/settings.module').then(
                         (m) => m.SettingsModule
@@ -182,6 +195,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'reports',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/latest-reports/latest-reports.module'
@@ -189,6 +204,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'employees',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/users/users.module').then(
                         (m) => m.UsersModule
@@ -196,6 +213,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'employees/single',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/single-employee/single-employee.module'
@@ -203,6 +222,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'invoice',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/invoice-list/invoice-list.module'
@@ -211,6 +232,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'invoice/print',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/generate-invoice/generate-invoice.module'
@@ -219,6 +242,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'bidding-reports',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/latest-bidding-report/latest-bidding-report.module'
@@ -227,6 +252,8 @@ export const appRoutes: Route[] = [
 
             {
                 path: 'offer-letter/:id',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/letters/offer-letter/offer-letter.module'
@@ -234,6 +261,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'relieving-letter/:id',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/letters/relieve-letter/relieve-letter.module'
@@ -241,6 +270,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'experience-letter/:id',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/letters/experience-letter/experience-letter.module'
@@ -248,6 +279,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'work-reports',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/work-report/work-report.module'
@@ -255,6 +288,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'trainees',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/trainee/trainee.module').then(
                         (m) => m.TraineeModule
@@ -262,6 +297,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'trainees/single',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/single-trainee/single-trainee.module'
@@ -269,6 +306,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'trainees/fee',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import('app/modules/admin/print-fee/print-fee.module').then(
                         (m) => m.PrintFeeModule
@@ -276,6 +315,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'trainees/certificate',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/trainee-certificate/trainee-certificate.module'
@@ -283,6 +324,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'google-ads/create',
+
                 loadChildren: () =>
                     import(
                         'app/modules/admin/digital-marketing-requirements/google-ads/google-ads.module'
@@ -319,6 +361,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'google-ads',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/google-ads-list/google-ads-list.module'
@@ -326,6 +370,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'email-marketing',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/email-marketing-list/email-marketing-list.module'
@@ -333,6 +379,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'facebook-ads',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/facebook-ads-list/facebook-ads-list.module'
@@ -340,6 +388,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'seo',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/seo-list/seo-list.module'
@@ -347,6 +397,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'smo',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/smo-list/smo-list.module'
@@ -354,6 +406,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'google-ads/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/google-ads-single/google-ads-single.module'
@@ -361,6 +415,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'facebook-ads/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/facebook-ads-single/facebook-ads-single.module'
@@ -368,6 +424,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'email-marketing/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/email-marketing-single/email-marketing-single.module'
@@ -375,6 +433,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'seo/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/seo-single/seo-single.module'
@@ -382,6 +442,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'smo/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/smo-single/smo-single.module'
@@ -389,6 +451,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'website',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/website-list/website-list.module'
@@ -403,6 +467,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'website/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/website-design-single/website-design-single.module'
@@ -410,6 +476,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'leads',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/requirements-list/leads-list/leads-list.module'
@@ -417,6 +485,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'leads/create',
+
                 loadChildren: () =>
                     import(
                         'app/modules/admin/digital-marketing-requirements/leads/leads.module'
@@ -424,6 +493,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'leads/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 loadChildren: () =>
                     import(
                         'app/modules/admin/singel-client-requirements/leads-single/leads-single.module'

@@ -1,5 +1,5 @@
 <ng-container *ngIf="!successMsgShow">
-    <div class="flex flex-col flex-auto min-w-0 requirements">
+    <div class="flex flex-col flex-auto min-w-0 requirements-form">
         <!-- Header -->
         <div
             class="flex flex-wrap width_set max-w-screen-xl mx-auto p-6 md:p-8"
@@ -969,7 +969,14 @@
     </div></ng-container
 >
 <ng-container *ngIf="successMsgShow">
-    <div class="flex flex-col flex-auto min-w-0 requirements">
+    <div
+        class="flex flex-col flex-auto min-w-0 requirements"
+        [ngClass]="
+            this.loginUser != undefined || this.loginUser != null
+                ? ''
+                : 'no_login'
+        "
+    >
         <div
             class="flex flex-wrap width_success max-w-screen-xl mx-auto p-6 md:p-8"
         >

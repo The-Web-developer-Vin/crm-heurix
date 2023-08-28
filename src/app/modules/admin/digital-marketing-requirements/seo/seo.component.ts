@@ -99,7 +99,7 @@ export class SeoComponent implements OnInit {
 
     ngOnInit(): void {
         let adminData: any = JSON.parse(localStorage.getItem('adminData'));
-        this.loginUser = adminData.name;
+        this.loginUser = adminData?.name;
         this.route.queryParams.subscribe((res: any) => {
             if (res.id) {
                 this.seoId = res.id;
@@ -355,14 +355,43 @@ export class SeoComponent implements OnInit {
 
         this.adminService.createSeo(obj).subscribe(
             (res: any) => {
-                this.snackBar.open(res.message, 'Close', {
-                    duration: 3000,
-                });
-                this.successMsgShow = true;
-                setTimeout(() => {
+                if (this.modify) {
+                    this.snackBar.open(res.message, 'Close', {
+                        duration: 3000,
+                    });
                     this.router.navigateByUrl('/seo');
-                }, 10000);
-                //this.seoForm.reset();
+                } else {
+                    this.successMsgShow = true;
+                    this.seoForm.reset();
+                    this.competitorsForm.reset();
+                    this.keywordsForm.reset();
+                    this.goalsForm.reset();
+                    this.competitorsForm.value.competitorsDetails.forEach(
+                        (element, index) => {
+                            this.deletecompetitors(index);
+                        }
+                    );
+                    this.keywordsForm.value.keywordsDetails.forEach(
+                        (element, index) => {
+                            this.deletekeywords(index);
+                        }
+                    );
+                    this.goalsForm.value.goalsDetails.forEach(
+                        (element, index) => {
+                            this.deletegoals(index);
+                        }
+                    );
+                    setTimeout(() => {
+                        if (
+                            this.loginUser != undefined ||
+                            this.loginUser != null
+                        ) {
+                            this.router.navigateByUrl('/seo');
+                        } else {
+                            this.successMsgShow = false;
+                        }
+                    }, 8000);
+                }
             },
             (err: any) => {
                 this.snackBar.open(err.error.message, 'Close', {

@@ -109,7 +109,7 @@ export class GoogleAdsComponent implements OnInit {
 
     ngOnInit(): void {
         let adminData: any = JSON.parse(localStorage.getItem('adminData'));
-        this.loginUser = adminData.name;
+        this.loginUser = adminData?.name;
         this.route.queryParams.subscribe((res: any) => {
             if (res.id) {
                 this.googleId = res.id;
@@ -411,15 +411,43 @@ export class GoogleAdsComponent implements OnInit {
 
         this.adminService.createGoogleAds(obj).subscribe(
             (res: any) => {
-                this.snackBar.open(res.message, 'Close', {
-                    duration: 3000,
-                });
-
-                // this.googleAdsForm.reset();
-                this.successMsgShow = true;
-                setTimeout(() => {
+                if (this.modify) {
+                    this.snackBar.open(res.message, 'Close', {
+                        duration: 3000,
+                    });
                     this.router.navigateByUrl('/google-ads');
-                }, 10000);
+                } else {
+                    this.successMsgShow = true;
+                    this.googleAdsForm.reset();
+                    this.competitorsForm.reset();
+                    this.offerForm.reset();
+                    this.businessForm.reset();
+                    this.businessForm.value.businessDetails.forEach(
+                        (element, index) => {
+                            this.deleteBusiness(index);
+                        }
+                    );
+                    this.offerForm.value.offerDetails.forEach(
+                        (element, index) => {
+                            this.deleteOffer(index);
+                        }
+                    );
+                    this.competitorsForm.value.competitorsDetails.forEach(
+                        (element, index) => {
+                            this.deletecompetitor(index);
+                        }
+                    );
+                    setTimeout(() => {
+                        if (
+                            this.loginUser != undefined ||
+                            this.loginUser != null
+                        ) {
+                            this.router.navigateByUrl('/google-ads');
+                        } else {
+                            this.successMsgShow = false;
+                        }
+                    }, 8000);
+                }
             },
             (err: any) => {
                 this.snackBar.open(err.error.message, 'Close', {

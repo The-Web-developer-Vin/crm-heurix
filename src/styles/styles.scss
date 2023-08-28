@@ -611,6 +611,13 @@ body.light .mat-checkbox-checked.mat-accent .mat-checkbox-background {
     padding: 0px 0px 13px 0px;
     //margin-bottom: 5px;
 }
+.requirements-form {
+    .cmn_brd {
+        border-bottom: 1px solid #e5eaef !important;
+        padding: 8px 0px 4px 0px;
+        margin-bottom: 5px;
+    }
+}
 // ::-webkit-scrollbar {
 //     width: 2px !important;
 // }
@@ -648,4 +655,9 @@ body::-webkit-scrollbar-thumb {
             border-bottom: 0px !important;
         }
     }
+}
+.no_login {
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
 }

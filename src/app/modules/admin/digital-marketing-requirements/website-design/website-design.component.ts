@@ -220,7 +220,7 @@ export class WebsiteDesignComponent implements OnInit {
 
     ngOnInit(): void {
         let adminData: any = JSON.parse(localStorage.getItem('adminData'));
-        this.loginUser = adminData.name;
+        this.loginUser = adminData?.name;
         this.route.queryParams.subscribe((res: any) => {
             if (res.id) {
                 this.websiteId = res.id;
@@ -906,14 +906,43 @@ export class WebsiteDesignComponent implements OnInit {
 
         this.adminService.createWebsiteDesign(obj).subscribe(
             (res: any) => {
-                this.snackBar.open(res.message, 'Close', {
-                    duration: 3000,
-                });
-                this.successMsgShow = true;
-                setTimeout(() => {
+                if (this.modify) {
+                    this.snackBar.open(res.message, 'Close', {
+                        duration: 3000,
+                    });
                     this.router.navigateByUrl('/website');
-                }, 10000);
-                //this.websiteDesignForm.reset();
+                } else {
+                    this.successMsgShow = true;
+                    this.websiteDesignForm.reset();
+                    this.existingLikeForm.reset();
+                    this.colorForm.reset();
+                    this.referenceUrlForm.reset();
+                    this.existingLikeForm.value.existingLikeDetails.forEach(
+                        (element, index) => {
+                            this.deleteExisting(index);
+                        }
+                    );
+                    this.colorForm.value.colorDetails.forEach(
+                        (element, index) => {
+                            this.deleteColor(index);
+                        }
+                    );
+                    this.referenceUrlForm.value.referenceDetails.forEach(
+                        (element, index) => {
+                            this.deleteRefer(index);
+                        }
+                    );
+                    setTimeout(() => {
+                        if (
+                            this.loginUser != undefined ||
+                            this.loginUser != null
+                        ) {
+                            this.router.navigateByUrl('/website');
+                        } else {
+                            this.successMsgShow = false;
+                        }
+                    }, 8000);
+                }
             },
             (err: any) => {
                 this.snackBar.open(err.error.message, 'Close', {

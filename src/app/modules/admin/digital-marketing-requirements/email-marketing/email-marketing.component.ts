@@ -58,7 +58,8 @@ export class EmailMarketingComponent implements OnInit {
 
     ngOnInit(): void {
         let adminData: any = JSON.parse(localStorage.getItem('adminData'));
-        this.loginUser = adminData.name;
+        this.loginUser = adminData?.name;
+        console.log('login', this.loginUser);
         this.route.queryParams.subscribe((res: any) => {
             if (res.id) {
                 this.emailId = res.id;
@@ -167,15 +168,39 @@ export class EmailMarketingComponent implements OnInit {
 
         this.adminService.createEmailMarketing(obj).subscribe(
             (res: any) => {
-                // this.snackBar.open(res.message, 'Close', {
-                //     duration: 3000,
-                // });
-
-                // this.emailForm.reset();
-                this.successMsgShow = true;
-                setTimeout(() => {
+                if (this.modify) {
+                    this.snackBar.open(res.message, 'Close', {
+                        duration: 3000,
+                    });
                     this.router.navigateByUrl('/email-marketing');
-                }, 10000);
+                } else {
+                    this.successMsgShow = true;
+                    this.emailForm.reset();
+                    this.competitorsForm.reset();
+                    this.platformForm.reset();
+
+                    this.platformForm.value.platformDetails.forEach(
+                        (element, index) => {
+                            this.deleteplatform(index);
+                        }
+                    );
+                    this.competitorsForm.value.competitorsDetails.forEach(
+                        (element, index) => {
+                            this.deletecompetitor(index);
+                        }
+                    );
+
+                    setTimeout(() => {
+                        if (
+                            this.loginUser != undefined ||
+                            this.loginUser != null
+                        ) {
+                            this.router.navigateByUrl('/email-marketing');
+                        } else {
+                            this.successMsgShow = false;
+                        }
+                    }, 8000);
+                }
             },
             (err: any) => {
                 this.snackBar.open(err.error.message, 'Close', {
