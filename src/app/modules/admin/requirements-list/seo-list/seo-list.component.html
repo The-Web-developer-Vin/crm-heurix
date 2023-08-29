@@ -26,22 +26,18 @@
                             class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
                         >
                             <!-- *ngIf="role=='Manager'" -->
-                            <button
-                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
-                                mat-flat-button
+
+                            <a
+                                target="_blank"
+                                routerLink="/seo/create"
+                                class="flex items-center px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
                             >
-                                <a
-                                    target="_blank"
-                                    routerLink="/seo/create"
-                                    class="flex items-center"
-                                >
-                                    <mat-icon
-                                        svgIcon="add"
-                                        class="icon-size-5 text-white"
-                                    ></mat-icon>
-                                    <span class="ml-1">Add Requirement</span></a
-                                >
-                            </button>
+                                <mat-icon
+                                    svgIcon="add"
+                                    class="icon-size-5 text-white"
+                                ></mat-icon>
+                                <span class="ml-1">Add Requirement</span></a
+                            >
                         </div>
                     </div>
                 </div>
