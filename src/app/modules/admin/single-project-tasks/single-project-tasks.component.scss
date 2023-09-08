@@ -1,0 +1,25 @@
+.tabs-setting ::ng-deep {
+    .mat-tab-labels {
+        border-bottom: 1px solid #e2e8f0 !important;
+        padding-left: 20px;
+        .count-label {
+            background: rgba(
+                var(--fuse-text-secondary-rgb),
+                var(--tw-text-opacity)
+            );
+            display: flex;
+            border-radius: 100%;
+            color: #fff;
+            font-size: 11px;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+        }
+    }
+    .mat-tab-body-content {
+        padding: 0px !important;
+    }
+    .mat-tab-label-container {
+        padding: 0px !important;
+    }
+}

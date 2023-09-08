@@ -1,0 +1,265 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">Add Tasks</div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+            <div class="milestones px-5 pt-4 requirements-form">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 mb-3"
+                >
+                    <div class="col">
+                        <div class="text-md font-medium">Project Name :</div>
+                        <div>
+                            <span
+                                class="capitalize font-semibold cursor-pointer"
+                                matTooltip="{{ projectData.Data.name }}"
+                                >{{
+                                    projectData.Data.name | slice : 0 : 12
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Client Name :</div>
+                        <div>
+                            <span
+                                class="capitalize font-semibold cursor-pointer"
+                                matTooltip="{{ projectData.Data.client.name }}"
+                                >{{
+                                    projectData.Data.client.name
+                                        | slice : 0 : 12
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Start Date :</div>
+                        <div>
+                            <span
+                                class="capitalize font-semibold cursor-pointer"
+                                >{{
+                                    projectData.Data.start_date
+                                        | date : "dd MMM, y"
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-md font-medium">Deadline Date :</div>
+                        <div>
+                            <span
+                                class="capitalize font-semibold cursor-pointer"
+                                >{{
+                                    (projectData.Data.end_date
+                                    | date : "dd MMM, y")
+                                        ? (projectData.Data.end_date
+                                          | date : "dd MMM, y")
+                                        : "--"
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="tasksForm" class="mt-6">
+                    <div formArrayName="tasksDetails" class="">
+                        <div
+                            class="border rounded-lg pt-2 pl-2 pr-2 pb-0 mt-3"
+                            *ngFor="
+                                let refer of tasksForm.get('tasksDetails')[
+                                    'controls'
+                                ];
+                                let i = index
+                            "
+                        >
+                            <div [formGroupName]="i">
+                                <div class="flex">
+                                    <div
+                                        class="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4"
+                                    >
+                                        <div>
+                                            <div
+                                                class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2"
+                                            >
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        placeholder="Module Name"
+                                                        [formControlName]="
+                                                            'moduleName'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                                <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full ml-2"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        placeholder="Name of the Task"
+                                                        [formControlName]="
+                                                            'taskName'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                            <div
+                                                class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-2"
+                                            >
+                                                <!-- <mat-form-field
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Employee"
+                                                        aria-label="Number"
+                                                        matInput
+                                                        [formControlName]="
+                                                            employee
+                                                        "
+                                                        [matAutocomplete]="auto"
+                                                    />
+                                                    <mat-autocomplete
+                                                        autoActiveFirstOption
+                                                        #auto="matAutocomplete"
+                                                    >
+                                                        <mat-option
+                                                            *ngFor="
+                                                                let option of filteredOptions
+                                                                    | async
+                                                            "
+                                                            [value]="
+                                                                option.name
+                                                            "
+                                                        >
+                                                            {{ option.name }}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field> -->
+                                                <div class="ng_select_emp1">
+                                                    <ng-select
+                                                        [items]="employees"
+                                                        bindLabel="name"
+                                                        bindValue="_id"
+                                                        placeholder="Employee"
+                                                        [formControlName]="
+                                                            'employee'
+                                                        "
+                                                        [searchable]="true"
+                                                    >
+                                                    </ng-select>
+                                                </div>
+                                                <mat-form-field
+                                                    appearance="fill"
+                                                    class="flex-auto fuse-mat-dense w-full"
+                                                >
+                                                    <input
+                                                        matInput
+                                                        placeholder="Start Date"
+                                                        [matDatepicker]="picker"
+                                                        [formControlName]="
+                                                            'startDate'
+                                                        "
+                                                        (click)="picker.open()"
+                                                    />
+                                                    <mat-datepicker-toggle
+                                                        matSuffix
+                                                        [for]="picker"
+                                                    ></mat-datepicker-toggle>
+                                                    <mat-datepicker
+                                                        #picker
+                                                    ></mat-datepicker>
+                                                </mat-form-field>
+                                                <mat-form-field
+                                                    appearance="fill"
+                                                    class="fuse-mat-dense w-full"
+                                                >
+                                                    <mat-select
+                                                        [formControlName]="
+                                                            'priority'
+                                                        "
+                                                        placeholder="Priority"
+                                                    >
+                                                        <mat-option
+                                                            value="High"
+                                                        >
+                                                            High
+                                                        </mat-option>
+                                                        <mat-option
+                                                            value="Medium"
+                                                        >
+                                                            Medium
+                                                        </mat-option>
+                                                        <mat-option value="Low">
+                                                            Low
+                                                        </mat-option>
+                                                    </mat-select></mat-form-field
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="task_text">
+                                            <mat-form-field class="w-full">
+                                                <textarea
+                                                    matInput
+                                                    placeholder="Task Description"
+                                                    [formControlName]="
+                                                        'description'
+                                                    "
+                                                ></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start ml-2 mt-2">
+                                        <span
+                                            (click)="addTasks()"
+                                            class="flex items-center cursor-pointer"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-2 text-primary_l"
+                                                svgIcon="heroicons_outline:plus-circle"
+                                            ></mat-icon>
+                                        </span>
+                                        <span
+                                            class="flex items-center cursor-pointer"
+                                            (click)="deleteTasks(i)"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5 text-red ml-1"
+                                                [svgIcon]="'delete'"
+                                            ></mat-icon>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="flex flex-col gt-md:flex-row mt-4">
+                    <button
+                        type="submit"
+                        class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Add Tasks
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

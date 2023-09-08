@@ -22,53 +22,53 @@
     .cmn_grd {
         position: relative;
         box-sizing: content-box;
-        &::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -33px;
-            width: 107px;
-            height: 32px;
-            margin: 0px auto;
-            right: 0px;
-            border-bottom: 13px solid #fff;
-        }
+        // &::after {
+        //     content: "";
+        //     position: absolute;
+        //     left: 0;
+        //     bottom: -33px;
+        //     width: 107px;
+        //     height: 32px;
+        //     margin: 0px auto;
+        //     right: 0px;
+        //     border-bottom: 13px solid #fff;
+        // }
     }
     .prs_step_1 {
         .header_sec {
             background-color: #4f46e5 !important;
         }
-        &::after {
-            border-left: 55px solid rgba(79, 70, 229, 0.7);
-            border-right: 55px solid #4f46e5;
-        }
+        // &::after {
+        //     border-left: 55px solid rgba(79, 70, 229, 0.7);
+        //     border-right: 55px solid #4f46e5;
+        // }
     }
     .prs_step_2 {
         .header_sec {
             background-color: #7f39ad !important;
         }
-        &::after {
-            border-left: 55px solid rgba(127, 57, 173, 0.7);
-            border-right: 55px solid #7f39ad;
-        }
+        // &::after {
+        //     border-left: 55px solid rgba(127, 57, 173, 0.7);
+        //     border-right: 55px solid #7f39ad;
+        // }
     }
     .prs_step_3 {
         .header_sec {
             background-color: #ff3754 !important;
         }
-        &::after {
-            border-left: 55px solid rgba(255, 55, 84, 0.7);
-            border-right: 55px solid #ff3754;
-        }
+        // &::after {
+        //     border-left: 55px solid rgba(255, 55, 84, 0.7);
+        //     border-right: 55px solid #ff3754;
+        // }
     }
     .prs_step_4 {
         .header_sec {
             background-color: rgb(34, 197, 94) !important;
         }
-        &::after {
-            border-left: 55px solid rgba(34, 197, 94, 0.7);
-            border-right: 55px solid rgb(34, 197, 94);
-        }
+        // &::after {
+        //     border-left: 55px solid rgba(34, 197, 94, 0.7);
+        //     border-right: 55px solid rgb(34, 197, 94);
+        // }
     }
 }
 .cmn_status_l {

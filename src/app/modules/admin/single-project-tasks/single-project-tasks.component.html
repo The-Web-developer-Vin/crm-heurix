@@ -1,0 +1,163 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="flex px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-4 justify-between"
+            >
+                <!-- <div
+                    class="text-xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                >
+                    Vinutnaa
+                </div> -->
+                <div class="flex">
+                    <div class="">Project Name</div>
+                    <div class="font-semibold">
+                        <span class="mr-2">:</span>
+                        <span>{{ projectData?.name }}</span>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="">Client Name</div>
+                    <div class="font-semibold">
+                        <span class="mr-2">:</span>
+                        <span>{{ projectData?.client?.name }}</span>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="">Start Date</div>
+                    <div class="font-semibold">
+                        <span class="mr-2">:</span>
+                        <span
+                            class="amounts badge bg-success/10 text-success-l"
+                            >{{
+                                projectData?.start_date | date : "dd MMM, y"
+                            }}</span
+                        >
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="">Deadline Date</div>
+                    <div class="font-semibold">
+                        <span class="mr-2">:</span>
+                        <span
+                            *ngIf="projectData?.end_date"
+                            class="amounts badge bg-error/10 text-error dark:bg-error/15"
+                            >{{
+                                projectData?.end_date | date : "dd MMM, y"
+                            }}</span
+                        >
+                        <span *ngIf="!projectData?.end_date">--</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="mt-6 bg-card py-2 pt-6 shadow rounded-lg bg_block tabs-setting relative"
+            >
+                <mat-tab-group
+                    class="tab-group"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="tabClick($event)"
+                >
+                    <mat-tab label="todo">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                To Do
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{ count?.todos ? count?.todos : 0 }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'todo'">
+                            <app-todo-list
+                                [filterData]="filterData"
+                                [tabName]="tabName"
+                                [projectId]="projectId"
+                                (_deleteTask)="deleteTask($event)"
+                            ></app-todo-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="inprogress">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Inprogress
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.inprogresss
+                                            ? count?.inprogresss
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'inprogress'">
+                            <app-inprogress-list
+                                [filterDataInprogress]="filterDataInprogress"
+                                [tabName]="tabName"
+                                [projectId]="projectId"
+                                (_deleteTask)="deleteTask($event)"
+                            ></app-inprogress-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="onHold">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Onhold
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.onholds ? count?.onholds : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'onHold'">
+                            <app-onhold-list
+                                [filterDataOnHold]="filterDataOnHold"
+                                [tabName]="tabName"
+                                [projectId]="projectId"
+                                (_deleteTask)="deleteTask($event)"
+                            ></app-onhold-list>
+                        </ng-container>
+                    </mat-tab>
+                    <mat-tab label="completed">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Completed
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.completeds
+                                            ? count?.completeds
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'completed'">
+                            <app-completed-list
+                                [filterDataCompleted]="filterDataCompleted"
+                                [tabName]="tabName"
+                                [projectId]="projectId"
+                                (_deleteTask)="deleteTask($event)"
+                            ></app-completed-list>
+                        </ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

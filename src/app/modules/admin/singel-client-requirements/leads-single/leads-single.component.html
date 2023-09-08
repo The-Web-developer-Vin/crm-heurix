@@ -254,11 +254,13 @@
                                     <div
                                         class="cnt_sec pt-2 px-3 pb-4 text-center"
                                     >
-                                        <span class="text-center">{{
-                                            details?.prospectNote
-                                                ? details?.prospectNote
-                                                : "--"
-                                        }}</span>
+                                        <ng-container
+                                            *ngFor="let address of prospectNote"
+                                        >
+                                            <span class="text-center word-wrap">
+                                                {{ address }}<br
+                                            /></span>
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div
@@ -284,11 +286,13 @@
                                     <div
                                         class="cnt_sec pt-2 px-3 pb-4 text-center"
                                     >
-                                        <span class="text-center">{{
-                                            details?.leadNote
-                                                ? details?.leadNote
-                                                : "--"
-                                        }}</span>
+                                        <ng-container
+                                            *ngFor="let address of leadNote"
+                                        >
+                                            <span class="text-center word-wrap">
+                                                {{ address }}<br
+                                            /></span>
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div
@@ -314,11 +318,15 @@
                                     <div
                                         class="cnt_sec pt-2 px-3 pb-4 text-center"
                                     >
-                                        <span class="text-center">{{
-                                            details?.opportunityNote
-                                                ? details?.opportunityNote
-                                                : "--"
-                                        }}</span>
+                                        <ng-container
+                                            *ngFor="
+                                                let address of opportunityNote
+                                            "
+                                        >
+                                            <span class="text-center word-wrap">
+                                                {{ address }}<br
+                                            /></span>
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div
@@ -344,11 +352,13 @@
                                     <div
                                         class="cnt_sec pt-2 px-3 pb-4q text-center"
                                     >
-                                        <span class="text-center">{{
-                                            details?.closeNote
-                                                ? details?.closeNote
-                                                : "--"
-                                        }}</span>
+                                        <ng-container
+                                            *ngFor="let address of closeNote"
+                                        >
+                                            <span class="text-center word-wrap">
+                                                {{ address }}<br
+                                            /></span>
+                                        </ng-container>
                                     </div>
                                 </div>
                             </div>

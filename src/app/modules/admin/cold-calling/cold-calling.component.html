@@ -1,0 +1,151 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div
+                                class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                            >
+                                Cold Calling
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
+                        >
+                            <!-- *ngIf="role=='Manager'" -->
+                            <div class="relative">
+                                <button
+                                    class="browse_btn flex items-center font-semibold cursor-pointer primary_btn text-white px-5 py-2 rounded"
+                                    mat-flat-button
+                                    color="primary"
+                                >
+                                    <mat-icon
+                                        svgIcon="feather:download"
+                                        class="mr-2 icon-size-5 text-white"
+                                    ></mat-icon>
+                                    Import
+                                </button>
+
+                                <input
+                                    type="file"
+                                    #fileInput
+                                    id="uploadImage"
+                                    name="uploadImage"
+                                    accept=".xlsx,.xls"
+                                    (change)="fileSelected($event)"
+                                    class="browse-input"
+                                />
+                            </div>
+                            <!-- <a
+                                target="_blank"
+                                
+                                class="flex items-center px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
+                            >
+                                <mat-icon
+                                    svgIcon="add"
+                                    class="icon-size-5 text-white"
+                                ></mat-icon>
+                                <span class="ml-1">Import</span></a
+                            > -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-card py-2 pt-6 shadow rounded-lg bg_block tabs-setting relative"
+            >
+                <mat-tab-group
+                    class="tab-group"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="tabClick($event)"
+                >
+                    <mat-tab label="all">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                All
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.allCounts ? count?.allCounts : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'all'">
+                            <app-all-cold-calling
+                                [filterData]="filterData"
+                                [tabName]="tabName"
+                                (_deleteCalling)="deleteCalling($event)"
+                                [allList]="allList"
+                            ></app-all-cold-calling
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="interested">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Interested
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.interestCounts
+                                            ? count?.interestCounts
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'interested'">
+                            <app-interested-list
+                                [filterDataInterested]="filterDataInterested"
+                                [tabName]="tabName"
+                                [allList]="allList"
+                                (_deleteCalling)="deleteCalling($event)"
+                            ></app-interested-list
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="notInterested">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Not Interested
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.notinterestCounts
+                                            ? count?.notinterestCounts
+                                            : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'notInterested'">
+                            <app-not-interested-list
+                                [filterDataNotInterested]="
+                                    filterDataNotInterested
+                                "
+                                [tabName]="tabName"
+                                [allList]="allList"
+                                (_deleteCalling)="deleteCalling($event)"
+                            ></app-not-interested-list
+                        ></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

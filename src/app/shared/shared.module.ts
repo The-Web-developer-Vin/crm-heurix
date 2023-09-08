@@ -22,7 +22,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { AlphabetOnlyDirective } from './directives/alphabet-only.directive';
 import { NgxEditorModule } from 'ngx-editor';
 import { MatRadioModule } from '@angular/material/radio';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { MatChipsModule } from '@angular/material/chips';
 @NgModule({
     imports: [
         CommonModule,
@@ -47,6 +50,10 @@ import { MatRadioModule } from '@angular/material/radio';
         MatSortModule,
         NgxEditorModule,
         MatRadioModule,
+        MatSlideToggleModule,
+        FuseDrawerModule,
+        MatChipsModule,
+        NgSelectModule,
     ],
     exports: [
         CommonModule,
@@ -74,6 +81,10 @@ import { MatRadioModule } from '@angular/material/radio';
         AlphabetOnlyDirective,
         NgxEditorModule,
         MatRadioModule,
+        MatSlideToggleModule,
+        FuseDrawerModule,
+        NgSelectModule,
+        MatChipsModule,
     ],
     declarations: [MonthsPipe, AmountToWordsPipe, AlphabetOnlyDirective],
 })

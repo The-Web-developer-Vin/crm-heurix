@@ -14,25 +14,6 @@ export class AdminService {
         this.token = localStorage.getItem('accessToken');
     }
 
-    createInvoice(data: any) {
-        let options = {
-            headers: new HttpHeaders({
-                Authorization: 'Bearer ' + this.token,
-                Accept: 'application/json',
-            }),
-        };
-        return this.http.post<any>(applicationUrls.invoice, data);
-    }
-    getLastInvoice() {
-        return this.http.get<any>(applicationUrls.getLast);
-    }
-    getAllInvoices(payload) {
-        return this.http.get<any>(applicationUrls.allInvoice + payload);
-    }
-    getInvoiceById(id: any) {
-        return this.http.get<any>(applicationUrls.invoiceById + '/' + id);
-    }
-
     // larvel API's
     getCountries(payload: any) {
         return this.http.get<any>(applicationUrls.countries + payload);
@@ -524,5 +505,108 @@ export class AdminService {
     }
     getFollowUpLeads(data) {
         return this.http.post<any>(applicationUrls.leads + '/followup', data);
+    }
+    // coldCalling
+    getColdList(pageparams) {
+        return this.http.get<any>(
+            applicationUrls.coldCalling + '/list' + pageparams
+        );
+    }
+    createColdCalling(data) {
+        return this.http.post<any>(
+            applicationUrls.coldCalling + '/create',
+            data
+        );
+    }
+    updateColdCalling(data) {
+        return this.http.post<any>(
+            applicationUrls.coldCalling + '/update',
+            data
+        );
+    }
+    getByCallId(id: any) {
+        return this.http.get<any>(applicationUrls.coldCalling + '/get/' + id);
+    }
+    getColdFolloeUp(data: any) {
+        return this.http.post<any>(
+            applicationUrls.coldCalling + '/add/followup',
+            data
+        );
+    }
+    getColdCounts() {
+        return this.http.get<any>(applicationUrls.coldCalling + '/counts/list');
+    }
+    deleteColdCalling(id: any) {
+        return this.http.delete<any>(applicationUrls.coldCalling + '/' + id);
+    }
+
+    getTasksList(pageparams) {
+        return this.http.get<any>(
+            applicationUrls.tasks + '/projects/list' + pageparams
+        );
+    }
+    createTask(data: any) {
+        return this.http.post<any>(
+            applicationUrls.tasks + '/createUpdate',
+            data
+        );
+    }
+    getTasksEmployees() {
+        return this.http.get<any>(applicationUrls.tasks + '/employee/list');
+    }
+    getTaskStatusList(pageparams) {
+        return this.http.get<any>(applicationUrls.tasks + '/list' + pageparams);
+    }
+    deleteTask(id: any) {
+        return this.http.delete<any>(applicationUrls.tasks + '/' + id);
+    }
+    getTaskById(id: any) {
+        return this.http.get<any>(applicationUrls.tasks + '/get/' + id);
+    }
+    getTasksCounts(id: any) {
+        return this.http.get<any>(
+            applicationUrls.tasks + '/getAll/counts' + '/' + id
+        );
+    }
+    getProjectTasksCount() {
+        return this.http.get<any>(applicationUrls.tasks + '/proCount/list');
+    }
+    getCityList() {
+        return this.http.get<any>(applicationUrls.invoice + '/city/list');
+    }
+
+    // invoices
+    getInvoiceList(pageparams) {
+        return this.http.get<any>(
+            applicationUrls.invoice + '/list' + pageparams
+        );
+    }
+    createInvoice(data: any) {
+        return this.http.post<any>(
+            applicationUrls.invoice + '/createupdate',
+            data
+        );
+    }
+    getByInvoiceId(id: any) {
+        return this.http.get<any>(applicationUrls.invoice + '/get/' + id);
+    }
+    sendEmail(data: any) {
+        return this.http.post<any>(applicationUrls.invoice + '/sendMail', data);
+    }
+
+    // proposals
+    getProposalList(pageparams) {
+        return this.http.get<any>(
+            applicationUrls.proposals + '/list' + pageparams
+        );
+    }
+    createProposal(data: any) {
+        return this.http.post<any>(
+            applicationUrls.proposals + '/createupdate',
+            data
+        );
+    }
+    getByProposalId(id: any) {
+        return this.http.get<any>(applicationUrls.proposals + '/get/' + id);
     }
 }

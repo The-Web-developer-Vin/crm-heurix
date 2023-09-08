@@ -4,6 +4,7 @@ import { AdminService } from 'app/core/admin/admin.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Component({
     selector: 'app-leads-single',
@@ -13,6 +14,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class LeadsSingleComponent implements OnInit {
     leadId: any;
     details: any;
+    prospectNote: any;
+    closeNote: any;
+    leadNote: any;
+    opportunityNote: any;
     constructor(
         private route: ActivatedRoute,
         private adminService: AdminService,
@@ -33,6 +38,11 @@ export class LeadsSingleComponent implements OnInit {
         this.adminService.getByLeads(this.leadId).subscribe(
             (res: any) => {
                 this.details = res.data.leads;
+                this.prospectNote = this.details?.prospectNote?.split('\n');
+                this.leadNote = this.details?.leadNote?.split('\n');
+                this.opportunityNote =
+                    this.details?.opportunityNote?.split('\n');
+                this.closeNote = this.details?.closeNote?.split('\n');
                 this.spinner.hide();
             },
             (err: any) => {
@@ -73,7 +83,7 @@ export class LeadsSingleComponent implements OnInit {
                 // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('Leads.pdf');
+            pdf.save(this.details.clientName + '.pdf');
         });
     }
 }

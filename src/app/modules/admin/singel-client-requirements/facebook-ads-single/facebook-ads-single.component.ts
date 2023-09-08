@@ -73,7 +73,7 @@ export class FacebookAdsSingleComponent implements OnInit {
                 // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('Facebook-Ads.pdf');
+            pdf.save(this.details.clientName + '.pdf');
         });
     }
 }

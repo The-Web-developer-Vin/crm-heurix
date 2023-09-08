@@ -221,19 +221,31 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.SingleEmployeeModule),
             },
             {
-                path: 'invoice',
+                path: 'invoices',
                 canActivate: [AuthGuard],
                 canActivateChild: [AuthGuard],
+
                 loadChildren: () =>
                     import(
                         'app/modules/admin/invoice-list/invoice-list.module'
                     ).then((m) => m.InvoiceListModule),
+            },
+            {
+                path: 'invoices/create',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/create-invoice/create-invoice.module'
+                    ).then((m) => m.CreateInvoiceModule),
             },
 
             {
                 path: 'invoice/print',
                 canActivate: [AuthGuard],
                 canActivateChild: [AuthGuard],
+
                 loadChildren: () =>
                     import(
                         'app/modules/admin/generate-invoice/generate-invoice.module'
@@ -499,6 +511,75 @@ export const appRoutes: Route[] = [
                     import(
                         'app/modules/admin/singel-client-requirements/leads-single/leads-single.module'
                     ).then((m) => m.LeadsSingleModule),
+            },
+            {
+                path: 'cold-calling',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/cold-calling/cold-calling.module'
+                    ).then((m) => m.ColdCallingModule),
+            },
+            {
+                path: 'cold-calling/client',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/single-cold-calling/single-cold-calling.module'
+                    ).then((m) => m.SingleColdCallingModule),
+            },
+            {
+                path: 'tasks',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/project-management/project-management.module'
+                    ).then((m) => m.ProjectManagementModule),
+            },
+            {
+                path: 'tasks/project',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/single-project-tasks/single-project-tasks.module'
+                    ).then((m) => m.SingleProjectTasksModule),
+            },
+            {
+                path: 'proposals',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import('app/modules/admin/proposals/proposals.module').then(
+                        (m) => m.ProposalsModule
+                    ),
+            },
+            {
+                path: 'proposals/create',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/create-praposal/create-praposal.module'
+                    ).then((m) => m.CreatePraposalModule),
+            },
+            {
+                path: 'proposals/view',
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/single-praposal-view/single-praposal-view.module'
+                    ).then((m) => m.SinglePraposalViewModule),
             },
         ],
     },

@@ -1,0 +1,143 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out update_tsk">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-xl font-semibold text-white">Update Tasks</div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+            <form
+                [formGroup]="updateForm"
+                class="flex flex-col create-form px-5 pt-5 pb-7"
+            >
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label>Module Name</mat-label>
+                        <input matInput [formControlName]="'moduleName'" />
+                    </mat-form-field>
+                    <mat-form-field
+                        class="flex-auto fuse-mat-dense w-full ml-4"
+                    >
+                        <mat-label>Name of the Task</mat-label>
+                        <input matInput [formControlName]="'taskName'" />
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="w-full">
+                        <mat-label>Task Description</mat-label>
+                        <textarea
+                            matInput
+                            [formControlName]="'description'"
+                        ></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row gt-md:flex-row">
+                    <div class="ng_select_emp1 w-full">
+                        <div class="label_ex mt-label font-semibold">
+                            Employee Name
+                        </div>
+                        <ng-select
+                            [items]="employees"
+                            bindLabel="name"
+                            bindValue="_id"
+                            [formControlName]="'employee'"
+                            [searchable]="true"
+                        >
+                        </ng-select>
+                    </div>
+                    <mat-form-field
+                        appearance="fill"
+                        class="flex-auto fuse-mat-dense w-full ml-4"
+                        ><mat-label>Start Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker"
+                            [formControlName]="'startDate'"
+                            (click)="picker.open()"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field
+                        appearance="fill"
+                        class="fuse-mat-dense w-full"
+                        ><mat-label>Priority</mat-label>
+                        <mat-select [formControlName]="'priority'">
+                            <mat-option value="High"> High </mat-option>
+                            <mat-option value="Medium"> Medium </mat-option>
+                            <mat-option value="Low"> Low </mat-option>
+                        </mat-select></mat-form-field
+                    >
+                    <mat-form-field
+                        appearance="fill"
+                        class="fuse-mat-dense w-full ml-4"
+                        ><mat-label>Status</mat-label>
+                        <mat-select
+                            [formControlName]="'status'"
+                            (selectionChange)="seletedStatus($event.value)"
+                        >
+                            <mat-option value="todo"> Todo </mat-option>
+                            <mat-option value="Inprogress">
+                                Inprogress
+                            </mat-option>
+                            <mat-option value="onHold"> Onhold </mat-option>
+                            <mat-option value="completed">
+                                Completed
+                            </mat-option>
+                        </mat-select></mat-form-field
+                    >
+                </div>
+                <div class="flex flex-row gt-md:flex-row" *ngIf="testingShow">
+                    <mat-form-field
+                        appearance="fill"
+                        class="fuse-mat-dense w-full"
+                        ><mat-label>Testing</mat-label>
+                        <mat-select [formControlName]="'testing'">
+                            <mat-option value="pending"> Pending </mat-option>
+                            <mat-option value="completed">
+                                Completed
+                            </mat-option>
+                        </mat-select></mat-form-field
+                    >
+                    <mat-form-field
+                        appearance="fill"
+                        class="fuse-mat-dense w-full ml-4"
+                        ><mat-label>Manager Testing</mat-label>
+                        <mat-select [formControlName]="'managerTesting'">
+                            <mat-option value="pending"> Pending </mat-option>
+                            <mat-option value="completed">
+                                Completed
+                            </mat-option>
+                        </mat-select></mat-form-field
+                    >
+                </div>
+                <div class="flex flex-col gt-md:flex-row mt-2">
+                    <button
+                        type="submit"
+                        class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

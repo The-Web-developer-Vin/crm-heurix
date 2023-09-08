@@ -73,7 +73,7 @@ export class SeoSingleComponent implements OnInit {
                 // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('SEO.pdf');
+            pdf.save(this.details.clientName + '.pdf');
         });
     }
 }

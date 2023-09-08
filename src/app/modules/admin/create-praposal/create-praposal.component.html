@@ -1,0 +1,639 @@
+<div class="flex flex-col flex-auto w-full p-6 invioceForm praposal">
+    <div class="w-full mx-auto width">
+        <div class="brd_cls shadow p-6">
+            <div class="text-3xl font-bold mb-8 text-center">
+                {{ modify ? "Update" : "Create" }} Praposal
+            </div>
+            <form [formGroup]="praposalForm">
+                <div
+                    class="w-full gap-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2"
+                >
+                    <div>
+                        <mat-form-field
+                            appearance="fill"
+                            class="w-full fuse-mat-dense"
+                        >
+                            <mat-label>Proposal Category</mat-label>
+                            <mat-select [formControlName]="'category'">
+                                <mat-option value="Web Develpoment"
+                                    >Web Develpoment</mat-option
+                                >
+                                <mat-option value="Digital Marketing"
+                                    >Digital Marketing</mat-option
+                                >
+                                <mat-option value="Mobile Apps"
+                                    >Mobile Apps</mat-option
+                                >
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                            <mat-label>Client Name</mat-label>
+                            <input matInput [formControlName]="'clientName'" />
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                            <mat-label>Company Name</mat-label>
+                            <input matInput [formControlName]="'companyName'" />
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                            <mat-label>Client Email</mat-label>
+                            <input matInput [formControlName]="'clientMail'" />
+                            <mat-error
+                                *ngIf="
+                                    praposalForm
+                                        .get('clientMail')
+                                        .hasError('clientMail')
+                                "
+                            >
+                                Please enter a valid email address
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field
+                            appearance="fill"
+                            class="w-full fuse-mat-dense"
+                        >
+                            <mat-label>Country</mat-label>
+                            <mat-select
+                                [formControlName]="'country'"
+                                (selectionChange)="selectCountry($event.value)"
+                            >
+                                <mat-option
+                                    [value]="e.currency"
+                                    *ngFor="let e of coutries"
+                                >
+                                    {{ e.name }} - {{ e.currency }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="showState">
+                            <mat-form-field
+                                appearance="fill"
+                                class="w-full fuse-mat-dense"
+                            >
+                                <mat-label>State</mat-label>
+                                <mat-select
+                                    [formControlName]="'state'"
+                                    (selectionChange)="
+                                        selectState($event.value)
+                                    "
+                                >
+                                    <mat-option
+                                        [value]="e.name"
+                                        *ngFor="let e of state"
+                                    >
+                                        {{ e.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field class="flex-auto w-full">
+                            <mat-label>Address</mat-label>
+                            <textarea
+                                matInput
+                                [formControlName]="'address'"
+                            ></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- summary -->
+                <div
+                    class="w-full gap-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1"
+                >
+                    <mat-form-field class="flex-auto w-full">
+                        <mat-label>Executive summary</mat-label>
+                        <textarea
+                            matInput
+                            [formControlName]="'executiveSummary'"
+                        ></textarea>
+                    </mat-form-field>
+                </div>
+                <!-- scope of work -->
+                <div
+                    class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="label_ex mt-label">Scope of Work</div>
+                        <!-- <div>
+                            <span
+                                (click)="addServices()"
+                                class="ml-12 flex items-center cursor-pointer"
+                            >
+                                <mat-icon
+                                    class="icon-size-2 text-primary_l"
+                                    svgIcon="heroicons_outline:plus-circle"
+                                ></mat-icon>
+                            </span>
+                        </div> -->
+                    </div>
+                    <form [formGroup]="scopeForm" class="mt-2">
+                        <div formArrayName="scopeDetails">
+                            <div
+                                class="border p-3 pb-0 rounded-lg mb-3 bg-gray"
+                                *ngFor="
+                                    let scope of scopeDetails().controls;
+                                    let i = index
+                                "
+                            >
+                                <div [formGroupName]="i">
+                                    <div class="flex">
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense service_text"
+                                        >
+                                            <input
+                                                id="project_url"
+                                                matInput
+                                                value="Module + {{ i + 1 }}"
+                                                placeholder="Module"
+                                                [formControlName]="'module'"
+                                            />
+                                        </mat-form-field>
+                                        <div class="flex items-start ml-2 mt-2">
+                                            <button
+                                                mat-button
+                                                [matMenuTriggerFor]="theMenu"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    svgIcon="heroicons_outline:dots-vertical"
+                                                ></mat-icon>
+                                            </button>
+                                            <mat-menu #theMenu="matMenu">
+                                                <button
+                                                    mat-menu-item
+                                                    (click)="
+                                                        addServices();
+                                                        addSubService(i + 1)
+                                                    "
+                                                >
+                                                    Add Module
+                                                </button>
+                                                <button
+                                                    mat-menu-item
+                                                    (click)="removeService(i)"
+                                                >
+                                                    Remove Module
+                                                </button>
+                                            </mat-menu>
+                                            <!-- <span
+                                                (click)="addSubService(i)"
+                                                class="flex items-center cursor-pointer"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-2 text-primary_l"
+                                                    svgIcon="heroicons_outline:plus-circle"
+                                                ></mat-icon>
+                                            </span> -->
+                                            <!-- <span
+                                                class="flex items-center cursor-pointer"
+                                                (click)="removeService(i)"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5 text-red ml-2"
+                                                    [svgIcon]="'delete'"
+                                                ></mat-icon>
+                                            </span> -->
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        formArrayName="subModule"
+                                        class="w-full"
+                                    >
+                                        <div
+                                            *ngFor="
+                                                let skill of employeeSkills(i)
+                                                    .controls;
+                                                let subIndex = index
+                                            "
+                                        >
+                                            <div [formGroupName]="subIndex">
+                                                <div class="flex w-full">
+                                                    <mat-form-field
+                                                        class="flex-auto fuse-mat-dense"
+                                                    >
+                                                        <input
+                                                            matInput
+                                                            placeholder="head"
+                                                            [formControlName]="
+                                                                'subHeading'
+                                                            "
+                                                        />
+                                                    </mat-form-field>
+                                                    <mat-form-field
+                                                        class="flex-auto fuse-mat-dense ml-4"
+                                                    >
+                                                        <input
+                                                            id="project_url"
+                                                            matInput
+                                                            placeholder="des"
+                                                            [formControlName]="
+                                                                'subDescription'
+                                                            "
+                                                        />
+                                                    </mat-form-field>
+
+                                                    <div
+                                                        class="flex items-start ml-2 mt-2"
+                                                    >
+                                                        <button
+                                                            mat-button
+                                                            [matMenuTriggerFor]="
+                                                                theSubMenu
+                                                            "
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                svgIcon="heroicons_outline:dots-vertical"
+                                                            ></mat-icon>
+                                                        </button>
+                                                        <mat-menu
+                                                            #theSubMenu="matMenu"
+                                                        >
+                                                            <button
+                                                                mat-menu-item
+                                                                (click)="
+                                                                    addSubService(
+                                                                        i
+                                                                    )
+                                                                "
+                                                            >
+                                                                Add Row
+                                                            </button>
+                                                            <button
+                                                                mat-menu-item
+                                                                (click)="
+                                                                    removeSubService(
+                                                                        i,
+                                                                        subIndex
+                                                                    )
+                                                                "
+                                                            >
+                                                                Remove Row
+                                                            </button>
+                                                        </mat-menu>
+                                                        <!-- <span
+                                                            class="flex items-center cursor-pointer"
+                                                            (click)="
+                                                                removeSubService(
+                                                                    i,
+                                                                    subIndex
+                                                                )
+                                                            "
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5 text-red ml-2"
+                                                                [svgIcon]="
+                                                                    'delete'
+                                                                "
+                                                            ></mat-icon>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- deliverables -->
+                <div
+                    class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1"
+                >
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="label_ex mt-label">Deliverables</div>
+                    </div>
+                    <form [formGroup]="deliverablesForm">
+                        <div
+                            formArrayName="deliverablesDetails"
+                            class="border rounded-lg p-3 pb-0 mb-3"
+                        >
+                            <div
+                                class=""
+                                *ngFor="
+                                    let page of deliverablesForm.get(
+                                        'deliverablesDetails'
+                                    )['controls'];
+                                    let i = index
+                                "
+                            >
+                                <div [formGroupName]="i">
+                                    <div class="flex">
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense"
+                                        >
+                                            <input
+                                                placeholder="Deliverables"
+                                                matInput
+                                                [formControlName]="
+                                                    'deliverables'
+                                                "
+                                            />
+                                        </mat-form-field>
+
+                                        <div class="flex items-start ml-4 mt-2">
+                                            <span
+                                                (click)="addDeliverables()"
+                                                class="flex items-center cursor-pointer"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-2 text-primary_l"
+                                                    svgIcon="heroicons_outline:plus-circle"
+                                                ></mat-icon>
+                                            </span>
+                                            <span
+                                                class="flex items-center cursor-pointer"
+                                                (click)="deleteDeliverables(i)"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5 text-red ml-2"
+                                                    [svgIcon]="'delete'"
+                                                ></mat-icon>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Roles & responsibilities -->
+                <div
+                    class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1"
+                >
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="label_ex mt-label">
+                            Roles and Responsibilities
+                        </div>
+                    </div>
+                    <form [formGroup]="responsbilityForm">
+                        <div
+                            formArrayName="rolesDetails"
+                            class="border rounded-lg p-3 pb-0 mb-3"
+                        >
+                            <div
+                                class=""
+                                *ngFor="
+                                    let page of responsbilityForm.get(
+                                        'rolesDetails'
+                                    )['controls'];
+                                    let i = index
+                                "
+                            >
+                                <div [formGroupName]="i">
+                                    <div class="flex">
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense"
+                                        >
+                                            <input
+                                                placeholder="Role"
+                                                matInput
+                                                [formControlName]="'role'"
+                                            />
+                                        </mat-form-field>
+                                        <mat-form-field
+                                            class="flex-auto fuse-mat-dense ml-4"
+                                        >
+                                            <input
+                                                placeholder="Responsibility"
+                                                matInput
+                                                [formControlName]="
+                                                    'responsibility'
+                                                "
+                                            />
+                                        </mat-form-field>
+
+                                        <div class="flex items-start ml-4 mt-2">
+                                            <span
+                                                (click)="addResponsibilty()"
+                                                class="flex items-center cursor-pointer"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-2 text-primary_l"
+                                                    svgIcon="heroicons_outline:plus-circle"
+                                                ></mat-icon>
+                                            </span>
+                                            <span
+                                                class="flex items-center cursor-pointer"
+                                                (click)="deleteResponsibilty(i)"
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5 text-red ml-2"
+                                                    [svgIcon]="'delete'"
+                                                ></mat-icon>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- payment & terms -->
+                <div class="amount_details w-full mt-0">
+                    <div class="label_ex mt-label mb-3">Payments & Terms</div>
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th align="left">Items</th>
+                                <th align="left">Item Description</th>
+                                <th align="left">Units</th>
+                                <th align="left">Unit Price</th>
+                                <th align="left">Total Cost</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="items">
+                            <tr
+                                *ngFor="
+                                    let refer of praposalForm.get('items')[
+                                        'controls'
+                                    ];
+                                    let i = index
+                                "
+                                [formGroupName]="i"
+                            >
+                                <td class="prices">{{ i + 1 }}</td>
+                                <td>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            placeholder="Item Description"
+                                            [formControlName]="
+                                                'itemDescription'
+                                            "
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="prices">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            (keypress)="numberOnly($event)"
+                                            matInput
+                                            placeholder="00"
+                                            maxlength="3"
+                                            [formControlName]="'units'"
+                                            (keyup)="total($event, i)"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="prices">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            (keypress)="numberOnly($event)"
+                                            matInput
+                                            placeholder="00.00"
+                                            maxlength="5"
+                                            [formControlName]="'unitPrice'"
+                                            (keyup)="total($event, i)"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="prices">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            readonly
+                                            matInput
+                                            placeholder="00.00"
+                                            [formControlName]="'totalCost'"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="action">
+                                    <span
+                                        class="flex items-center cursor-pointer"
+                                        (click)="removeItem(i)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5 text-red ml-1"
+                                            [svgIcon]="'delete'"
+                                        ></mat-icon>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="py-2 add_item_div">
+                        <span
+                            (click)="addItem()"
+                            class="text-primary_l font-semibold cursor-pointer"
+                            >Add Item</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-end add_item_div bottom_value w-full py-3 costs"
+                    >
+                        <div class="text-end">
+                            <div class="flex items-center mb-3 justify-end">
+                                <div class="mr-2">Total Without Tax :</div>
+                                <div class="font-bold w-15">
+                                    {{ totalWithoutTax ? totalWithoutTax : 00 }}
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end">
+                                <div class="mr-2 flex">
+                                    <ng-container *ngIf="showStateTax">
+                                        <div class="flex items-center">
+                                            <div class="label_in mt-0">
+                                                (CGST :
+                                            </div>
+                                            <div class="font-semibold">9%</div>
+                                        </div>
+                                        ,
+                                        <div class="flex items-center mr-2">
+                                            <div class="label_in mt-0">
+                                                SGST :
+                                            </div>
+                                            <div class="font-semibold">9%)</div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="showGst">
+                                        <div class="flex items-center mr-2">
+                                            <div class="label_in mr-2 mt-0">
+                                                (IGST :
+                                            </div>
+                                            <div class="font-semibold">
+                                                18%)
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    Tax :
+                                </div>
+                                <div class="font-bold w-15">
+                                    {{ taxAmount ? taxAmount : 0 }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex justify-end bottom_value t w-full pt-3 costs"
+                    >
+                        <div class="flex items-center justify-end text-lg">
+                            <div class="mr-2 font-bold">Grand Total:</div>
+                            <div class="font-bold">
+                                {{
+                                    (grandTotal
+                                    | currency
+                                        : selectedCountry
+                                        : "symbol"
+                                        : "1.0")
+                                        ? (grandTotal
+                                          | currency
+                                              : selectedCountry
+                                              : "symbol"
+                                              : "1.0")
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bankDetails flex mt-4">
+                    <div>
+                        <div class="font-bold mb-3">Bank Details:</div>
+
+                        <mat-radio-group
+                            class="flex flex-col"
+                            aria-label="Select an option"
+                            (change)="checkBank($event)"
+                            [(ngModel)]="bankDetails"
+                            [ngModelOptions]="{ standalone: true }"
+                        >
+                            <mat-radio-button value="Company" class="mb-3"
+                                >Company Account</mat-radio-button
+                            >
+                            <mat-radio-button value="RK" class="mb-3"
+                                >Radha Krishna</mat-radio-button
+                            >
+                            <mat-radio-button value="laxmi" class="mb-3"
+                                >Laxmi</mat-radio-button
+                            >
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="flex mt-4 justify-end">
+                    <button
+                        type="submit"
+                        class="max-w-40 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

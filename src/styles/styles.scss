@@ -3,6 +3,8 @@
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 @import "~ngx-spinner/animations/ball-fussion.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 .bg-light {
     background-color: #ddd !important;
@@ -640,4 +642,35 @@ body.light .mat-checkbox-checked.mat-accent .mat-checkbox-background {
     height: 100vh;
     align-items: center;
     justify-content: center;
+}
+.bg-green_list {
+    background-color: green;
+}
+// .mat-tab-group
+//     .mat-tab-header
+//     .mat-tab-label-container
+//     .mat-tab-list
+//     .mat-tab-labels
+//     .mat-tab-label.mat-tab-label-active {
+//     .inCmp_bg {
+//         background-color: #fa896b !important;
+//     }
+//     .cmp_bg {
+//         background-color: #13deb9 !important;
+//     }
+//     .all_bg {
+//         background: #5d87ff !important;
+//     }
+// }
+.inCmp_bg {
+    background-color: #fa896b !important;
+}
+.cmp_bg {
+    background-color: #13deb9 !important;
+}
+.all_bg {
+    background: #5d87ff !important;
+}
+.wor_bg {
+    background-color: #ffae1f !important;
 }

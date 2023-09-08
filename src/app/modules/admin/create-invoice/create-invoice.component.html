@@ -1,0 +1,371 @@
+<div class="flex flex-col flex-auto w-full p-6 invioceForm">
+    <div class="w-full max-w-screen-md mx-auto">
+        <div class="brd_cls shadow p-6">
+            <div class="text-3xl font-bold mb-6 text-center">
+                {{ modify ? " Update" : "Create" }} Invoice
+            </div>
+            <form [formGroup]="invoiceForm">
+                <div
+                    class="billTo flex w-full gap-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2"
+                >
+                    <div class="">
+                        <div class="font-bold mb-2">Bill To</div>
+                        <div
+                            class="company_name grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 flex items-center"
+                        >
+                            <div class="label_in mr-2">Company Name</div>
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense w-full col-span-2"
+                            >
+                                <input
+                                    matInput
+                                    [formControlName]="'companyName'"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">Client's GST</div>
+
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense w-full col-span-2"
+                            >
+                                <input
+                                    matInput
+                                    [formControlName]="'clientGST'"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div class="font-bold mb-2 mt-4">Billing Address</div>
+                        <div
+                            class="text_area flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">Address</div>
+                            <mat-form-field class="flex-auto w-full col-span-2">
+                                <textarea
+                                    matInput
+                                    [formControlName]="'billingAddress'"
+                                ></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div
+                            class="flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">*Client Name</div>
+                            <mat-form-field
+                                appearance="fill"
+                                class="w-full fuse-mat-dense col-span-2"
+                            >
+                                <mat-select [formControlName]="'clientName'">
+                                    <mat-option
+                                        [value]="e._id"
+                                        *ngFor="let e of clients"
+                                    >
+                                        {{ e.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">Client Contact No</div>
+
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense w-full col-span-2"
+                            >
+                                <input
+                                    matInput
+                                    [formControlName]="'clientNumber'"
+                                    (keypress)="numberOnly($event)"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">*Client Email ID</div>
+
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense w-full col-span-2"
+                            >
+                                <input
+                                    matInput
+                                    [formControlName]="'clientMail'"
+                                />
+                                <!-- <mat-error
+                                    *ngIf="
+                                        invoiceForm
+                                            .get('email')
+                                            .hasError('required')
+                                    "
+                                >
+                                    Email address is required
+                                </mat-error> -->
+                                <mat-error
+                                    *ngIf="
+                                        invoiceForm
+                                            .get('clientMail')
+                                            .hasError('clientMail')
+                                    "
+                                >
+                                    Please enter a valid email address
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div
+                            class="flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">Country</div>
+
+                            <mat-form-field
+                                appearance="fill"
+                                class="w-full fuse-mat-dense col-span-2"
+                            >
+                                <mat-select
+                                    [formControlName]="'country'"
+                                    (selectionChange)="
+                                        selectCountry($event.value)
+                                    "
+                                >
+                                    <mat-option
+                                        [value]="e.currency"
+                                        *ngFor="let e of coutries"
+                                    >
+                                        {{ e.name }} - {{ e.currency }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div
+                            *ngIf="showState"
+                            class="flex items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3"
+                        >
+                            <div class="label_in mr-2">State</div>
+
+                            <mat-form-field
+                                appearance="fill"
+                                class="w-full fuse-mat-dense col-span-2"
+                            >
+                                <mat-select
+                                    [formControlName]="'state'"
+                                    (selectionChange)="
+                                        selectState($event.value)
+                                    "
+                                >
+                                    <mat-option
+                                        [value]="e.name"
+                                        *ngFor="let e of state"
+                                    >
+                                        {{ e.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="amount_details w-full mt-6">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th align="left">Items</th>
+                                <th align="left">Item Description</th>
+                                <th align="left">Units</th>
+                                <th align="left">Unit Price</th>
+                                <th align="left">Total Cost</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="items">
+                            <tr
+                                *ngFor="
+                                    let refer of invoiceForm.get('items')[
+                                        'controls'
+                                    ];
+                                    let i = index
+                                "
+                                [formGroupName]="i"
+                            >
+                                <td class="prices">{{ i + 1 }}</td>
+                                <td>
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            matInput
+                                            placeholder="Item Description"
+                                            [formControlName]="
+                                                'itemDescription'
+                                            "
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="prices">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            (keypress)="numberOnly($event)"
+                                            matInput
+                                            placeholder="00"
+                                            maxlength="3"
+                                            [formControlName]="'units'"
+                                            (keyup)="total($event, i)"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="prices">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            (keypress)="numberOnly($event)"
+                                            matInput
+                                            placeholder="00.00"
+                                            maxlength="5"
+                                            [formControlName]="'unitPrice'"
+                                            (keyup)="total($event, i)"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="prices">
+                                    <mat-form-field
+                                        class="flex-auto fuse-mat-dense w-full"
+                                    >
+                                        <input
+                                            readonly
+                                            matInput
+                                            placeholder="00.00"
+                                            [formControlName]="'totalCost'"
+                                        />
+                                    </mat-form-field>
+                                </td>
+                                <td class="action">
+                                    <span
+                                        class="flex items-center cursor-pointer"
+                                        (click)="removeItem(i)"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-5 text-red ml-1"
+                                            [svgIcon]="'delete'"
+                                        ></mat-icon>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="py-2 add_item_div">
+                        <span
+                            (click)="addItem()"
+                            class="text-primary_l font-semibold cursor-pointer"
+                            >Add Item</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-end add_item_div bottom_value w-full py-3 costs"
+                    >
+                        <div class="text-end">
+                            <div class="flex items-center mb-3 justify-end">
+                                <div class="mr-2">Total Without Tax :</div>
+                                <div class="font-bold w-15">
+                                    {{ totalWithoutTax ? totalWithoutTax : 00 }}
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end">
+                                <div class="mr-2 flex">
+                                    <ng-container *ngIf="showStateTax">
+                                        <div class="flex items-center">
+                                            <div class="label_in mt-0">
+                                                (CGST :
+                                            </div>
+                                            <div class="font-semibold">9%</div>
+                                        </div>
+                                        ,
+                                        <div class="flex items-center mr-2">
+                                            <div class="label_in mt-0">
+                                                SGST :
+                                            </div>
+                                            <div class="font-semibold">9%)</div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="showGst">
+                                        <div class="flex items-center mr-2">
+                                            <div class="label_in mr-2 mt-0">
+                                                (IGST :
+                                            </div>
+                                            <div class="font-semibold">
+                                                18%)
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    Tax :
+                                </div>
+                                <div class="font-bold w-15">
+                                    {{ taxAmount ? taxAmount : 0 }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex justify-end bottom_value t w-full pt-3 costs"
+                    >
+                        <div class="flex items-center justify-end text-lg">
+                            <div class="mr-2 font-bold">Grand Total:</div>
+                            <div class="font-bold">
+                                {{
+                                    (grandTotal
+                                    | currency
+                                        : selectedCountry
+                                        : "symbol"
+                                        : "1.0")
+                                        ? (grandTotal
+                                          | currency
+                                              : selectedCountry
+                                              : "symbol"
+                                              : "1.0")
+                                        : 0
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bankDetails flex mt-4">
+                    <div>
+                        <div class="font-bold mb-3">Bank Details:</div>
+
+                        <mat-radio-group
+                            class="flex flex-col"
+                            aria-label="Select an option"
+                            (change)="checkBank($event)"
+                            [(ngModel)]="bankDetails"
+                            [ngModelOptions]="{ standalone: true }"
+                        >
+                            <mat-radio-button value="Company" class="mb-3"
+                                >Company Account</mat-radio-button
+                            >
+                            <mat-radio-button value="RK" class="mb-3"
+                                >Radha Krishna</mat-radio-button
+                            >
+                            <mat-radio-button value="laxmi" class="mb-3"
+                                >Laxmi</mat-radio-button
+                            >
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="flex mt-4 justify-end">
+                    <button
+                        type="submit"
+                        class="max-w-40 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

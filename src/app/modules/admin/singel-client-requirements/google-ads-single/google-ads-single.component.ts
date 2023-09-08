@@ -72,7 +72,7 @@ export class GoogleAdsSingleComponent implements OnInit {
                 // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('google-ads.pdf');
+            pdf.save(this.details.clientName + '.pdf');
         });
     }
 }

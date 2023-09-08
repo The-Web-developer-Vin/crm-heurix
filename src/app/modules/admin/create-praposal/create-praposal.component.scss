@@ -1,0 +1,106 @@
+.invioceForm ::ng-deep {
+    .mat-form-field.mat-form-field-appearance-fill.fuse-mat-dense
+        .mat-form-field-wrapper {
+        //  margin-bottom: 10px !important;
+        .mat-form-field-flex {
+            min-height: 30px !important;
+            height: 35px;
+        }
+    }
+
+    .label_in {
+        color: #58566e;
+        font-size: 14px;
+        margin-top: -12px;
+    }
+    .mat-radio-label {
+        .mat-radio-container {
+            width: 16px;
+            height: 16px;
+        }
+        .mat-radio-outer-circle {
+            width: 16px;
+            height: 16px;
+        }
+        .mat-radio-inner-circle {
+            width: 16px;
+            height: 16px;
+            background-color: #4f46e5 !important;
+        }
+    }
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+        border-color: #4f46e5 !important;
+    }
+}
+.praposal {
+    .width {
+        max-width: 850px !important;
+    }
+    .bg-gray {
+        background-color: #eee;
+    }
+}
+.label_ex {
+    font: 400 0.875rem / 1.2857142857 "Inter var", ui-sans-serif, system-ui,
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji";
+    color: rgba(
+        var(--fuse-text-default-rgb),
+        var(--tw-text-opacity)
+    ) !important;
+}
+.amount_details ::ng-deep {
+    table {
+        th {
+            background-color: #58566e;
+            color: #fff;
+            padding: 0.8em 1em;
+            font-weight: 500;
+        }
+        tbody {
+            tr {
+                td {
+                    padding: 0.5em 1em;
+                    border-bottom: 0.1rem solid #eaeaea;
+                    .mat-form-field.mat-form-field-appearance-fill.fuse-mat-dense
+                        .mat-form-field-wrapper {
+                        margin-bottom: 0px !important;
+                    }
+                    &.prices {
+                        width: 40px !important;
+                    }
+                    &.action {
+                        width: 20px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.add_item_div {
+    border-bottom: 0.1rem solid #eaeaea;
+}
+.bottom_value {
+    color: #58566e;
+    font-size: 14px;
+}
+.costs {
+    padding-right: 65px;
+}
+.bg-light {
+    background-color: #ddd !important;
+}
+::ng-deep body.light .mat-snack-bar-container,
+body .light .mat-snack-bar-container {
+    background: rgb(34 197 94);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container .mat-button {
+    color: #fff;
+}
+
+::ng-deep body.light .mat-snack-bar-container.alert-red {
+    background: rgb(239 68 68);
+}

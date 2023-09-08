@@ -1,0 +1,348 @@
+<div class="search p-4 flex items-center justify-between">
+    <div class="flex items-center relative">
+        <mat-form-field
+            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+            [floatLabel]="'always'"
+        >
+            <input
+                matInput
+                #search
+                placeholder="Search"
+                [(ngModel)]="searchName"
+                (keyup.enter)="doFilter(searchName)"
+            />
+        </mat-form-field>
+        <mat-icon
+            matPrefix
+            class="icon-size-5 cursor-pointer absolute right-4"
+            [svgIcon]="'heroicons_solid:search'"
+            (click)="doFilter(searchName)"
+        ></mat-icon>
+    </div>
+</div>
+<div class="overflow-x-auto w-full">
+    <table
+        class="w-full bg-transparent is-hoverable"
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        [trackBy]="trackByFn"
+    >
+        <!-- position -->
+        <ng-container matColumnDef="position">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+            >
+                S.No
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element; let i = index"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <span class="flex capitalize cursor-pointer text-xs+">
+                    {{ i + 1 }}
+                </span>
+            </td>
+        </ng-container>
+        <!--module -->
+        <ng-container matColumnDef="module">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+                mat-sort-header
+                (click)="sorting($event, 'moduleName')"
+            >
+                Module
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span class="flex capitalize cursor-pointer text-xs+">
+                    {{ element.moduleName }}
+                </span>
+            </td>
+        </ng-container>
+        <!--task -->
+        <ng-container matColumnDef="task">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+                mat-sort-header
+                (click)="sorting($event, 'taskName')"
+            >
+                Name of The Task
+            </th>
+            <td mat-cell *matCellDef="let element" class="px-4 py-3">
+                <span
+                    class="flex capitalize cursor-pointer text-xs+ word-wrap task_line"
+                >
+                    {{ element.taskName }}
+                </span>
+            </td>
+        </ng-container>
+        <!--Assigned to -->
+        <ng-container matColumnDef="employee">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+                mat-sort-header
+                (click)="sorting($event, 'employee')"
+            >
+                Assigned to
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span class="flex capitalize cursor-pointer text-xs+">
+                    {{ element.employee.name }}
+                </span>
+            </td>
+        </ng-container>
+        <!--startDate -->
+        <ng-container matColumnDef="startDate">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+                mat-sort-header
+                (click)="sorting($event, 'startDate')"
+            >
+                Start Date
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span class="flex capitalize cursor-pointer text-xs+">
+                    {{ element.startDate | date : "dd MMM, y" }}
+                </span>
+            </td>
+        </ng-container>
+        <!--finished -->
+        <ng-container matColumnDef="finished">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+            >
+                Deadline
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span class="flex capitalize cursor-pointer text-xs+">
+                    {{
+                        (element.finishedDate | date : "dd MMM, y")
+                            ? (element.finishedDate | date : "dd MMM, y")
+                            : "--"
+                    }}
+                </span>
+            </td>
+        </ng-container>
+        <!--priority -->
+        <ng-container matColumnDef="priority">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                mat-sort-header
+                (click)="sorting($event, 'priority')"
+            >
+                Priority
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span
+                    class="badge bg-primary/10 text-primary_l amounts text-xs+ chng_amnt"
+                    *ngIf="element.priority == 'High'"
+                >
+                    High
+                </span>
+                <span
+                    class="chng_amnt amounts badge bg-success/10 text-success-l dark:bg-success/15 text-xs+"
+                    *ngIf="element.priority == 'Medium'"
+                >
+                    Medium
+                </span>
+                <span
+                    class="chng_amnt badge bg-warning/10 text-amber-500 dark:bg-warning/15 amounts text-xs+"
+                    *ngIf="element.priority == 'Low'"
+                >
+                    Low
+                </span>
+            </td>
+        </ng-container>
+        <!--status -->
+        <ng-container matColumnDef="status">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+            >
+                Status
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span
+                    *ngIf="element.status == 'todo'"
+                    class="chng_amnt badge bg-primary/10 text-primary_l amounts text-xs+ capitalize"
+                >
+                    {{ element.status }}
+                </span>
+                <span
+                    *ngIf="element.status == 'completed'"
+                    class="chng_amnt amounts badge bg-success/10 text-success-l dark:bg-success/15 text-xs+ capitalize"
+                >
+                    {{ element.status }}
+                </span>
+                <span
+                    *ngIf="element.status == 'Inprogress'"
+                    class="chng_amnt badge bg-warning/10 text-amber-500 dark:bg-warning/15 amounts text-xs+ capitalize"
+                >
+                    {{ element.status }}
+                </span>
+                <span
+                    *ngIf="element.status == 'onHold'"
+                    class="chng_amnt amounts badge bg-error/10 text-error dark:bg-error/15 text-xs+ capitalize"
+                >
+                    {{ element.status }}
+                </span>
+            </td>
+        </ng-container>
+        <!--Testing -->
+        <ng-container matColumnDef="testing">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+            >
+                Testing
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span
+                    *ngIf="element.testing == 'completed'"
+                    class="chng_amnt amounts badge bg-success/10 text-success-l dark:bg-success/15 text-xs+ capitalize"
+                >
+                    {{ element.testing }}
+                </span>
+
+                <span
+                    *ngIf="element.testing == 'pending'"
+                    class="chng_amnt amounts badge bg-error/10 text-error dark:bg-error/15 text-xs+ capitalize"
+                >
+                    {{ element.testing }}
+                </span>
+            </td>
+        </ng-container>
+        <!--manager -->
+        <ng-container matColumnDef="manager">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100"
+            >
+                Manager Testing
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3"
+            >
+                <span
+                    *ngIf="element.manager == 'completed'"
+                    class="chng_amnt amounts badge bg-success/10 text-success-l dark:bg-success/15 text-xs+ capitalize"
+                >
+                    {{ element.manager }}
+                </span>
+
+                <span
+                    *ngIf="element.manager == 'pending'"
+                    class="chng_amnt amounts badge bg-error/10 text-error dark:bg-error/15 text-xs+ capitalize"
+                >
+                    {{ element.manager }}
+                </span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <!-- <div *ngIf="role=='Manager'">  -->
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+            >
+                Actions
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="whitespace-nowrap px-4 py-3 sm:px-5"
+            >
+                <div class="flex">
+                    <div class="flex">
+                        <span
+                            (click)="edit(element)"
+                            class="flex items-center cursor-pointer"
+                        >
+                            <mat-icon
+                                svgIcon="edit"
+                                class="icon-size-5 mr-3 text-green-600"
+                            ></mat-icon>
+                        </span>
+
+                        <span
+                            class="flex items-center cursor-pointer"
+                            (click)="delete(element)"
+                        >
+                            <mat-icon
+                                class="icon-size-5 text-red mr-3"
+                                [svgIcon]="'delete'"
+                            ></mat-icon>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td
+                class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                align="center"
+                [attr.colspan]="displayedColumns.length"
+            >
+                No data Found.
+            </td>
+        </tr>
+    </table>
+</div>
+<mat-paginator
+    [length]="pageLength"
+    [pageSize]="pageSize"
+    [pageIndex]="pageNumber - 1"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="getData()"
+>
+</mat-paginator>

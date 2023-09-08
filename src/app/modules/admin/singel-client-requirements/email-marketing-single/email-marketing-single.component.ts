@@ -73,7 +73,7 @@ export class EmailMarketingSingleComponent implements OnInit {
                 // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('Email-Marketing.pdf');
+            pdf.save(this.details.clientName + '.pdf');
         });
     }
 }

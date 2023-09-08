@@ -1,0 +1,67 @@
+<div class="">
+    <div class="flex flex-col flex-auto form-Out">
+        <div class="flex-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between px-5 bg-primary_l py-4 bg-light-primary"
+            >
+                <div class="text-2xl font-semibold text-white truncate">
+                    Update Status
+                </div>
+                <button
+                    (click)="close()"
+                    type="button"
+                    mat-icon-button
+                    matDialogClose
+                >
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:x'"
+                        class="text-white"
+                    ></mat-icon>
+                </button>
+            </div>
+            <form
+                [formGroup]="createForm"
+                class="flex flex-col create-form px-5 py-6"
+            >
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-select
+                            placeholder="Status"
+                            (selectionChange)="getStatus($event.value)"
+                            [(ngModel)]="selectedStatus"
+                            [formControlName]="'status'"
+                        >
+                            <mat-option
+                                *ngFor="let e of statusList"
+                                value="{{ e.value }}"
+                                >{{ e.name }}</mat-option
+                            >
+                        </mat-select></mat-form-field
+                    >
+                </div>
+                <div *ngIf="showNote">
+                    <mat-form-field class="w-full">
+                        <!-- <mat-label>Note</mat-label> -->
+                        <textarea
+                            matInput
+                            placeholder="Note"
+                            [formControlName]="'n
+                            ote'"
+                        ></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col gt-md:flex-row">
+                    <button
+                        type="submit"
+                        class="max-w-40 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="save()"
+                    >
+                        Update Status
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

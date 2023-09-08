@@ -89,7 +89,7 @@ export class AuthService {
                     this._userService.user = response.data.user;
                     console.log('response.data.user', response.data.user);
                     if (response.data.user.role == 'Sales') {
-                        this.router.navigate(['/bidding-reports']);
+                        this.router.navigate(['/leads']);
                     } else {
                         this.router.navigate([`/projects`]);
                     }

@@ -75,7 +75,11 @@ export class WebsiteDesignSingleComponent implements OnInit {
                 );
                 heightLeft -= pageHeight;
             }
-            pdf.save('Website-Design.pdf');
+            pdf.save(
+                this.details.logoText
+                    ? this.details.logoText
+                    : this.details.clientName + '.pdf'
+            );
         });
     }
     viewContent(data: any) {

@@ -1,0 +1,113 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
+            >
+                <div
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
+                >
+                    <div class="flex items-center justify-between">
+                        <div
+                            class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
+                        >
+                            Projects
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+
+            <div
+                class="bg-card py-2 pt-6 shadow rounded-lg bg_block tabs-setting relative"
+            >
+                <mat-tab-group
+                    class="tab-group"
+                    [animationDuration]="'0'"
+                    (selectedTabChange)="tabClick($event)"
+                >
+                    <mat-tab label="Inprogress">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Working
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.working ? count?.working : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'Inprogress'">
+                            <app-working
+                                [filterData]="filterData"
+                                [tabName]="tabName"
+                                (_deleteProjectTasks)="
+                                    deleteProjectTask($event)
+                                "
+                                [allList]="allList"
+                            ></app-working
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="Completed">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Completed
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.completed ? count?.completed : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'Completed'">
+                            <app-completed
+                                [filterData]="filterDataCompleted"
+                                [tabName]="tabName"
+                                (_deleteProjectTasks)="
+                                    deleteProjectTask($event)
+                                "
+                                [allList]="allList"
+                            ></app-completed
+                        ></ng-container>
+                    </mat-tab>
+                    <mat-tab label="Stopped">
+                        <ng-template mat-tab-label>
+                            <button
+                                class="btn h-8 rounded-full text-xs+ font-medium"
+                            >
+                                Stopped
+                                <span
+                                    class="count-label inline-flex items-center font-bold px-2 py-0.5 rounded-full tracking-wide"
+                                >
+                                    {{
+                                        count?.stopped ? count?.stopped : 0
+                                    }}</span
+                                >
+                            </button>
+                        </ng-template>
+                        <ng-container *ngIf="tabName == 'Stopped'">
+                            <app-completed
+                                [filterData]="filterDataStopped"
+                                [tabName]="tabName"
+                                (_deleteProjectTasks)="
+                                    deleteProjectTask($event)
+                                "
+                                [allList]="allList"
+                            ></app-completed
+                        ></ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

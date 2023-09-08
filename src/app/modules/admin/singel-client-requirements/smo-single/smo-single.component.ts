@@ -73,7 +73,7 @@ export class SmoSingleComponent implements OnInit {
                 // );
                 heightLeft -= pageHeight;
             }
-            pdf.save('SMO.pdf');
+            pdf.save(this.details.clientName + '.pdf');
         });
     }
 }

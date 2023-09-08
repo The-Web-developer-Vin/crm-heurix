@@ -69,6 +69,28 @@ export const defaultNavigation: FuseNavigationItem[] = [
     //     link: '/work-reports',
     // },
     {
+        id: 'proposals',
+        title: 'Proposals',
+        type: 'basic',
+        icon: 'list_alt_add',
+        link: '/proposals',
+    },
+
+    {
+        id: 'invoice',
+        title: 'Invoices',
+        type: 'basic',
+        icon: 'receipt_long',
+        link: '/invoices',
+    },
+    {
+        id: 'coldCalling',
+        title: 'Cold Calling',
+        type: 'basic',
+        icon: 'record_voice_over',
+        link: '/cold-calling',
+    },
+    {
         id: 'digital',
         title: 'Req Forms',
         type: 'collapsable',
@@ -209,6 +231,28 @@ export const userNavigation: FuseNavigationItem[] = [
     //     link: '/work-reports',
     // },
     {
+        id: 'proposals',
+        title: 'Proposals',
+        type: 'basic',
+        icon: 'list_alt_add',
+        link: '/proposals',
+    },
+
+    {
+        id: 'invoice',
+        title: 'Invoices',
+        type: 'basic',
+        icon: 'receipt_long',
+        link: '/invoices',
+    },
+    {
+        id: 'coldCalling',
+        title: 'Cold Calling',
+        type: 'basic',
+        icon: 'record_voice_over',
+        link: '/cold-calling',
+    },
+    {
         id: 'digital',
         title: 'Digital Forms',
         type: 'collapsable',
@@ -283,24 +327,16 @@ export const userNavigation: FuseNavigationItem[] = [
     },
 ];
 export const salesNavigation: FuseNavigationItem[] = [
-    // {
-    //     id: 'biddings',
-    //     title: 'Bidding Report',
-    //     type: 'basic',
-    //     icon: 'monetization_on',
-    //     link: '/bidding-reports',
-    // },
-
-    // {
-    //     id: 'workreport',
-    //     title: 'Work Report',
-    //     type: 'basic',
-    //     icon: 'description',
-    //     link: '/work-reports',
-    // },
+    {
+        id: 'coldCalling',
+        title: 'Cold Calling',
+        type: 'basic',
+        icon: 'record_voice_over',
+        link: '/cold-calling',
+    },
     {
         id: 'digital',
-        title: 'Digital Forms',
+        title: 'Req Forms',
         type: 'collapsable',
         icon: 'list_alt',
         // link : '/courses'
@@ -340,7 +376,21 @@ export const salesNavigation: FuseNavigationItem[] = [
                 //  icon : 'feather:clipboard',
                 link: 'smo',
             },
+            {
+                id: 'websiteDesign',
+                title: 'Website Design',
+                type: 'basic',
+                //  icon : 'feather:clipboard',
+                link: '/website',
+            },
         ],
+    },
+    {
+        id: 'leads',
+        title: 'Leads',
+        type: 'basic',
+        icon: 'leaderboard',
+        link: '/leads',
     },
     {
         id: 'signout',

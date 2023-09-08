@@ -2,18 +2,6 @@ import { environment } from '../../environments/environment';
 
 class ApplicationURLs {
     serverUrl = environment.apiUrl;
-    get invoice() {
-        return this.serverUrl + 'invoice/createUpdate';
-    }
-    get getLast() {
-        return this.serverUrl + 'invoice/getLast';
-    }
-    get allInvoice() {
-        return this.serverUrl + 'invoice/getusers/getAll';
-    }
-    get invoiceById() {
-        return this.serverUrl + 'invoice';
-    }
 
     // Larvel API's
     serveUrl = environment.apiUrl;
@@ -305,6 +293,19 @@ class ApplicationURLs {
     get leads() {
         return this.serveUrl + 'leads';
     }
-   
+    get coldCalling() {
+        return this.serveUrl + 'coldCalling';
+    }
+    // tasks
+    get tasks() {
+        return this.serveUrl + 'tasks';
+    }
+    get invoice() {
+        return this.serverUrl + 'invoice';
+    }
+    // proposals
+    get proposals() {
+        return this.serverUrl + 'proposal';
+    }
 }
 export const applicationUrls = new ApplicationURLs();

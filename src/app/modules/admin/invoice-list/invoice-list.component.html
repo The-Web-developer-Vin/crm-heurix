@@ -6,19 +6,20 @@
                 class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 w-full min-w-0"
             >
                 <div
-                    class="flex flex-col flex-auto px-4 py-2 bg-card shadow rounded overflow-hidden mb-5"
+                    class="flex flex-col flex-auto px-4 py-6 bg-light-primary rounded-lg overflow-hidden mb-5"
                 >
                     <div class="flex items-center justify-between">
                         <div
-                            class="text-2xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                            class="text-2xl font-semibold text-slate-700 dark:text-navy-100 md:leading-snug truncate"
                         >
-                            All Invoices
+                            Invoices
                         </div>
                         <div
                             class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3"
                         >
+                            <!-- *ngIf="role=='Manager'" -->
                             <button
-                                class="px-3 py-1 mat-focus-indicator fuse-mat-button-rounded mat-flat-button mat-button-base vin-primary"
+                                class="px-3 mat-focus-indicator mat-flat-button mat-button-base primary_btn text-white"
                                 mat-flat-button
                                 (click)="add()"
                             >
@@ -35,146 +36,232 @@
 
             <!-- Table -->
 
-            <div class="bg-card mb-5 shadow rounded py-1">
-                <!-- <div class="search p-4">
-                    <mat-form-field
-                        class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
-                        [floatLabel]="'always'"
-                    >
+            <div class="bg-card mb-5 shadow rounded-lg py-1 bg_block">
+                <div class="search p-4 flex items-center justify-between">
+                    <div class="flex items-center relative">
+                        <mat-form-field
+                            class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-dense w-60"
+                            [floatLabel]="'always'"
+                        >
+                            <input
+                                matInput
+                                #search
+                                placeholder="Search"
+                                [(ngModel)]="searchName"
+                                (keyup.enter)="doFilter(searchName)"
+                            />
+                        </mat-form-field>
                         <mat-icon
                             matPrefix
-                            class="icon-size-5"
+                            class="icon-size-5 cursor-pointer absolute right-4"
                             [svgIcon]="'heroicons_solid:search'"
+                            (click)="doFilter(searchName)"
                         ></mat-icon>
-                        <input matInput #search placeholder="Search" />
-                    </mat-form-field>
-                </div> -->
+                    </div>
+                </div>
                 <div class="overflow-x-auto w-full">
                     <table
-                        class="w-full bg-transparent"
+                        class="w-full bg-transparent is-hoverable"
                         mat-table
-                        matSort
                         [dataSource]="dataSource"
                         [trackBy]="trackByFn"
-                        #clientsTable
+                        matSort
                     >
-                        <!-- id -->
+                        <!-- position -->
+                        <ng-container matColumnDef="position">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                S.No
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element; let i = index"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span
+                                    class="flex capitalize cursor-pointer text-xs+"
+                                >
+                                    {{ i + 1 }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!--project name -->
                         <ng-container matColumnDef="id">
                             <th
                                 mat-header-cell
-                                mat-sort-header
                                 *matHeaderCellDef
-                                class="pr-6 whitespace-nowrap capitalize"
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                mat-sort-header
+                                (click)="sorting($event, 'invoiceId')"
                             >
                                 Invoice Id
                             </th>
                             <td
                                 mat-cell
-                                *matCellDef="let transaction"
-                                class="whitespace-nowrap"
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
                             >
                                 <span
-                                    class="pr-6 flex capitalize cursor-pointer"
+                                    class="flex capitalize cursor-pointer text-xs+"
                                 >
-                                    {{ transaction.invoiceId }}
+                                    {{ element.invoiceId }}
                                 </span>
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="idin">
+                        <!--client name -->
+                        <ng-container matColumnDef="client">
                             <th
                                 mat-header-cell
-                                mat-sort-header
                                 *matHeaderCellDef
-                                class="pr-6 whitespace-nowrap capitalize"
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                mat-sort-header
+                                (click)="sorting($event, 'clientName')"
                             >
-                                Id
+                                Client Name
                             </th>
                             <td
                                 mat-cell
-                                *matCellDef="let transaction"
-                                class="whitespace-nowrap"
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
                             >
                                 <span
-                                    class="pr-6 flex capitalize cursor-pointer"
+                                    class="flex capitalize cursor-pointer text-xs+"
                                 >
-                                    {{ transaction._id }}
+                                    {{ element.clientName.name }}
                                 </span>
                             </td>
                         </ng-container>
-
-                        <!-- invoiceDescription -->
-                        <ng-container matColumnDef="invoiceDescription">
+                        <!--url -->
+                        <ng-container matColumnDef="email">
                             <th
                                 mat-header-cell
-                                mat-sort-header
                                 *matHeaderCellDef
-                                class="pr-6 whitespace-nowrap capitalize"
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                mat-sort-header
+                                (click)="sorting($event, 'clientMail')"
                             >
-                                Invoice Description
+                                Email
                             </th>
-                            <td mat-cell *matCellDef="let transaction" class="">
-                                <span class="flex pr-6 capitalize">
-                                    {{ transaction.invoiceDescription }}
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <span class="flex cursor-pointer text-xs+">
+                                    {{
+                                        element.clientMail
+                                            ? element.clientMail
+                                            : "--"
+                                    }}
                                 </span>
                             </td>
                         </ng-container>
-
-                        <!-- address -->
+                        <!--startDate -->
                         <ng-container matColumnDef="address">
                             <th
                                 mat-header-cell
-                                mat-sort-header
                                 *matHeaderCellDef
-                                class="pr-6 whitespace-nowrap capitalize"
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                mat-sort-header
+                                (click)="sorting($event, 'billingAddress')"
                             >
                                 Address
                             </th>
-                            <td mat-cell *matCellDef="let transaction" class="">
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="px-4 py-3 sm:px-5"
+                            >
                                 <span
-                                    class="flex pr-6 capitalize"
-                                    [innerHtml]="transaction.address"
+                                    class="flex capitalize cursor-pointer text-xs+ word-wrap"
                                 >
+                                    {{
+                                        element.billingAddress
+                                            ? element.billingAddress
+                                            : "--"
+                                    }}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <!-- GST -->
-                        <ng-container matColumnDef="GST">
+                        <!--date -->
+                        <ng-container matColumnDef="date">
                             <th
                                 mat-header-cell
-                                mat-sort-header
                                 *matHeaderCellDef
-                                class="pr-6 whitespace-nowrap capitalize"
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                                mat-sort-header
+                                (click)="sorting($event, 'latestMail')"
                             >
-                                GST
+                                Invoice Date
                             </th>
                             <td
                                 mat-cell
-                                *matCellDef="let transaction"
-                                class="whitespace-nowrap"
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
                             >
-                                <span class="pr-6 whitespace-nowrap capitalize">
-                                    {{ transaction.GST }}
-                                </span>
+                                <div
+                                    class="whitespace-nowrap capitalize"
+                                    *ngIf="element.latestMail"
+                                >
+                                    {{
+                                        element.latestMail | date : "dd MMM, y"
+                                    }}
+                                </div>
+                                <div *ngIf="!element.latestMail">--</div>
                             </td>
                         </ng-container>
-
-                        <!-- actions -->
                         <ng-container matColumnDef="actions">
-                            <th mat-header-cell *matHeaderCellDef>Actions</th>
-                            <td mat-cell *matCellDef="let element">
-                                <div class="flex">
-                                    <button
-                                        class="vin-text-primary rounded py-0.5 px-3 text-sm font-semibold bg-sky-200"
-                                        [routerLink]="['/invoice/print']"
-                                        [queryParams]="{ id: element._id }"
+                            <!-- <div *ngIf="role=='Manager'">  -->
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="text-xs+ whitespace-nowrap bg-light-primary px-4 py-3 font-medium capitalize text-slate-800 dark:text-navy-100 lg:px-5"
+                            >
+                                Actions
+                            </th>
+                            <td
+                                mat-cell
+                                *matCellDef="let element"
+                                class="whitespace-nowrap px-4 py-3 sm:px-5"
+                            >
+                                <div class="flex items-center">
+                                    <span
+                                        (click)="viewSingle(element)"
+                                        class="flex items-center cursor-pointer mr-3"
                                     >
-                                        Genenrate
-                                    </button>
+                                        <mat-icon
+                                            svgIcon="mat_solid:remove_red_eye"
+                                            class="icon-size-5 text-amber-500"
+                                        ></mat-icon>
+                                    </span>
+                                    <span
+                                        (click)="edit(element)"
+                                        class="flex items-center cursor-pointer mr-3"
+                                    >
+                                        <mat-icon
+                                            svgIcon="edit"
+                                            class="icon-size-5 text-green-600"
+                                        ></mat-icon>
+                                    </span>
+                                    <span
+                                        (click)="
+                                            OpenSettingsDrawer(element);
+                                            settingsDrawer.toggle()
+                                        "
+                                        class="flex items-center cursor-pointer"
+                                    >
+                                        <mat-icon
+                                            svgIcon="mat_solid:send"
+                                            class="icon-size-5 text-primary_l"
+                                        ></mat-icon>
+                                    </span>
                                 </div>
                             </td>
                         </ng-container>
-
                         <tr
                             mat-header-row
                             *matHeaderRowDef="displayedColumns"
@@ -183,6 +270,15 @@
                             mat-row
                             *matRowDef="let row; columns: displayedColumns"
                         ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td
+                                class="text-xs+ mat-cell whitespace-nowrap px-4 py-3 sm:px-5"
+                                align="center"
+                                [attr.colspan]="displayedColumns.length"
+                            >
+                                No data Found.
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <mat-paginator
@@ -197,3 +293,151 @@
         </div>
     </div>
 </div>
+
+<fuse-drawer
+    class="w-screen min-w-screen sm:w-140 sm:min-w-140 z-999 send_mail_modal"
+    fixed
+    [mode]="'over'"
+    [name]="'settingsDrawer'"
+    [position]="'right'"
+    #settingsDrawer
+>
+    <div class="w-full send_mail">
+        <div
+            class="flex flex-row items-center px-6 h-15 min-h-15 text-white bg-primary_l"
+        >
+            <div
+                class="ml-3 text-2xl font-semibold tracking-tight flex items-center"
+            >
+                <mat-icon
+                    svgIcon="mat_solid:send"
+                    class="text-white mr-3"
+                ></mat-icon>
+                Send Mail
+            </div>
+            <button
+                class="ml-auto"
+                mat-icon-button
+                (click)="settingsDrawer.close(); close()"
+            >
+                <mat-icon
+                    class="text-current"
+                    [svgIcon]="'heroicons_outline:x'"
+                ></mat-icon>
+            </button>
+        </div>
+        <div class="p-6">
+            <form [formGroup]="sendMailForm">
+                <div class="flex flex-row gt-md:flex-row">
+                    <div class="w-full">
+                        <div class="mb-2 label_ex mt-label">To*</div>
+                        <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                            <mat-chip-list #chipList formArrayName="email">
+                                <mat-chip
+                                    [color]="item.invalid ? 'warn' : ''"
+                                    selected
+                                    *ngFor="
+                                        let item of emailList;
+                                        let i = index
+                                    "
+                                    [selectable]="true"
+                                    [removable]="removable"
+                                    (removed)="removeEmail(item)"
+                                    required
+                                    name="chips"
+                                >
+                                    {{ item.mail }}
+                                    <mat-icon matChipRemove *ngIf="removable"
+                                        >cancel</mat-icon
+                                    >
+                                </mat-chip>
+                                <input
+                                    placeholder="Emails"
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="
+                                        separatorKeysCodes
+                                    "
+                                    [matChipInputAddOnBlur]="true"
+                                    (matChipInputTokenEnd)="addMail($event)"
+                                />
+                            </mat-chip-list>
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label class="text-dark">To</mat-label>
+                        <input matInput [formControlName]="'mail'" />
+                    </mat-form-field> -->
+                </div>
+                <div class="flex flex-row gt-md:flex-row">
+                    <mat-form-field class="flex-auto fuse-mat-dense w-full">
+                        <mat-label class="text-dark">Subject</mat-label>
+                        <input matInput [formControlName]="'subject'" />
+                    </mat-form-field>
+                </div>
+                <div class="">
+                    <div class="label_ex mt-label font-semibold mb-1">
+                        Message
+                    </div>
+                    <div class="editor_mail">
+                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                        </ngx-editor-menu>
+                        <ngx-editor
+                            [editor]="editor"
+                            formControlName="message"
+                            class="h-70"
+                        >
+                        </ngx-editor>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <div
+                        *ngIf="uploadedFiles.length != 0"
+                        class="mb-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-1"
+                    >
+                        <div *ngFor="let e of uploadedFiles; let i = index">
+                            {{ e }}
+                            <span
+                                (click)="deleteFile(i)"
+                                class="cursor-pointer deleteFile ml-2"
+                                >X</span
+                            >
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <span
+                            class="browse_btn cursor-pointer text-primary_l flex items-center font-semibold"
+                        >
+                            <mat-icon
+                                svgIcon="attach_file"
+                                class="icon-size-6 text-primary_l mr-1"
+                            ></mat-icon>
+                            Attachments
+                        </span>
+
+                        <input
+                            type="file"
+                            #fileInput
+                            id="uploadImage"
+                            name="uploadImage"
+                            accept=".doc, .docx,.pdf, .xlsx,.xls, .txt, image/"
+                            (change)="fileSelected($event)"
+                            class="browse-input"
+                            multiple
+                        />
+                        <!-- .ppt, .pptx,.xlsx,.xls,.txt, -->
+                    </div>
+                </div>
+                <div class="flex flex-col gt-md:flex-row mt-10">
+                    <button
+                        type="submit"
+                        class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn_modal text-white"
+                        mat-flat-button
+                        (click)="sendMail()"
+                    >
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</fuse-drawer>
