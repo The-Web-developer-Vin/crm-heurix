@@ -48,13 +48,9 @@ export class UpdateCallingStatusComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        console.log('dhfd', this.modifyData);
         this.createForm = this.fs.group({
-            status: [''],
-            note: [
-                '',
-                this.selectedStatus == 'Interested' ? Validators.required : '',
-            ],
+            status: ['', Validators.required],
+            note: [''],
         });
 
         if (this.modifyData) {
@@ -73,6 +69,10 @@ export class UpdateCallingStatusComponent implements OnInit {
     }
 
     save() {
+        if (this.selectedStatus == 'Interested') {
+            this.createForm.controls['note'].setValidators(Validators.required);
+            this.createForm.controls['note'].updateValueAndValidity();
+        }
         if (this.createForm.invalid) {
             this.snackBar.open('Invalid Form', 'Close', {
                 duration: 3000,
@@ -80,6 +80,7 @@ export class UpdateCallingStatusComponent implements OnInit {
             });
             return;
         }
+
         let obj = {
             callingId: this.coldId,
             ...this.createForm.value,

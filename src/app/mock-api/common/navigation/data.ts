@@ -91,6 +91,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/cold-calling',
     },
     {
+        id: 'tasks',
+        title: 'Tasks',
+        type: 'basic',
+        icon: 'manage_accounts',
+        link: '/tasks',
+    },
+    {
         id: 'digital',
         title: 'Req Forms',
         type: 'collapsable',
@@ -251,6 +258,13 @@ export const userNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'record_voice_over',
         link: '/cold-calling',
+    },
+    {
+        id: 'tasks',
+        title: 'Tasks',
+        type: 'basic',
+        icon: 'manage_accounts',
+        link: '/tasks',
     },
     {
         id: 'digital',

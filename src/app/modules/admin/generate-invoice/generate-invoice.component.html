@@ -17,8 +17,8 @@
             <div class="text-3xl font-bold mb-10 text-center">Invoice</div>
             <div class="logo mb-15">
                 <img
-                    class="w-40"
-                    src="../../../../assets/images/logo/logo-change.png"
+                    class="w-50"
+                    src="../../../../assets/images/logo/logo.webp"
                     alt=""
                 />
             </div>
@@ -128,34 +128,42 @@
                         </div>
                         <div class="flex items-center justify-end">
                             <div class="mr-2 flex">
-                                <ng-container
-                                    *ngIf="
-                                        invoiceDetails?.state ==
-                                        'Andhra Pradesh'
-                                    "
-                                >
-                                    <div class="flex items-center">
-                                        <div class="label_in mt-0">(CGST :</div>
-                                        <div class="font-semibold">9%</div>
-                                    </div>
-                                    ,
-                                    <div class="flex items-center mr-2">
-                                        <div class="label_in mt-0">SGST :</div>
-                                        <div class="font-semibold">9%)</div>
-                                    </div>
-                                </ng-container>
-                                <ng-container
-                                    *ngIf="
-                                        invoiceDetails?.state !=
-                                        'Andhra Pradesh'
-                                    "
-                                >
-                                    <div class="flex items-center mr-2">
-                                        <div class="label_in mr-2 mt-0">
-                                            (IGST :
+                                <ng-container *ngIf="selectedCountry == 'INR'">
+                                    <ng-container
+                                        *ngIf="
+                                            invoiceDetails?.state ==
+                                            'Andhra Pradesh'
+                                        "
+                                    >
+                                        <div class="flex items-center">
+                                            <div class="label_in mt-0">
+                                                (CGST :
+                                            </div>
+                                            <div class="font-semibold">9%</div>
                                         </div>
-                                        <div class="font-semibold">18%)</div>
-                                    </div> </ng-container
+                                        ,
+                                        <div class="flex items-center mr-2">
+                                            <div class="label_in mt-0">
+                                                SGST :
+                                            </div>
+                                            <div class="font-semibold">9%)</div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="
+                                            invoiceDetails?.state !=
+                                            'Andhra Pradesh'
+                                        "
+                                    >
+                                        <div class="flex items-center mr-2">
+                                            <div class="label_in mr-2 mt-0">
+                                                (IGST :
+                                            </div>
+                                            <div class="font-semibold">
+                                                18%)
+                                            </div>
+                                        </div>
+                                    </ng-container></ng-container
                                 >Tax :
                             </div>
                             <div class="font-bold w-15">
