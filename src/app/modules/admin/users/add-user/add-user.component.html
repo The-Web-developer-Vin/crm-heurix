@@ -155,15 +155,6 @@
                             [formControlName]="'phoneNumber'"
                             (keypress)="numberOnly($event)"
                         />
-                        <mat-error
-                            *ngIf="
-                                createForm
-                                    .get('phoneNumber')
-                                    .hasError('required')
-                            "
-                        >
-                            Mobile Number is required
-                        </mat-error>
                     </mat-form-field>
                     <mat-form-field
                         appearance="fill"
@@ -189,20 +180,15 @@
                             [formControlName]="'city'"
                             appAlphabetOnly
                         />
-                        <mat-error
-                            *ngIf="createForm.get('city').hasError('required')"
-                        >
-                            City is required
-                        </mat-error>
                     </mat-form-field>
                 </div>
 
                 <div class="flex flex-col gt-md:flex-row user_editor">
                     <mat-label class="addr_label"
-                        >Address<span [ngClass]="addr_req ? 'text-red-500' : ''"
-                            >*</span
-                        ></mat-label
-                    >
+                        >Address<span
+                            [ngClass]="addr_req ? 'text-red-500' : ''"
+                        ></span
+                    ></mat-label>
                     <div
                         class="NgxEditor__Wrapper w-full"
                         [ngClass]="addr_req ? 'error_show' : ''"
@@ -215,9 +201,6 @@
                             [ngModelOptions]="{ standalone: true }"
                             (ngModelChange)="editorChange($event)"
                         ></ngx-editor>
-                    </div>
-                    <div *ngIf="addr_req" class="mat-error text-sm font-medium">
-                        Address is required
                     </div>
                 </div>
                 <div class="mb-3 text-md font-semibold details">
@@ -234,15 +217,6 @@
                             matInput
                             [formControlName]="'collegeName'"
                         />
-                        <mat-error
-                            *ngIf="
-                                createForm
-                                    .get('collegeName')
-                                    .hasError('required')
-                            "
-                        >
-                            Colleg eName is required
-                        </mat-error>
                     </mat-form-field>
                     <mat-form-field
                         appearance="fill"
@@ -266,15 +240,6 @@
                             [formControlName]="'passedYear'"
                             (keypress)="numberOnly($event)"
                         />
-                        <mat-error
-                            *ngIf="
-                                createForm
-                                    .get('passedYear')
-                                    .hasError('required')
-                            "
-                        >
-                            Year of Passing is required
-                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -327,7 +292,7 @@
                                         .hasError('required')
                                 "
                             >
-                                Year of Passing is required
+                                Years of Experience is required
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field
@@ -381,22 +346,7 @@
                             Joining Date is required
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field
-                        appearance="fill"
-                        class="flex-auto fuse-mat-dense w-full ml-5"
-                    >
-                        <mat-label>Employee Id</mat-label>
-                        <input
-                            id="email"
-                            matInput
-                            [formControlName]="'empId'"
-                        />
-                        <mat-error
-                            *ngIf="createForm.get('empId').hasError('required')"
-                        >
-                            Employee Id is required
-                        </mat-error>
-                    </mat-form-field>
+
                     <mat-form-field
                         appearance="fill"
                         class="flex-auto fuse-mat-dense w-full ml-5"

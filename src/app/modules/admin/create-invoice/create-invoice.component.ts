@@ -239,13 +239,7 @@ export class CreateInvoiceComponent implements OnInit {
             });
             return;
         }
-        if (this.bankDetails == undefined) {
-            this.snackBar.open('Please Select Bank Details', 'Close', {
-                duration: 3000,
-                panelClass: ['alert-red'],
-            });
-            return;
-        }
+
         let obj;
         if (this.modify) {
             obj = {
@@ -254,8 +248,8 @@ export class CreateInvoiceComponent implements OnInit {
                 totalWithOutTax: this.totalWithoutTax,
                 tax: this.taxAmount,
                 grandTotal: this.grandTotal,
-                accountDetails: this.accountDetails,
-                bankDetails: this.bankDetails,
+                // accountDetails: this.accountDetails,
+                // bankDetails: this.bankDetails,
             };
         } else {
             obj = {
@@ -263,8 +257,8 @@ export class CreateInvoiceComponent implements OnInit {
                 totalWithOutTax: this.totalWithoutTax,
                 tax: this.taxAmount,
                 grandTotal: this.grandTotal,
-                accountDetails: this.accountDetails,
-                bankDetails: this.bankDetails,
+                // accountDetails: this.accountDetails,
+                // bankDetails: this.bankDetails,
             };
         }
 

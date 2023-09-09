@@ -208,13 +208,25 @@
                                             *matCellDef="let transaction"
                                             class="whitespace-nowrap px-4 py-1 sm:px-5"
                                         >
-                                            <img
-                                                src="{{
-                                                    baseUrl + transaction.image
-                                                }}"
-                                                alt="{{ transaction.name }}"
-                                                class="employee-image"
-                                            />
+                                            <ng-container
+                                                *ngIf="transaction.image"
+                                            >
+                                                <img
+                                                    src="{{
+                                                        baseUrl +
+                                                            transaction.image
+                                                    }}"
+                                                    alt="{{ transaction.name }}"
+                                                    class="employee-image"
+                                            /></ng-container>
+                                            <ng-container
+                                                *ngIf="!transaction.image"
+                                            >
+                                                <img
+                                                    src="assets/images/logo/profile-user.png"
+                                                    alt="{{ transaction.name }}"
+                                                    class="employee-image"
+                                            /></ng-container>
                                         </td>
                                     </ng-container>
 

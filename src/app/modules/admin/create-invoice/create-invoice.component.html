@@ -340,27 +340,33 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="bankDetails flex mt-4">
                     <div>
                         <div class="font-bold mb-3">Bank Details:</div>
-
-                        <mat-radio-group
-                            class="flex flex-col"
-                            aria-label="Select an option"
-                            (change)="checkBank($event)"
-                            [(ngModel)]="bankDetails"
-                            [ngModelOptions]="{ standalone: true }"
+                        <div
+                            class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 items-center mb-1"
                         >
-                            <mat-radio-button value="Company" class="mb-3"
-                                >Company Account</mat-radio-button
-                            >
-                            <mat-radio-button value="RK" class="mb-3"
-                                >Radha Krishna</mat-radio-button
-                            >
-                            <mat-radio-button value="laxmi" class="mb-3"
-                                >Laxmi</mat-radio-button
-                            >
-                        </mat-radio-group>
+                            <div class="label_in mt-0 mr-2">Bank Name</div>
+                            <div class="font-semibold col-span-3">
+                                : Commonwealth Bank
+                            </div>
+                        </div>
+
+                        <div
+                            class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 items-center mb-1"
+                        >
+                            <div class="label_in mt-0 mr-2">Account No.</div>
+                            <div class="font-semibold col-span-3">
+                                : 10747163
+                            </div>
+                        </div>
+                        <div
+                            class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 items-center mb-1"
+                        >
+                            <div class="label_in mt-0 mr-2">BSB</div>
+                            <div class="font-semibold col-span-3">: 062174</div>
+                        </div>
                     </div>
                 </div>
                 <div class="flex mt-4 justify-end">

@@ -97,16 +97,16 @@ export class AddUserComponent implements OnInit {
             email: new FormControl('', [Validators.required, Validators.email]),
             lastName: new FormControl('', Validators.required),
             technology: new FormControl('', Validators.required),
-            empId: new FormControl('', Validators.required),
+            // empId: new FormControl('', Validators.required),
             date_of_join: new FormControl('', Validators.required),
             role: new FormControl('', Validators.required),
 
-            city: new FormControl('', Validators.required),
+            city: new FormControl(''),
             address: new FormControl(''),
 
-            image: new FormControl('', Validators.required),
+            image: new FormControl(''),
             gender: new FormControl('', Validators.required),
-            phoneNumber: new FormControl('', Validators.required),
+            phoneNumber: new FormControl(''),
             alternativeNumber: new FormControl(''),
             nameTitle: new FormControl('', Validators.required),
             certificateOriginal: new FormControl(false),
@@ -116,9 +116,9 @@ export class AddUserComponent implements OnInit {
             drivingLicense: new FormControl(false),
             certificateXerox: new FormControl(false),
 
-            collegeName: new FormControl('', Validators.required),
+            collegeName: new FormControl(''),
             course: new FormControl(''),
-            passedYear: new FormControl('', Validators.required),
+            passedYear: new FormControl(''),
             experience: new FormControl(false),
             experienceYrs: new FormControl(''),
             previousCompany: new FormControl(''),
@@ -294,7 +294,7 @@ export class AddUserComponent implements OnInit {
                 formData.append('name', this.createForm.value.name);
                 formData.append('email', this.createForm.value.email);
                 formData.append('lastName', this.createForm.value.lastName);
-                formData.append('image', this.file);
+                formData.append('image', this.file ? this.file : '');
 
                 for (var i = 0; i < this.technologyArray?.length; i++) {
                     formData.append('technology', this.technologyArray[i]);
@@ -495,7 +495,7 @@ export class AddUserComponent implements OnInit {
             formData.append('name', this.createForm.value.name);
             formData.append('email', this.createForm.value.email);
             formData.append('lastName', this.createForm.value.lastName);
-            formData.append('image', this.file);
+            formData.append('image', this.file ? this.file : '');
             // let technologyArray:any=[]
             // technologyArray.push(this.createForm.value.technology)
             // console.log("technologyArray",technologyArray)

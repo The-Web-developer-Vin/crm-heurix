@@ -22,11 +22,18 @@
                     </div>
                     <div class="details-sec">
                         <div class="flex items-center justify-center mb-4">
-                            <img
-                                class="rounded-full"
-                                src="{{ baseUrl + employeeData?.image }}"
-                                alt="{{ employeeData?.name }}"
-                            />
+                            <ng-container *ngIf="employeeData?.image">
+                                <img
+                                    class="rounded-full"
+                                    src="{{ baseUrl + employeeData?.image }}"
+                                    alt="{{ employeeData?.name }}"
+                            /></ng-container>
+                            <ng-container *ngIf="!employeeData.image">
+                                <img
+                                    src="assets/images/logo/profile-user.png"
+                                    alt="{{ employeeData?.name }}"
+                                    class="employee-image"
+                            /></ng-container>
                         </div>
                         <div class="flex-col">
                             <div class="grid grid-cols-6 mb-2">
@@ -105,7 +112,11 @@
                                     <div
                                         class="ml-2 col-span-3 word-wrap capitalize"
                                     >
-                                        {{ employeeData?.experienceYrs }}
+                                        {{
+                                            employeeData?.experienceYrs
+                                                ? employeeData?.experienceYrs
+                                                : "--"
+                                        }}
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-6 mb-2">
@@ -120,7 +131,11 @@
                                     <div
                                         class="ml-2 col-span-3 word-wrap capitalize"
                                     >
-                                        {{ employeeData?.previousCompany }}
+                                        {{
+                                            employeeData?.previousCompany
+                                                ? employeeData?.previousCompany
+                                                : "--"
+                                        }}
                                     </div>
                                 </div>
                             </ng-container>
@@ -132,7 +147,16 @@
                                     >
                                 </div>
                                 <div class="ml-2 col-span-3 word-wrap">
-                                    {{ employeeData?.phoneNumber }}
+                                    <ng-container
+                                        *ngIf="employeeData?.phoneNumber"
+                                        >{{
+                                            employeeData?.phoneNumber
+                                        }}</ng-container
+                                    >
+                                    <ng-container
+                                        *ngIf="!employeeData?.phoneNumber"
+                                        >--</ng-container
+                                    >
                                 </div>
                             </div>
                             <div class="grid grid-cols-6 mb-2">
@@ -197,9 +221,13 @@
                                 </div>
                                 <div class="ml-2 col-span-3 word-wrap">
                                     <span
+                                        *ngIf="employeeData?.address"
                                         class="capitalize"
                                         [innerHtml]="employeeData?.address"
                                     ></span>
+                                    <span *ngIf="!employeeData?.address"
+                                        >--</span
+                                    >
                                 </div>
                             </div>
                             <div class="grid grid-cols-6 mb-2">
