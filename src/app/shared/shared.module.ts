@@ -26,6 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatChipsModule } from '@angular/material/chips';
+import { SignatureDirective } from './directives/signature.directive';
 @NgModule({
     imports: [
         CommonModule,
@@ -85,7 +86,13 @@ import { MatChipsModule } from '@angular/material/chips';
         FuseDrawerModule,
         NgSelectModule,
         MatChipsModule,
+        SignatureDirective,
     ],
-    declarations: [MonthsPipe, AmountToWordsPipe, AlphabetOnlyDirective],
+    declarations: [
+        MonthsPipe,
+        AmountToWordsPipe,
+        AlphabetOnlyDirective,
+        SignatureDirective,
+    ],
 })
 export class SharedModule {}

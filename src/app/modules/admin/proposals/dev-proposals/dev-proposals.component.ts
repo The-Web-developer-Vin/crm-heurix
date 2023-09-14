@@ -124,7 +124,7 @@ export class DevProposalsComponent implements OnInit {
     OpenSettingsDrawer(data: any) {}
     viewSingle(data: any) {
         this.router.navigate([]).then((result) => {
-            window.open(`/proposals/view?id= ${data._id}`, '_blank');
+            window.open(`/proposals/view?id=${data._id}`, '_blank');
         });
     }
 }

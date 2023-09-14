@@ -1,5 +1,5 @@
 <div class="flex flex-col flex-auto w-full p-6 invioceForm">
-    <div class="w-full max-w-screen-md mx-auto">
+    <div class="w-full max-w-screen-md mx-auto relative">
         <div class="flex items-center justify-end mb-5 mt-3">
             <button
                 class="max-w-30 mat-focus-indicator rounded-2 mat-flat-button mat-button-base primary_btn text-white"
@@ -13,14 +13,17 @@
                 Download
             </button>
         </div>
-        <div class="brd_cls p-6" id="pdfCapture" #pdfCapture>
+        <div
+            class="brd_cls pt-6 pl-6 pr-6"
+            style="padding-bottom: 90px"
+            id="pdfCapture"
+            #pdfCapture
+        >
             <div class="tableOfContents">
                 <h4 style="font-size: 18px; margin-bottom: 15px">
                     <b>TABLE OF CONTENTS</b>
                 </h4>
-                <p style="font-size: 16px; color: #302727">
-                    Proposal Terms & Conditions
-                </p>
+
                 <p
                     style="
                         font-size: 16px;
@@ -39,8 +42,8 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">2.</span> About Vinutnaa IT
-                    Services
+                    <span style="padding-right: 5px">2.</span> About Heurix
+                    Digital Pvt Ltd
                 </p>
                 <p
                     style="
@@ -50,8 +53,7 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">3.</span> Products and
-                    Services
+                    <span style="padding-right: 5px">3.</span> Service Offerings
                 </p>
                 <p
                     style="
@@ -61,8 +63,8 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">4.</span> The Vinutnaa IT
-                    Services Difference – Our Core Values
+                    <span style="padding-right: 5px">4.</span> Heurix's
+                    Differentiating Edge
                 </p>
                 <p
                     style="
@@ -72,8 +74,8 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">5.</span> Accreditations,
-                    Certifications, and Partners
+                    <span style="padding-right: 5px">5.</span> Credentials and
+                    Collaborations
                 </p>
                 <p
                     style="
@@ -83,7 +85,7 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">6.</span> Scope of Work
+                    <span style="padding-right: 5px">6.</span> Scope of Endeavor
                 </p>
                 <p
                     style="
@@ -95,6 +97,7 @@
                 >
                     <span style="padding-right: 5px">7.</span> Deliverables
                 </p>
+
                 <p
                     style="
                         font-size: 16px;
@@ -114,8 +117,19 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">9.</span> Assumptions and
+                    <span style="padding-right: 5px">9.</span> Operational
                     Considerations
+                </p>
+                <p
+                    style="
+                        font-size: 16px;
+                        color: #302727;
+                        display: flex;
+                        margin-bottom: 3px;
+                    "
+                >
+                    <span style="padding-right: 5px">10.</span> Payments and
+                    Terms
                 </p>
 
                 <p
@@ -126,7 +140,8 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">10.</span> Payment Terms
+                    <span style="padding-right: 5px">11.</span> Post-Proposal
+                    Engagements
                 </p>
                 <p
                     style="
@@ -136,221 +151,515 @@
                         margin-bottom: 3px;
                     "
                 >
-                    <span style="padding-right: 5px">11.</span> Customer
-                    Acceptance
+                    <span style="padding-right: 5px">12.</span> Corporate
+                    Protocols
                 </p>
-                <p
-                    style="
-                        font-size: 16px;
-                        color: #302727;
-                        display: flex;
-                        margin-bottom: 3px;
-                    "
-                >
-                    <span style="padding-right: 5px">12.</span> General Terms
-                </p>
+
                 <h3 style="margin-bottom: 10px; color: #fff">f</h3>
             </div>
             <div class="sub_des">
-                <p style="font-size: 15px; color: #302727; margin-bottom: 30px">
-                    <b style="font-size: 16px">Proposal Terms & Conditions : </b
-                    >All the details mentioned in this proposal are valid for a
-                    period of 30 days from the date of issuance. Any changes or
-                    modifications after the stated period will require a new
-                    proposal.
-                </p>
                 <h6 style="font-size: 16px; margin-bottom: 0px; color: #302727">
                     <b>1. Executive Summary</b>
                 </h6>
                 <p style="font-size: 15px; color: #302727; margin-bottom: 30px">
-                    Vinutnaa IT Services India Private Limited proudly presents
-                    this proposal for the development of a Tax Application for
-                    Innovento Company. With our vast experience in web and
-                    mobile application development, we aim to deliver a robust,
-                    user-friendly, and efficient application tailored to meet
-                    the specific needs of Innovento.
+                    {{ proposalDetails?.executiveSummary }}
                 </p>
                 <h6 style="font-size: 16px; color: #302727; margin-bottom: 0px">
-                    <b>2. About Vinutnaa IT Services</b>
+                    <b>2. About Heurix Digital Pvt Ltd</b>
                 </h6>
+                <p style="font-size: 15px; color: #302727; margin-bottom: 20px">
+                    Established in 2023, Heurix Digital Pvt Ltd has charted an
+                    impressive trajectory in the digital solutions domain. With
+                    our strategic headquarters in Australia, we're geared to
+                    empower businesses with avant-garde digital solutions. Our
+                    mission transcends mere project deliverables; we're in the
+                    business of sculpting digital legacies.
+                </p>
                 <p style="font-size: 15px; color: #302727; margin-bottom: 30px">
-                    Vinutnaa IT Services has been a pioneer in the IT industry,
-                    offering services to a global clientele. Our team of
-                    professionals is dedicated to ensuring the highest quality
-                    of service and innovation. We have successfully catered to
-                    clients from the USA, UK, Australia, Canada, India, and
-                    other regions
+                    Our collaboration with Vinutnaa IT Services India Pvt Ltd
+                    enhances our value proposition, offering our clientele a
+                    synthesis of localized proficiency and global industry best
+                    practices. Each endeavor undertaken by Heurix epitomizes a
+                    synergy of innovation and unmatched technical acumen.
                 </p>
                 <h6
                     style="font-size: 16px; color: #302727; margin-bottom: 10px"
                 >
-                    <b>3. Products and Services</b>
+                    <b>3. Service Offerings</b>
                 </h6>
                 <ul style="margin-bottom: 30px">
                     <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Web Application Development</span
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
                         >
+                            <b>Digital Marketing:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Strategic Expertise: Drawing on extensive market
+                            research and insights, we craft marketing strategies
+                            tailored to your unique brand voice, ensuring that
+                            you reach and resonate with your target audience.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Multichannel Approach: From SEO to PPC, social media
+                            marketing to content creation, we employ a diverse
+                            suite of channels to ensure your brand is
+                            omnipresent and impactful.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            Analytics & Insights: Our campaigns are not just
+                            about reach; they're about results. With
+                            sophisticated analytical tools, we continuously
+                            monitor and optimize our efforts for maximum ROI.
+                        </p>
                     </li>
                     <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Mobile Application Development</span
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
                         >
+                            <b>Web Application Development:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Custom Solutions: Understanding that every business
+                            has unique requirements, our team crafts bespoke web
+                            applications tailored to your operational needs and
+                            customer expectations.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Scalable & Secure: In today's dynamic digital
+                            landscape, we prioritize scalability and security,
+                            ensuring that as your business grows, your
+                            application evolves with it without compromising
+                            data integrity.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            Integrated Ecosystem: Our web applications
+                            seamlessly integrate with your existing digital
+                            ecosystems, be it CRM systems, payment gateways, or
+                            third-party plugins.
+                        </p>
                     </li>
                     <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Digital Marketing: SEO, SMO, and Adwords</span
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
                         >
+                            <b>Web Development:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            User-Centric Design: Every website we craft is a
+                            blend of aesthetic elegance and functional prowess,
+                            ensuring that visitors enjoy a seamless, intuitive
+                            browsing experience.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Responsive & Mobile-Optimized: With a significant
+                            portion of users accessing websites from mobile
+                            devices, we ensure our designs are responsive,
+                            ensuring a consistent experience across all screen
+                            sizes.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            SEO-Ready: Beyond design and functionality, we
+                            ensure that the backend of your website is optimized
+                            for search engines, paving the way for enhanced
+                            organic reach.
+                        </p>
                     </li>
                     <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Lead Generation</span
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
                         >
+                            <b>Mobile App Development::</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Platform Versatility: Whether your audience is on
+                            Android or iOS, our team has the expertise to craft
+                            apps that run seamlessly on both ecosystems.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Intuitive User Experience: Recognizing that user
+                            experience is paramount in the app world, our
+                            designs prioritize ease of use, intuitive
+                            navigation, and compelling visuals.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            Post-Launch Support: Our commitment doesn't end at
+                            launch. We offer continuous support, updates, and
+                            refinements, ensuring your app remains relevant in a
+                            rapidly evolving digital landscape.
+                        </p>
+                    </li>
+                </ul>
+
+                <h6 style="font-size: 16px; color: #302727; margin-bottom: 0px">
+                    <b>4. Heurix's Differentiating Edge</b>
+                </h6>
+                <p style="font-size: 15px; color: #302727; margin-bottom: 20px">
+                    In a world inundated with digital solutions, Heurix Digital
+                    Pvt Ltd does not merely strive to be a part of the crowd; we
+                    lead it. Here's how:
+                </p>
+                <ul style="margin-bottom: 20px">
+                    <li style="margin-bottom: 5px">
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>Client-Centric Vision:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Enduring Partnerships: For us, every client
+                            interaction isn't just a project; it's a
+                            partnership. We understand the nuances of your
+                            business, ensuring the solutions provided resonate
+                            deeply with your brand ethos and objectives.
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            Deep Dive Approach: Beyond the immediate, we delve
+                            deep into the long-term aspirations of our clients,
+                            ensuring the digital solutions we provide today
+                            align with your vision for tomorrow.
+                        </p>
+                    </li>
+                    <li style="margin-bottom: 5px">
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>Innovative Drive:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Digital Architects: As trailblazers in the digital
+                            realm, we’re at the forefront of emergent
+                            technologies, ensuring our clients have access to
+                            solutions that position them ahead of the curve.
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            Research & Development: Our dedicated R&D wing
+                            ensures that innovation isn't a sporadic event but a
+                            consistent effort, driving us to explore,
+                            experiment, and excel.
+                        </p>
+                    </li>
+                    <li style="margin-bottom: 5px">
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>Unwavering Commitment to Quality:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Pinnacle of Excellence: Our benchmarks are set high.
+                            Every solution we deliver undergoes rigorous
+                            testing, ensuring it not only meets but often
+                            exceeds industry standards.
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            Continuous Improvement: Feedback loops and
+                            post-deployment analyses ensure that our commitment
+                            to quality doesn't end at delivery, but it’s a
+                            continuous journey of refinement.
+                        </p>
+                    </li>
+                    <li style="margin-bottom: 5px">
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>Transparent Dialogues:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Informed Stakeholders: At every phase, our clients
+                            are in the loop. Regular updates, milestone reports,
+                            and open channels of communication ensure that there
+                            are no surprises, only consistent progress.
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            Empowering Decisions: By keeping our clients
+                            informed, we empower them to make decisions that
+                            align with their business objectives, ensuring a
+                            collaborative approach to success.
+                        </p>
+                    </li>
+                    <li style="margin-bottom: 5px">
+                        <p
+                            style="
+                                color: #302727;
+                                font-size: 15px;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>Integrity in Action:</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Ethical Foundation: Our operations are firmly rooted
+                            in a code of ethics that prioritizes honesty,
+                            transparency, and trust.
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            Stakeholder Trust: Over the years, the unwavering
+                            trust of our stakeholders stands as a testament to
+                            our commitment to working with integrity. It's not
+                            just about doing the job; it's about doing it right.
+                        </p>
+
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 30px;
+                            "
+                        >
+                            At Heurix, we believe our differentiating edge is a
+                            fusion of our passion, expertise, and the unwavering
+                            commitment to the success of our clients. We don’t
+                            just deliver solutions; we deliver the Heurix
+                            experience.
+                        </p>
                     </li>
                 </ul>
                 <h6 style="font-size: 16px; color: #302727; margin-bottom: 0px">
-                    <b
-                        >4. The Vinutnaa IT Services Difference – Our Core
-                        Values</b
-                    >
+                    <b>5. Credentials and Collaborations</b>
                 </h6>
                 <p style="font-size: 15px; color: #302727; margin-bottom: 30px">
-                    Integrity, Innovation, Client Centricity, Excellence, and
-                    Teamwork form the backbone of Vinutnaa IT Services. We
-                    believe in delivering solutions that not only meet but
-                    exceed client expectations.
+                    Our stature in the digital sphere is buttressed by a gamut
+                    of industry accreditations and certifications. Our pivotal
+                    partnership with Vinutnaa IT Services India Pvt Ltd
+                    amplifies our capabilities, ensuring we offer a holistic and
+                    robust suite of digital solutions to our esteemed clientele.
                 </p>
-                <h6 style="font-size: 16px; color: #302727; margin-bottom: 0px">
-                    <b>5. Accreditations, Certifications, and Partners</b>
-                </h6>
-                <p style="font-size: 15px; color: #302727; margin-bottom: 30px">
-                    Vinutnaa IT Services is a certified partner of
-                    [Certifications], holds various accolades in web and mobile
-                    application development from recognized industry bodies, and
-                    proudly stands as a
-                    <b>Google Certified Development Company</b>.
-                </p>
-                <h6
-                    style="font-size: 16px; color: #302727; margin-bottom: 12px"
-                >
-                    <b>6.Scope of Work</b>
-                </h6>
                 <div>
                     <h6
                         style="
-                            font-size: 15px;
+                            font-size: 16px;
                             color: #302727;
                             margin-bottom: 0px;
                         "
                     >
-                        <b>Module1</b>
+                        <b>6. Scope of Endeavor</b>
                     </h6>
-                    <p
-                        style="
-                            font-size: 15px;
-                            color: #302727;
-                            margin-bottom: 20px;
-                        "
-                    >
-                        <b>Login :</b> Description of Login
-                    </p>
-                </div>
-                <div>
-                    <h6
-                        style="
-                            font-size: 15px;
-                            color: #302727;
-                            margin-bottom: 0px;
-                        "
-                    >
-                        <b>Module2</b>
-                    </h6>
-                    <p
-                        style="
-                            font-size: 15px;
-                            color: #302727;
-                            margin-bottom: 20px;
-                        "
-                    >
-                        <b>Login :</b> Description of Login
-                    </p>
+                    <span *ngFor="let e of proposalDetails?.scopeDetails">
+                        <h6
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 0px;
+                                margin-top: 15px;
+                            "
+                        >
+                            <b>{{ e.module }}</b>
+                        </h6>
+                        <p
+                            *ngFor="let f of e.subModule"
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>{{ f.subHeading }} :</b> {{ f.subDescription }}
+                        </p>
+                    </span>
                 </div>
                 <h6
                     style="
                         font-size: 16px;
                         color: #302727;
                         margin-bottom: 10px;
-                        margin-top: 10px;
+                        margin-top: 30px;
                     "
                 >
                     <b>7. Deliverables</b>
                 </h6>
                 <ul style="margin-bottom: 30px">
-                    <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Comprehensive Tax Application as per
-                            requirements</span
-                        >
-                    </li>
-                    <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >User Manut</span
-                        >
-                    </li>
-                    <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Source Code</span
-                        >
-                    </li>
-                    <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Test Reports</span
-                        >
+                    <li
+                        style="margin-bottom: 5px"
+                        *ngFor="let e of proposalDetails?.deliverablesDetails"
+                    >
+                        <span style="color: #302727; font-size: 15px">{{
+                            e.deliverables
+                        }}</span>
                     </li>
                 </ul>
-                <h6 style="font-size: 16px; color: #302727; margin-bottom: 8px">
+                <h6 style="font-size: 16px; color: #302727; margin-bottom: 5px">
                     <b>8. Roles and Responsibilities</b>
                 </h6>
                 <div>
                     <p
+                        *ngFor="let role of proposalDetails?.rolesDetails"
                         style="
                             font-size: 15px;
                             color: #302727;
-                            margin-bottom: 5px;
+                            margin-bottom: 0px;
                         "
                     >
-                        <b>Project Manager :</b> Oversee project, ensure timely
-                        delivery
+                        <b>{{ role.role }} :</b> {{ role.responsibility }}
                     </p>
-                    <p
-                        style="
-                            font-size: 15px;
-                            color: #302727;
-                            margin-bottom: 5px;
-                        "
-                    >
-                        <b>Frontend Developers :</b> UI/UX Design and Frontend
-                        Development
-                    </p>
-                    <p
-                        style="
-                            font-size: 15px;
-                            color: #302727;
-                            margin-bottom: 5px;
-                        "
-                    >
-                        <b>Backend Developers :</b> Backend Logic and Database
-                        Management
-                    </p>
-                    <p
-                        style="
-                            font-size: 15px;
-                            color: #302727;
-                            margin-bottom: 5px;
-                        "
-                    >
-                        <b>QA Team :</b> Testing & Quality Assurancet
-                    </p>
+
                     <!-- <div>
                         <p
                             style="
@@ -455,57 +764,393 @@
                     style="
                         font-size: 16px;
                         color: #302727;
+                        margin-bottom: 8px;
+                        margin-top: 30px;
+                    "
+                >
+                    <b>9. Operational Considerations</b>
+                </h6>
+                <ul style="margin-bottom: 20px">
+                    <li style="margin-bottom: 5px">
+                        <span style="color: #302727; font-size: 15px"
+                            >Feedback cycles will be integral to ensuring
+                            project adherence to timelines.</span
+                        >
+                    </li>
+                    <li style="margin-bottom: 5px">
+                        <span style="color: #302727; font-size: 15px"
+                            >Once ratified, the project scope will be deemed
+                            final. Subsequent modifications may necessitate
+                            recalibrations in terms of cost and delivery
+                            timelines.</span
+                        >
+                    </li>
+                    <li style="margin-bottom: 5px">
+                        <span style="color: #302727; font-size: 15px"
+                            >External dependencies, such as third-party
+                            integrations, are contingent on external factors and
+                            may influence project schedules.</span
+                        >
+                    </li>
+                </ul>
+                <!-- <h6
+                    style="
+                        font-size: 16px;
+                        color: #302727;
                         margin-bottom: 10px;
                         margin-top: 30px;
                     "
                 >
-                    <b>9. Assumptions and Considerations</b>
+                    <b>10. Payments and Terms</b>
                 </h6>
-                <ul style="margin-bottom: 30px">
-                    <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >All requirements provided by Innovento are
-                            final</span
+                <div
+                    class="amount_details w-full mt-10"
+                    style="width: 100%; border: 0px; display: block"
+                >
+                    <table autosize="1" style="width: 100% !important">
+                        <thead>
+                            <tr>
+                                <th
+                                    align="left"
+                                    style="
+                                        background-color: #58566e;
+                                        color: #fff;
+                                        padding: 0.8em 1em;
+                                        font-weight: 500;
+                                        font-size: 15px;
+                                    "
+                                >
+                                    Items
+                                </th>
+                                <th
+                                    align="left"
+                                    style="
+                                        background-color: #58566e;
+                                        color: #fff;
+                                        padding: 0.8em 1em;
+                                        font-weight: 500;
+                                        font-size: 15px;
+                                    "
+                                >
+                                    Item Description
+                                </th>
+                                <th
+                                    align="left"
+                                    style="
+                                        background-color: #58566e;
+                                        color: #fff;
+                                        padding: 0.8em 1em;
+                                        font-weight: 500;
+                                        font-size: 15px;
+                                    "
+                                >
+                                    Units
+                                </th>
+                                <th
+                                    align="left"
+                                    style="
+                                        background-color: #58566e;
+                                        color: #fff;
+                                        padding: 0.8em 1em;
+                                        font-weight: 500;
+                                        font-size: 15px;
+                                    "
+                                >
+                                    Unit Price
+                                </th>
+                                <th
+                                    align="end"
+                                    style="
+                                        background-color: #58566e;
+                                        color: #fff;
+                                        padding: 0.8em 1em;
+                                        font-weight: 500;
+                                    "
+                                >
+                                    Total Cost
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let e of proposalDetails?.items;
+                                    let i = index
+                                "
+                            >
+                                <td
+                                    class="cost"
+                                    style="
+                                        padding: 0.2em 1em 1.2em 1em;
+                                        border-bottom: 0.1rem solid #eaeaea;
+                                        font-size: 15px;
+                                        color: #302727;
+                                    "
+                                >
+                                    {{ i + 1 }}
+                                </td>
+                                <td
+                                    style="
+                                        padding: 0.2em 1em 1.2em 1em;
+                                        border-bottom: 0.1rem solid #eaeaea;
+                                        font-size: 15px;
+                                        color: #302727;
+                                    "
+                                >
+                                    {{ e.itemDescription }}
+                                </td>
+                                <td
+                                    class="prices cost"
+                                    style="
+                                        padding: 0.2em 1em 1.2em 1em;
+                                        border-bottom: 0.1rem solid #eaeaea;
+                                    "
+                                >
+                                    {{ e.units }}
+                                </td>
+                                <td
+                                    class="prices cost"
+                                    style="
+                                        padding: 0.2em 1em 1.2em 1em;
+                                        border-bottom: 0.1rem solid #eaeaea;
+                                        font-size: 15px;
+                                        color: #302727;
+                                    "
+                                >
+                                    {{ e.unitPrice }}
+                                </td>
+                                <td
+                                    class="cost text-right prices"
+                                    style="
+                                        padding: 0.2em 1em 1.2em 1em;
+                                        border-bottom: 0.1rem solid #eaeaea;
+                                        font-size: 15px;
+                                        color: #302727;
+                                    "
+                                >
+                                    {{ e.totalCost }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div
+                        class="add_item_div bottom_value w-full pt-1 px-3 pb-5"
+                        style="border-bottom: 1px solid #eaeaea; width: 100%"
+                    >
+                        <p
+                            class=""
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                text-align: right;
+                                margin-bottom: 0px;
+                            "
                         >
-                    </li>
-                    <li style="margin-bottom: 5px">
-                        <span style="color: #302727; font-size: 15px"
-                            >Any change in requirements post-approval might
-                            incur additional costs.</span
+                            Total Without Tax :
+                            <b style="font-size: 16px; color: #302727">{{
+                                proposalDetails?.totalWithOutTax
+                            }}</b>
+                        </p>
+
+                        <p
+                            class=""
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                text-align: right;
+                                margin-bottom: 0px;
+                            "
                         >
-                    </li>
-                </ul>
+                            <ng-container *ngIf="selectedCountry == 'INR'">
+                                <ng-container
+                                    *ngIf="
+                                        proposalDetails?.state ==
+                                        'Andhra Pradesh'
+                                    "
+                                >
+                                    <div class="flex items-center">
+                                        <div class="label_in mt-0">(CGST :</div>
+                                        <div class="font-semibold">9%</div>
+                                    </div>
+                                    ,
+                                    <div class="flex items-center mr-2">
+                                        <div class="label_in mt-0">SGST :</div>
+                                        <div class="font-semibold">9%)</div>
+                                    </div>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="
+                                        proposalDetails?.state !=
+                                        'Andhra Pradesh'
+                                    "
+                                >
+                                    <div class="flex items-center mr-2">
+                                        <div class="label_in mr-2 mt-0">
+                                            (IGST :
+                                        </div>
+                                        <div class="font-semibold">18%)</div>
+                                    </div>
+                                </ng-container></ng-container
+                            >Tax :
+                            <b style="font-size: 16px; color: #302727">{{
+                                proposalDetails?.tax
+                            }}</b>
+                        </p>
+                    </div>
+                    <div
+                        class="flex justify-end bottom_value t w-full pt-2 px-3"
+                    >
+                        <p
+                            class=""
+                            style="
+                                font-size: 17px;
+                                color: #302727;
+                                text-align: right;
+                            "
+                        >
+                            Grand Total:
+                            <b
+                                style="
+                                    font-size: 18px;
+                                    color: #302727;
+                                    font-weight: 700;
+                                "
+                            >
+                                {{
+                                    (proposalDetails?.grandTotal
+                                    | currency
+                                        : selectedCountry
+                                        : "symbol"
+                                        : "1.0")
+                                        ? (proposalDetails?.grandTotal
+                                          | currency
+                                              : selectedCountry
+                                              : "symbol"
+                                              : "1.0")
+                                        : 0
+                                }}</b
+                            >
+                        </p>
+                    </div>
+                </div> -->
+                <h6
+                    style="
+                        font-size: 16px;
+                        color: #302727;
+                        margin-bottom: 0px;
+                        margin-top: 30px;
+                    "
+                >
+                    <b>11. Post-Proposal Engagements</b>
+                </h6>
+                <p style="font-size: 15px; color: #302727; margin-bottom: 30px">
+                    Subsequent requirements or modifications post the
+                    ratification of this proposal will necessitate separate
+                    discussions and might be accompanied by additional financial
+                    implications. Such modifications will be documented and
+                    ratified through supplementary agreements.
+                </p>
                 <h6
                     style="font-size: 16px; color: #302727; margin-bottom: 10px"
                 >
-                    <b>10. Payment Terms</b>
+                    <b>12. Corporate Protocols</b>
                 </h6>
-                <ul style="margin-bottom: 30px">
+                <ul style="margin-bottom: 10px">
                     <li style="margin-bottom: 5px">
                         <span style="color: #302727; font-size: 15px"
-                            >30% upfront</span
+                            >Intellectual property rights will transition to the
+                            client upon the fulfillment of all financial
+                            commitments.</span
                         >
                     </li>
                     <li style="margin-bottom: 5px">
                         <span style="color: #302727; font-size: 15px"
-                            >40% post-development</span
+                            >All project intricacies and data will be
+                            safeguarded under strict confidentiality
+                            clauses.</span
                         >
                     </li>
                     <li style="margin-bottom: 5px">
                         <span style="color: #302727; font-size: 15px"
-                            >30% post-deployment</span
+                            >Any disparities will be addressed under the purview
+                            of Australian legal jurisdiction.</span
                         >
                     </li>
                 </ul>
-                <h6 style="font-size: 16px; color: #302727; margin-bottom: 0px">
-                    <b>11. Customer Acceptance</b>
-                </h6>
-                <p style="font-size: 15px; color: #302727">
-                    Client feedback and approval stages will be integrated
-                    throughout the development process to ensure utmost
-                    satisfaction.
+                <p style="font-size: 15px; color: #302727; margin-bottom: 45px">
+                    We anticipate a symbiotic collaboration, culminating in
+                    tangible digital successes. We await your feedback and
+                    potential queries.
                 </p>
             </div>
+            <div class="signature" style="display: block; overflow: auto">
+                <div class="left" style="float: left">
+                    <!-- <img
+                        src="{{ baseUrl }}assets/images/logo/logo.webp"
+                        alt=""
+                        style="width: 150px"
+                    /> -->
+                </div>
+                <div class="right" style="float: right">
+                    <canvas
+                        *ngIf="signing"
+                        signature
+                        width="350"
+                        height="120"
+                        [clear]="clearMe"
+                        [options]="{ color: '#009', width: 1, blur: 2 }"
+                        (imgSrc)="srcChange($event)"
+                    ></canvas>
+                    <div *ngIf="!signing">
+                        <img
+                            class="signature"
+                            src="{{ src }}"
+                            style="width: 150px"
+                        />
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            <b>{{ proposalDetails?.clientName }}</b>
+                        </p>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: #302727;
+                                margin-bottom: 0px;
+                            "
+                        >
+                            14 Sep, 2023
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute" style="bottom: 26px; right: 25px">
+            <div *ngIf="!signing">
+                <p class="form-text">
+                    <a
+                        (click)="resign()"
+                        class="text-primary_l cursor-pointer font-semibold"
+                        >Re-sign</a
+                    >
+                </p>
+            </div>
+            <p *ngIf="signing" class="mt-10">
+                <a
+                    (click)="clear()"
+                    class="px-5 py-3 clear_btn text-primary_l cursor-pointer"
+                    >Clear</a
+                ><a
+                    (click)="save()"
+                    class="px-5 py-3 ml-3 primary_btn text-white cursor-pointer"
+                    >Save</a
+                >
+            </p>
         </div>
     </div>
 </div>
