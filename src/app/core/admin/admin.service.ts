@@ -609,4 +609,10 @@ export class AdminService {
     getByProposalId(id: any) {
         return this.http.get<any>(applicationUrls.proposals + '/get/' + id);
     }
+    signatureUpdate(data: any) {
+        return this.http.post<any>(
+            applicationUrls.proposals + '/updateSign',
+            data
+        );
+    }
 }

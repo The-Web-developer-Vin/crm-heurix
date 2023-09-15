@@ -33,6 +33,7 @@
         "highlight.js": "11.6.0",
         "html-to-pdfmake": "^2.4.25",
         "html2canvas": "^1.4.1",
+        "html2pdf.js": "^0.10.1",
         "jspdf": "^1.5.3",
         "jszip": "3.1.5",
         "lodash-es": "4.17.21",

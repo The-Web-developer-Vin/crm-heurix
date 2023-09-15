@@ -573,8 +573,6 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'proposals/view',
-                canActivate: [AuthGuard],
-                canActivateChild: [AuthGuard],
 
                 loadChildren: () =>
                     import(

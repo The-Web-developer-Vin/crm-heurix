@@ -7,3 +7,56 @@
     border: 1px solid #4f46e5 !important;
     border-radius: 8px !important;
 }
+.bg-light {
+    background-color: #ddd !important;
+}
+::ng-deep body.light .mat-snack-bar-container,
+body .light .mat-snack-bar-container {
+    background: rgb(34 197 94);
+    color: #fff !important;
+}
+::ng-deep body.light .mat-snack-bar-container .mat-button {
+    color: #fff;
+}
+
+::ng-deep body.light .mat-snack-bar-container.alert-red {
+    background: rgb(239 68 68);
+    color: #fff !important;
+}
+.page-break {
+    display: block;
+    page-break-before: always;
+}
+.amount_details {
+    table {
+        border-collapse: collapse;
+        th {
+            background-color: #58566e;
+            color: #fff;
+            padding: 0.2em 0.8em 1.2em 0.8em;
+            font-weight: 500;
+            border-collapse: collapse;
+        }
+        tbody {
+            tr {
+                td {
+                    padding: 0.2em 1em 1.2em 1em;
+                    border-bottom: 0.1rem solid #eaeaea;
+                    &.prices {
+                        white-space: nowrap;
+                    }
+                    &.cost {
+                        width: 100px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.add_item_div {
+    border-bottom: 0.1rem solid #eaeaea;
+}
+.bottom_value {
+    color: #58566e;
+    font-size: 14px;
+}
