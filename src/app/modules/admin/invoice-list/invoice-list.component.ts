@@ -205,11 +205,24 @@ export class InvoiceListComponent implements OnInit {
 
     OpenSettingsDrawer(data) {
         this.invoiceId = data._id;
-        this.emailList.push({ mail: data.clientMail, invalid: false });
+        if (this.emailList.length >= 1) {
+            this.emailList.forEach((element) => {
+                if (element.mail != data.clientMail) {
+                    this.emailList.push({
+                        mail: data.clientMail,
+                        invalid: false,
+                    });
+                }
+            });
+        }
+        if (this.emailList.length == 0) {
+            this.emailList.push({ mail: data.clientMail, invalid: false });
+        }
     }
     close() {
         this.sendMailForm.reset();
         this.emailList.length = 0;
+        this.uploadedFiles = [];
         this.uploadedFiles.length = 0;
     }
     sendMail() {
@@ -227,6 +240,7 @@ export class InvoiceListComponent implements OnInit {
                     duration: 3000,
                 });
                 this.sendMailForm.reset();
+                this.uploadedFiles = [];
                 this.uploadedFiles.length = 0;
                 this.emailList.length = 0;
                 this.drawer.close();
