@@ -79,10 +79,10 @@
                     <div class="text-right">
                         <div class="font-bold mb-2">Bill From</div>
                         <div class="text_area w-full mb-3">
-                            6-259, Behind Sai Baba<br />
-                            Temple, Thimmapuram<br />
-                            Kakinada, Andhra Pradesh <br />
-                            533005
+                            Heurix Digital Pyt Ltd<br />
+                            Unit 2 / 39 Earl Street,<br />
+                            Sydney, Merrylands,<br />
+                            New South Wales, 2160
                         </div>
                     </div>
                 </div>
@@ -108,9 +108,23 @@
                             <td class="cost">{{ i + 1 }}</td>
                             <td>{{ e.itemDescription }}</td>
                             <td class="prices cost">{{ e.units }}</td>
-                            <td class="prices cost">{{ e.unitPrice }}</td>
+                            <td class="prices cost">
+                                {{
+                                    e.unitPrice
+                                        | currency
+                                            : selectedCountry
+                                            : "symbol"
+                                            : "1.0"
+                                }}
+                            </td>
                             <td class="cost text-right prices">
-                                {{ e.totalCost }}
+                                {{
+                                    e.totalCost
+                                        | currency
+                                            : selectedCountry
+                                            : "symbol"
+                                            : "1.0"
+                                }}
                             </td>
                         </tr>
                     </tbody>
@@ -121,12 +135,18 @@
                 >
                     <div class="text-end">
                         <div class="flex items-center mb-3 justify-end">
-                            <div class="mr-2">Total Without Tax :</div>
+                            <div class="mr-2">Total Including Tax :</div>
                             <div class="font-bold w-15">
-                                {{ invoiceDetails?.totalWithOutTax }}
+                                {{
+                                    invoiceDetails?.totalWithOutTax
+                                        | currency
+                                            : selectedCountry
+                                            : "symbol"
+                                            : "1.0"
+                                }}
                             </div>
                         </div>
-                        <div class="flex items-center justify-end">
+                        <!-- <div class="flex items-center justify-end">
                             <div class="mr-2 flex">
                                 <ng-container *ngIf="selectedCountry == 'INR'">
                                     <ng-container
@@ -169,7 +189,7 @@
                             <div class="font-bold w-15">
                                 {{ invoiceDetails?.tax }}
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="flex justify-end bottom_value t w-full pt-2 px-3">
@@ -201,7 +221,14 @@
                             : Commonwealth Bank
                         </div>
                     </div>
-
+                    <div
+                        class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 items-center mb-1"
+                    >
+                        <div class="label_in mr-2">Account Name.</div>
+                        <div class="font-semibold col-span-3">
+                            : Konduru Akhil Sharma
+                        </div>
+                    </div>
                     <div
                         class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 items-center mb-1"
                     >

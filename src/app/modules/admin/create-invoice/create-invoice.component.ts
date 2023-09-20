@@ -88,12 +88,10 @@ export class CreateInvoiceComponent implements OnInit {
                 });
                 this.selectedCountry = res.data.invoice.country;
                 this.selectedState = res.data.invoice.state;
-                if (this.selectedState == 'Andhra Pradesh') {
-                    this.showStateTax = true;
-                    this.showGst = false;
-                } else {
-                    this.showStateTax = false;
+                if (this.selectedCountry == 'AUD') {
                     this.showGst = true;
+                } else {
+                    this.showGst = false;
                 }
                 this.accountDetails = res.data.invoice.accountDetails;
                 res.data.invoice.items.forEach((element) => {
@@ -137,27 +135,22 @@ export class CreateInvoiceComponent implements OnInit {
     }
     selectState(e: any) {
         this.selectedState = e;
-        if (e == 'Andhra Pradesh') {
-            this.showStateTax = true;
-            this.showGst = false;
-        } else {
-            this.showStateTax = false;
-            this.showGst = true;
-        }
-        if (e) {
-            this.taxAmount = Math.round((this.totalWithoutTax * 18) / 100);
-        }
-        this.grandTotal = this.totalWithoutTax + this.taxAmount;
+
+        // if (e) {
+        //     this.taxAmount = Math.round((this.totalWithoutTax * 10) / 100);
+        // }
+        // this.grandTotal = this.totalWithoutTax + this.taxAmount;
     }
     selectCountry(e: any) {
         this.selectedCountry = e;
-        if (e == 'INR') {
-            this.showState = true;
+        if (e == 'AUD') {
+            this.showGst = true;
+            //this.taxAmount = Math.round((this.totalWithoutTax * 10) / 100);
         } else {
-            this.showState = false;
-            this.showStateTax = false;
             this.showGst = false;
+            this.taxAmount = 0;
         }
+        // this.grandTotal = this.totalWithoutTax + this.taxAmount;
     }
     total(event, index) {
         let res =
@@ -168,8 +161,8 @@ export class CreateInvoiceComponent implements OnInit {
             this.totalWithoutTax = data.reduce((a, b) => a + +b.totalCost, 0);
         });
 
-        if (this.selectedState) {
-            this.taxAmount = Math.round((this.totalWithoutTax * 18) / 100);
+        if (this.selectedCountry) {
+            // this.taxAmount = Math.round((this.totalWithoutTax * 10) / 100);
         }
         this.grandTotal = this.totalWithoutTax + +this.taxAmount;
     }
