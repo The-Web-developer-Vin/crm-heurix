@@ -95,7 +95,9 @@
                             <th align="left">Item Description</th>
                             <th align="left">Units</th>
                             <th align="left">Unit Price</th>
-                            <th align="end">Total Cost</th>
+                            <th align="end">
+                                Total Cost({{ selectedCountry }})
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,25 +108,59 @@
                             "
                         >
                             <td class="cost">{{ i + 1 }}</td>
-                            <td>{{ e.itemDescription }}</td>
+                            <td class="word-wrap">{{ e.itemDescription }}</td>
                             <td class="prices cost">{{ e.units }}</td>
                             <td class="prices cost">
-                                {{
-                                    e.unitPrice
-                                        | currency
-                                            : selectedCountry
-                                            : "symbol"
-                                            : "1.0"
-                                }}
+                                <ng-container
+                                    *ngIf="
+                                        selectedCountry != 'AUD' &&
+                                        selectedCountry != 'CAD'
+                                    "
+                                >
+                                    {{
+                                        e.unitPrice
+                                            | currency
+                                                : selectedCountry
+                                                : "symbol"
+                                                : "1.0"
+                                    }}</ng-container
+                                >
+                                <ng-container *ngIf="selectedCountry == 'AUD'">
+                                    ${{
+                                        e.unitPrice | number : "1.0-2"
+                                    }}</ng-container
+                                >
+                                <ng-container *ngIf="selectedCountry == 'CAD'">
+                                    ${{
+                                        e.totalCost | number : "1.0-2"
+                                    }}</ng-container
+                                >
                             </td>
                             <td class="cost text-right prices">
-                                {{
-                                    e.totalCost
-                                        | currency
-                                            : selectedCountry
-                                            : "symbol"
-                                            : "1.0"
-                                }}
+                                <ng-container
+                                    *ngIf="
+                                        selectedCountry != 'AUD' &&
+                                        selectedCountry != 'CAD'
+                                    "
+                                >
+                                    {{
+                                        e.totalCost
+                                            | currency
+                                                : selectedCountry
+                                                : "symbol"
+                                                : "1.0"
+                                    }}</ng-container
+                                >
+                                <ng-container *ngIf="selectedCountry == 'AUD'">
+                                    ${{
+                                        e.totalCost | number : "1.0-2"
+                                    }}</ng-container
+                                >
+                                <ng-container *ngIf="selectedCountry == 'CAD'">
+                                    ${{
+                                        e.totalCost | number : "1.0-2"
+                                    }}</ng-container
+                                >
                             </td>
                         </tr>
                     </tbody>
@@ -136,13 +172,37 @@
                     <div class="text-end">
                         <div class="flex items-center mb-3 justify-end">
                             <div class="mr-2">Total Including Tax :</div>
-                            <div class="font-bold w-15">
+                            <div
+                                class="font-bold w-15"
+                                *ngIf="
+                                    selectedCountry != 'AUD' &&
+                                    selectedCountry != 'CAD'
+                                "
+                            >
                                 {{
                                     invoiceDetails?.totalWithOutTax
                                         | currency
                                             : selectedCountry
                                             : "symbol"
                                             : "1.0"
+                                }}
+                            </div>
+                            <div
+                                class="font-bold w-15"
+                                *ngIf="selectedCountry == 'AUD'"
+                            >
+                                ${{
+                                    invoiceDetails?.totalWithOutTax
+                                        | number : "1.0-2"
+                                }}
+                            </div>
+                            <div
+                                class="font-bold w-15"
+                                *ngIf="selectedCountry == 'CAD'"
+                            >
+                                ${{
+                                    invoiceDetails?.totalWithOutTax
+                                        | number : "1.0-2"
                                 }}
                             </div>
                         </div>
@@ -195,7 +255,13 @@
                 <div class="flex justify-end bottom_value t w-full pt-2 px-3">
                     <div class="flex items-center justify-end text-lg">
                         <div class="mr-2 font-bold">Grand Total:</div>
-                        <div class="font-bold">
+                        <div
+                            class="font-bold"
+                            *ngIf="
+                                selectedCountry != 'AUD' &&
+                                selectedCountry != 'CAD'
+                            "
+                        >
                             {{
                                 (invoiceDetails?.grandTotal
                                 | currency : selectedCountry : "symbol" : "1.0")
@@ -206,6 +272,14 @@
                                           : "1.0")
                                     : 0
                             }}
+                        </div>
+                        <div class="font-bold" *ngIf="selectedCountry == 'CAD'">
+                            $
+                            {{ invoiceDetails?.grandTotal | number : "1.0-2" }}
+                        </div>
+                        <div class="font-bold" *ngIf="selectedCountry == 'AUD'">
+                            $
+                            {{ invoiceDetails?.grandTotal | number : "1.0-2" }}
                         </div>
                     </div>
                 </div>
