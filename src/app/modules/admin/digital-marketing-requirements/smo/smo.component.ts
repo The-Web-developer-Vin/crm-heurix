@@ -457,7 +457,7 @@ export class SmoComponent implements OnInit {
                         } else {
                             this.successMsgShow = false;
                         }
-                    }, 8000);
+                    }, 3000);
                 }
             },
             (err: any) => {
